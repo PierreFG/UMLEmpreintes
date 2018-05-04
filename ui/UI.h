@@ -14,7 +14,7 @@
 
 namespace UI {
 	
-		void connectionMenu();
+		shared_ptr<Doctor> connectionMenu();
 		//Displays the connection Menu
 		
 		void mainMenu(Doctor d);
