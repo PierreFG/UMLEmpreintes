@@ -1,5 +1,5 @@
 /**
-* GUI.h
+* UI.h
 * Auteur : Louis Ohl
 * Projet : analyseur d'empreintes (TP GLUML)
 * Date : 4 Mai 2018
@@ -10,9 +10,9 @@
 #include <iostream>
 #include <set>
 #include "../modele/doctor.h"
-#include "GUI.h"
+#include "UI.h"
 
-void GUI::intro(){
+void UI::intro(){
 	cout << "\033[031m"<<endl;
 	cout << "Analyseur d'empreintes" << endl;
 	cout << "Application d�velopp�e dans un contexte de TP \"G�nie logiciel\" � l'INSA de Lyon"<<endl;
@@ -20,7 +20,7 @@ void GUI::intro(){
 	cout <<"\033[0m";
 }
 
-void GUI::connectionMenu(){
+void UI::connectionMenu(){
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
 	
 	bool notConnected=true;
@@ -41,11 +41,11 @@ void GUI::connectionMenu(){
 	}
 }
 
-void GUI::mainMenu(){
+void UI::mainMenu(){
 	cout << "bouh"<<endl;
 }
 
-int GUI::inputInt(){
+int UI::inputInt(){
 	bool ok=false;
 	int res=0;
 	while(!ok){
@@ -61,13 +61,13 @@ int GUI::inputInt(){
 	return res;
 }
 
-string GUI::inputString(){
+string UI::inputString(){
 	string line;
 	getline(cin, line);
 	return line;
 }
 
-char GUI::inputChar(set<char> expected){
+char UI::inputChar(set<char> expected){
 	char charac='\0';
 	bool ok=false;
 	while (!ok){
@@ -89,7 +89,7 @@ char GUI::inputChar(set<char> expected){
 	
 }
 
-Doctor GUI::saisirInformation(){
+Doctor UI::saisirInformation(){
 	cout <<"Formulaire d'inscription"<<endl<<endl;
 	bool ok=false;
 	do{
