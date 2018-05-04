@@ -1,5 +1,5 @@
 /**
-* IHM.h
+* UI.h
 * Auteur : Louis Ohl
 * Projet : analyseur d'empreintes (TP GLUML)
 * Date : 4 Mai 2018
