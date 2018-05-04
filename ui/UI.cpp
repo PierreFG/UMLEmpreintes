@@ -82,6 +82,8 @@ void UI::mainMenu(Doctor d){
 		set<char> expected(tab, tab+3);
 		car=inputChar(expected);
 		if (car=='a'){
+			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
+			string path=inputString();
 			//Appeler la méthode d'analyse d'une empreinte
 			
 		} else if(car=='h'){
