@@ -9,6 +9,7 @@
 #define GUI_H
 
 #include <iostream>
+#include <set>
 #include "Doctor.h"
 
 class GUI{
@@ -18,8 +19,7 @@ class GUI{
 		void mainMenu();
 		int inputInt();
 		string inputString();
-		string inputPassword();
-		char inputChar();
+		char inputChar(set<char> expected);
 		
 	private:
 		Doctor saisirInformation();
