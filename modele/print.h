@@ -13,6 +13,11 @@ public:
     Print (vector<string>, double*);
     virtual ~Print ();
 
+    long getID();
+    vector<string> getDiseases();
+    double* getAttr();
+
+
 protected:
     long ID;
     vector<string> diseases;

@@ -5,17 +5,19 @@
 * Date : 4 Mai 2018
 */
 
-//todo : cr�er manipulateur de couleur et formattage de texte param�trable pour meilleure esth�tique (classe)
+//todo : creer manipulateur de couleur et formattage de texte param�trable pour meilleure esthetique (classe)
 
 #include <iostream>
 #include <set>
 #include "../modele/doctor.h"
 #include "UI.h"
 
-void UI::intro(){
+using namespace std;
+
+UI::intro(){
 	cout << "\033[031m"<<endl;
 	cout << "Analyseur d'empreintes" << endl;
-	cout << "Application d�velopp�e dans un contexte de TP \"G�nie logiciel\" � l'INSA de Lyon"<<endl;
+	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
 	cout << "Copyrights : Pierre Faure--Giovagnoli, Romain Fournier, Alexis Le Conte, Louis Ohl"<<endl<<endl;
 	cout <<"\033[0m";
 }
@@ -24,7 +26,7 @@ void UI::connectionMenu(){
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
 	
 	bool notConnected=true;
-	cout<< "Poss�dez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
+	cout<< "Possedez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
 	cout<<"Pour quitter l'application, tapez (q)"<<endl;
 	char tab[] = {'i','c','q'};
 	set<char> expected(tab, tab+3); 
@@ -41,8 +43,20 @@ void UI::connectionMenu(){
 	}
 }
 
-void UI::mainMenu(){
-	cout << "bouh"<<endl;
+void UI::mainMenu(Doctor d){
+	char car;
+	
+	cout << "Bonjour M. " << d.getName() <<"."<<endl;
+	
+	while (car!='d'){
+		cout << "Pour analyser un fichier d'empreintes, tapez (a)." << endl;
+		cout << "Pour consulter l'historique de votre activite, tapez (h)." << endl;
+		cout << "Pour vous deconnecter, tapez (d)."<<endl;
+		char tab[] = {'a', 'h', 'd'};
+		set<char> expected(tab, tab+3);
+		car=inputChar(expected);
+	}
+	cout <<"Au revoir M. " << d.getName() << "." << endl;
 }
 
 int UI::inputInt(){
@@ -89,30 +103,30 @@ char UI::inputChar(set<char> expected){
 	
 }
 
-Doctor UI::saisirInformation(){
+Doctor UI::seizeInformation(){
 	cout <<"Formulaire d'inscription"<<endl<<endl;
 	bool ok=false;
+	string firstname, lastname, email, password, confirm;
 	do{
 		cout <<"Veuillez rentrer votre prenom :"<<endl;
-		string prenom=inputString();
+		firstname=inputString();
 		cout << "Veuillez rentrer votre nom de famille :"<<endl;
-		string nom=inputString();
+		lastname=inputString();
 		cout <<"Veuillez saisir votre email (il vous servira d'identifiant) :"<<endl;
-		string email=inputString();
+		email=inputString();
 		bool pwd=false;
-		string password, confirmation;
 		while (!pwd){
 			cout <<"Veuillez saisir votre mot de passe :" << endl;
 			password=inputString();
 			cout << "Veuillez confirmer votre mot de passe :" << endl;
-			confirmation = inputString();
-			if (password==confirmation){
+			confirm = inputString();
+			if (password==confirm){
 				pwd=true;
 			} else {
 				cout << "Vos mots de passe ne correspondent pas, veuillez les re-saisir !"<<endl;
 			}
 		}
-		cout << "Vous �tes : " << prenom << " " << nom << ". ";
+		cout << "Vous etes : " << firstname << " " << lastname << ". ";
 		cout << "Votre mail : " << email<<endl;
 		cout << "Ces informations vous correspondent-elles ? (o/n)" <<endl;
 		char tab[] = {'o','n'};
@@ -122,4 +136,6 @@ Doctor UI::saisirInformation(){
 			ok=true;
 		}
 	} while(!ok);
+	Doctor d(firstname, lastname, email, password);
+	return d;
 }
