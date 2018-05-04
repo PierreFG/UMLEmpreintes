@@ -4,6 +4,8 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
+
 using namespace std;
 
 class Doctor
@@ -22,6 +24,8 @@ protected:
     string mail;
     string mdp;
 };
+
+typedef shared_ptr<Doctor> Doctor_ptr;
 
 //-------------------------------- Autres définitions dépendantes de <Xxx>
 
