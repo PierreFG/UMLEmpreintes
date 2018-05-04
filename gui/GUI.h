@@ -1,21 +1,29 @@
 /**
-* UI.h
+* GUI.h
 * Auteur : Louis Ohl
 * Projet : analyseur d'empreintes (TP GLUML)
 * Date : 4 Mai 2018
 */
 
-#ifndef IHM_H
-#define IHM_H
+#ifndef GUI_H
+#define GUI_H
 
-class IHM{
+#include <iostream>
+#include <set>
+#include "Doctor.h"
+
+class GUI{
 	public:
 		void intro();
 		void connectionMenu();
 		void mainMenu();
 		int inputInt();
 		string inputString();
-		char inputChar();
+		char inputChar(set<char> expected);
+		
+	private:
+		Doctor saisirInformation();
+		
 }
 
-#endif // IHM_H
+#endif // GUI_H
