@@ -8,6 +8,7 @@
 //todo : créer manipulateur de couleur et formattage de texte paramétrable pour meilleure esthétique (classe)
 
 #include <iostream>
+#include <set>
 
 void GUI::intro(){
 	cout << "\033[031m"<<endl;
@@ -24,24 +25,23 @@ void GUI::connectionMenu(){
 	cout<< "Possédez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
 	cout<<"Pour quitter l'application, tapez (q)"<<endl;
 	char res=inputChar();
-	while (res!='i' && res !='c' && res!='q'){
-		cout << "Cela n'était pas demandé ! Recommencez. " << endl;
-		cout << "Possédez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
-		res=inputChar();
-	}
+	char[] tab = {'i','c','q'}
+	set<char> expected(tab); 
+	res=inputChar(expected);
 	if (res=='i'){
-		
+		cout << "Inscription"<<endl;
 	}
 	if (res=='c'){
-		
+		cout << "CouCou"<<endl;
 	}
 	if (res=='q'){
 		notConnected=false;
+		cout <<"Quitter"<<endl;
 	}
 }
 
 void GUI::mainMenu(){
-	
+	cout << "bouh"<<endl;
 }
 
 int GUI::inputInt(){
@@ -60,18 +60,26 @@ string GUI::inputString(){
 	return line;
 }
 
-string GUI::inputPassword(){
-	
-}
-
-char GUI::inputChar(){
-	string resultat;
-	getline(cin, resultat);
-	if (resultat==""){
-		return '\0';
-	} else {
-		return resultat[0];
+char GUI::inputChar(set<char> expected){
+	char charac='\0';
+	ok=false;
+	while (!ok){
+		string result;
+		getline(cin, result);
+		if (result==""){
+			charac='\0';
+		} else {
+			charac=resultat[0];
+		}
+		if (expected.find(charac)==expected.end()){
+			cout << "Ce caractère n'est pas demandé !"<<endl;
+		} else {
+			ok=true;
+		}
 	}
+	
+	return charac;
+	
 }
 
 Doctor GUI::saisirInformation(){
@@ -84,7 +92,23 @@ Doctor GUI::saisirInformation(){
 		string nom=inputString();
 		cout <<"Veuillez saisir votre email (il vous servira d'identifiant) :"<<endl;
 		string email=inputString();
-		cout <<"Veuillez saisir votre mot de passe :" << endl;
-	
+		bool pwd=false;
+		string password, confirmation;
+		while (!pwd){
+			cout <<"Veuillez saisir votre mot de passe :" << endl;
+			password=inputString();
+			cout << "Veuillez confirmer votre mot de passe :" << endl;
+			confirmation = inputString();
+			if (password==confirmation){
+				pwd=true;
+			} else {
+				cout << "Vos mots de passe ne correspondent pas, veuillez les re-saisir !"<<endl;
+			}
+		}
+		cout << "Vous êtes : " << prenom << " " << nom << ". ";
+		cout << "Votre mail : " << email<<endl;
+		cout << "Ces informations vous correspondent-elles ? (o/n)" <<endl;
+		char res = inputChar();
+		while res
 	} while(!ok);
 }
