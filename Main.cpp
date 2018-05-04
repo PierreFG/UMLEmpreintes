@@ -1,6 +1,10 @@
 #include <iostream>
+#include "./modele/doctor.h"
 
-int main() {
-	cout << " Hello World !" << endl;
-	return 0;
+using namespace std;
+
+int main(){
+    Doctor * d = new Doctor("Louis", "Ohl", "louis.ohl@ina-lyon.fr", "a");
+    cout << *d << endl;
+    return 0;
 }
