@@ -5,15 +5,17 @@
 * Date : 4 Mai 2018
 */
 
-//todo : créer manipulateur de couleur et formattage de texte paramétrable pour meilleure esthétique (classe)
+//todo : crï¿½er manipulateur de couleur et formattage de texte paramï¿½trable pour meilleure esthï¿½tique (classe)
 
 #include <iostream>
 #include <set>
+#include "../modele/doctor.h"
+#include "GUI.h"
 
 void GUI::intro(){
 	cout << "\033[031m"<<endl;
 	cout << "Analyseur d'empreintes" << endl;
-	cout << "Application développée dans un contexte de TP \"Génie logiciel\" à l'INSA de Lyon"<<endl
+	cout << "Application dï¿½veloppï¿½e dans un contexte de TP \"Gï¿½nie logiciel\" ï¿½ l'INSA de Lyon"<<endl;
 	cout << "Copyrights : Pierre Faure--Giovagnoli, Romain Fournier, Alexis Le Conte, Louis Ohl"<<endl<<endl;
 	cout <<"\033[0m";
 }
@@ -21,13 +23,12 @@ void GUI::intro(){
 void GUI::connectionMenu(){
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
 	
-	bool notConnected=true
-	cout<< "Possédez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
+	bool notConnected=true;
+	cout<< "Possï¿½dez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
 	cout<<"Pour quitter l'application, tapez (q)"<<endl;
-	char res=inputChar();
-	char[] tab = {'i','c','q'}
-	set<char> expected(tab); 
-	res=inputChar(expected);
+	char tab[] = {'i','c','q'};
+	set<char> expected(tab, tab+3); 
+	char res=inputChar(expected);
 	if (res=='i'){
 		cout << "Inscription"<<endl;
 	}
@@ -45,13 +46,19 @@ void GUI::mainMenu(){
 }
 
 int GUI::inputInt(){
-	ok=false;
+	bool ok=false;
 	int res=0;
 	while(!ok){
 		string line;
 		getline(cin, line);
-		int res = stoi(line);
+		try{
+			res = stoi(line);
+			ok=true;
+		}catch(exception e){
+
+		}
 	}
+	return res;
 }
 
 string GUI::inputString(){
@@ -62,17 +69,17 @@ string GUI::inputString(){
 
 char GUI::inputChar(set<char> expected){
 	char charac='\0';
-	ok=false;
+	bool ok=false;
 	while (!ok){
 		string result;
 		getline(cin, result);
 		if (result==""){
 			charac='\0';
 		} else {
-			charac=resultat[0];
+			charac=result[0];
 		}
 		if (expected.find(charac)==expected.end()){
-			cout << "Ce caractère n'est pas demandé !"<<endl;
+			cout << "Ce caractï¿½re n'est pas demandï¿½ !"<<endl;
 		} else {
 			ok=true;
 		}
@@ -105,10 +112,14 @@ Doctor GUI::saisirInformation(){
 				cout << "Vos mots de passe ne correspondent pas, veuillez les re-saisir !"<<endl;
 			}
 		}
-		cout << "Vous êtes : " << prenom << " " << nom << ". ";
+		cout << "Vous ï¿½tes : " << prenom << " " << nom << ". ";
 		cout << "Votre mail : " << email<<endl;
 		cout << "Ces informations vous correspondent-elles ? (o/n)" <<endl;
-		char res = inputChar();
-		while res
+		char tab[] = {'o','n'};
+		set<char> expected(tab, tab+2);
+		char res = inputChar(expected);
+		if (res=='o'){
+			ok=true;
+		}
 	} while(!ok);
 }
