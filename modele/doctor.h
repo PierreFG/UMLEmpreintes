@@ -15,6 +15,11 @@ public:
 
     friend ostream& operator << (ostream &out, Doctor &d);
 
+    long getID();
+    string getName();
+    string getFirstName();
+    string getMail();
+
 protected:
     long ID;
     string name;
