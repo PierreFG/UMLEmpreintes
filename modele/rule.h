@@ -14,6 +14,8 @@ public:
     Rule (map<string,vector<double>>);
     virtual ~Rule ();
 
+    map<string,vector<double>> getAsso();
+
 protected:
     map<string,vector<double>> asso;
 };
