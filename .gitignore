@@ -33,5 +33,9 @@
 
 # VC Project
 *.sln
-.vcxproj
-.vcxproj.filters
+*.vcxproj
+*.vcxproj.filters
+
+# Others
+.vscode
+.vs
