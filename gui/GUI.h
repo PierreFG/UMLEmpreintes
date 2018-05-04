@@ -10,7 +10,7 @@
 
 #include <iostream>
 #include <set>
-#include "Doctor.h"
+#include "../modele/doctor.h"
 
 class GUI{
 	public:
@@ -24,6 +24,6 @@ class GUI{
 	private:
 		Doctor saisirInformation();
 		
-}
+};
 
 #endif // GUI_H
