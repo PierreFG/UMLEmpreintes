@@ -45,11 +45,19 @@ void GUI::mainMenu(){
 }
 
 int GUI::inputInt(){
-	
+	ok=false;
+	int res=0;
+	while(!ok){
+		string line;
+		getline(cin, line);
+		int res = stoi(line);
+	}
 }
 
 string GUI::inputString(){
-	
+	string line;
+	getline(cin, line);
+	return line;
 }
 
 string GUI::inputPassword(){
