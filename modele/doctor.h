@@ -3,6 +3,7 @@
 #define DOCTOR_H
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 class Doctor
@@ -12,11 +13,7 @@ public:
     Doctor (string pname, string pfirstName, string pemail, string pmdp);
     virtual ~Doctor ();
 
-    string to_string(){
-        string r = "Doctor " + firstName + " " + name + "\n";
-        r += "Mail : " + mail  + "\n";
-        return r;
-    }
+    friend ostream& operator << (ostream &out, Doctor &d);
 
 protected:
     long ID;
