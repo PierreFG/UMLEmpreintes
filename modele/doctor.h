@@ -14,6 +14,7 @@ public:
     virtual ~Doctor ();
 
     friend ostream& operator << (ostream &out, Doctor &d);
+	
 
 protected:
     long ID;

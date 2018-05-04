@@ -12,6 +12,7 @@
 #include "../modele/doctor.h"
 #include "UI.h"
 
+using namespace std;
 
 UI::intro(){
 	cout << "\033[031m"<<endl;
@@ -43,7 +44,19 @@ void UI::connectionMenu(){
 }
 
 void UI::mainMenu(Doctor d){
-	cout << "Bonjour M." << endl;
+	char car;
+	
+	cout << "Bonjour M. " << d.getName() <<"."<<endl;
+	
+	while (car!='d'){
+		cout << "Pour analyser un fichier d'empreintes, tapez (a)." << endl;
+		cout << "Pour consulter l'historique de votre activite, tapez (h)." << endl;
+		cout << "Pour vous deconnecter, tapez (d)."<<endl;
+		char tab[] = {'a', 'h', 'd'};
+		set<char> expected(tab, tab+3);
+		car=inputChar(expected);
+	}
+	cout <<"Au revoir M. " << d.getName() << "." << endl;
 }
 
 int UI::inputInt(){
