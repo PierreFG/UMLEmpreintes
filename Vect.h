@@ -10,31 +10,39 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include Système
 #include<vector>
+#include <stdio.h>
+#include <stdlib.h>
 //------------------------------------------------------ Include Personnel
-using namespace std; 
-using num = double; 
+using namespace std;
 
 class Vect
 {
+
+    friend class Mat;
 public:
 	//---------------------------------------------------- Fonctions publiquess
     Vect operator+(const Vect& B);//addition de vector
-    Vect operator*(num c); //multiplication par un scalaire
-    Vect operator*(const Vect& B) ; //produit scalaire
+    Vect operator*(double c); //multiplication par un scalaire /!\ v*c et pas c*v sinon cast du vecteur en double
+    double operator*(const Vect& B) ; //produit scalaire
+    void operator=(const Vect& B);
     int size() const ; //taille du vecteur
-    operator num(); //conversion en scalaire si taille 1
+    operator double(); //conversion en scalaire si taille 1
+    void resize(int l); //modifier taille du vecteur
+    void afficher();
+    void set(int j, double k);
 
 	//-------------------------------------------- Constructeurs - destructeur
     Vect();
     Vect(int np);
     ~Vect();
+    Vect(const Vect&);
 
-
+    
 
 
 protected:
 	//----------------------------------------------------- Attributs privés
-    vector<num> data; 
+    vector<double> data; 
 	int n;
 };
 

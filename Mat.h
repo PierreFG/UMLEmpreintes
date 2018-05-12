@@ -14,29 +14,30 @@
 //------------------------------------------------------ Include Personnel
 #include "Vect.h"
 using namespace std; 
-using num = double; 
 
 class Mat
 {
 public:
 	//---------------------------------------------------- Fonctions publiquess
 
-
+    Mat transpose(); //transposée de la matrice
+    double get(int i, int j) const ;
+    int nbRows() const ;
+    int nbColumns() const ;
+    Mat inv(); // inverse de la matrice par la méthode de Gauss-Jordan
+    void set(int i, int j, double x);
+    void afficher();
 	//-------------------------------------------- Constructeurs - destructeur
 	Mat();
+    Mat(int i, int j);
+    Mat(int n);// matrice identité dim n;
 	virtual ~Mat();
-
-    Vect& operator[](int i);//indexation
+    Mat(const Mat& M);
+    //------------------------------------------- Surcharge d'opérateurs
     Mat operator+(const Mat& B);//addition de matrices
-    Mat operator*(num c); //multiplication scalaire
+    Mat operator*(double c); //multiplication scalaire
     Mat operator*(const Mat& B) ; //multiplication de matrices
-    Mat transpose(); //transposée de la matrice
-    num get(int i, int j) const ;
-    int nbRows() const ;
-    int nbColumn() const ;
-
-
-
+   
 protected:
 	//----------------------------------------------------- Attributs privés
     vector<Vect> data; 
