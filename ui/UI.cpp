@@ -9,12 +9,13 @@
 
 #include <iostream>
 #include <set>
+#include <memory>
 #include "../modele/doctor.h"
 #include "UI.h"
 
 using namespace std;
 
-UI::intro(){
+void UI::intro(){
 	cout << "\033[031m"<<endl;
 	cout << "Analyseur d'empreintes" << endl;
 	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
@@ -36,7 +37,7 @@ shared_ptr<Doctor> UI::connectionMenu(){
 		set<char> expected(tab, tab+3); 
 		char res=inputChar(expected);
 		if (res=='i'){
-			d=seizeInformation();
+			*d=seizeInformation();
 		}
 		else if (res=='c'){
 			bool ok=false;
