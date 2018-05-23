@@ -34,7 +34,7 @@ k=1
 while [ "$i" -le "$reponse" ]
 do
 	a=$(sed "$k!d" inputFile)
-	if [[ "$a" != Test* && "$a" != "" ]]
+	if [[ "$a" != "%"Test* && "$a" != "" ]]
 	then
 		echo "$a" >> "input"$i
 	else

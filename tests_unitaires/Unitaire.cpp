@@ -14,7 +14,7 @@ void test1(){
 }*/
 
 void test1(){
-	cout << "bite"<<endl;
+	cout << "yo"<<endl;
 }
 
 void test2(){
