@@ -10,7 +10,7 @@
 #Dans un premier temps, compiler le fichier test unitaire
 echo "Compilation du fichier Unitaire.cpp"
 
-g++ Unitaire.cpp -o tester
+g++ Unitaire.cpp -o tester -std=c++11
 
 if [ ! -e tester ]
 then
