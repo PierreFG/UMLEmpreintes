@@ -25,6 +25,8 @@ string Doctor::getMail(){
     return mail;
 }
 
+Doctor::Doctor() : ID(0) {}
+
 Doctor::Doctor (string pname, string pfN, string pmail, string pmdp):name(pname),firstName(pfN), mail(pmail), mdp(pmdp)
 {
     ID = 0;

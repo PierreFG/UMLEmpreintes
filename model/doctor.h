@@ -12,6 +12,7 @@ class Doctor
 {
 
 public:
+    Doctor ( );
     Doctor (string pname, string pfirstName, string pemail, string pmdp);
     virtual ~Doctor ();
 
