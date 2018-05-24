@@ -1,5 +1,7 @@
 #include <iostream>
-//#include "../ui/UI.h"
+
+#include "fs/FileServices.h"
+#include "model/doctor.h"
 
 using namespace std;
 /*using namespace UI;
@@ -30,6 +32,13 @@ void test4(){
 	cout <<"division interdite"<<endl;
 	int i = 2/0;
 }
+
+void TU_05() {
+    Doctor doc("","","","");
+    if(cin >> doc)
+        cout << doc;
+}
+
 int main(){
 	int test;
 	cin >> test;
@@ -46,6 +55,9 @@ int main(){
 		case 4:
 			test4();
 			break;
+        case 5:
+            TU_05();
+            break;
 	}
 	return 0;
 }

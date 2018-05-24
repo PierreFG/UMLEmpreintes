@@ -10,8 +10,9 @@
 #include <iostream>
 #include <set>
 #include <memory>
-#include "../modele/doctor.h"
+#include "model/doctor.h"
 #include "UI.h"
+#include "fs/FileServices.h"
 
 using namespace std;
 
@@ -25,16 +26,16 @@ void UI::intro(){
 
 shared_ptr<Doctor> UI::connectionMenu(){
 	shared_ptr<Doctor> d=nullptr;
-	
+
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
-	
+
 	bool notConnected=true;
-	
+
 	do{
 		cout<< "Possedez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
 		cout<<"Pour quitter l'application, tapez (q)"<<endl;
 		char tab[] = {'i','c','q'};
-		set<char> expected(tab, tab+3); 
+		set<char> expected(tab, tab+3);
 		char res=inputChar(expected);
 		if (res=='i'){
 			*d=seizeInformation();
@@ -54,7 +55,7 @@ shared_ptr<Doctor> UI::connectionMenu(){
 				} else {
 					cout << "Erreur d'authentification, recommencer ? (o/n)"<< endl;
 					char yn[] = {'o','n'};
-					set<char> expected(tab, tab+3); 
+					set<char> expected(tab, tab+3);
 					res=inputChar(expected);
 					if (res=='n'){
 						ok=true;
@@ -72,9 +73,9 @@ shared_ptr<Doctor> UI::connectionMenu(){
 
 void UI::mainMenu(Doctor d){
 	char car;
-	
+
 	cout << "Bonjour M. " << d.getName() <<"."<<endl;
-	
+
 	while (car!='d'){
 		cout << "Pour analyser un fichier d'empreintes, tapez (a)." << endl;
 		cout << "Pour consulter l'historique de votre activite, tapez (h)." << endl;
@@ -86,7 +87,7 @@ void UI::mainMenu(Doctor d){
 			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
 			string path=inputString();
 			//Appeler la méthode d'analyse d'une empreinte
-			
+
 		} else if(car=='h'){
 			//Appeler la méthode historique
 		}
@@ -133,9 +134,9 @@ char UI::inputChar(set<char> expected){
 			ok=true;
 		}
 	}
-	
+
 	return charac;
-	
+
 }
 
 Doctor UI::seizeInformation(){
