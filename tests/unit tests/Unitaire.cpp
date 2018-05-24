@@ -34,14 +34,18 @@ void test4(){
 }
 
 void TU_05() {
-    Doctor doc("","","","");
-    if(cin >> doc)
-        cout << doc;
+    Doctor doc;
+    int i = 0;
+    while(cin >> doc) {
+        cout << "#" << i++ << ": " << doc;
+    }
+
 }
 
 int main(){
 	int test;
 	cin >> test;
+	cin.ignore();
 	switch(test){
 		case 1:
 			test1();

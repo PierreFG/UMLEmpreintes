@@ -1,8 +1,12 @@
 #include "fs/FileServices.h"
 
+///////////////////////////////////////////////////////////////////////////////
+/// LECTURE / ECRITURE DES OBJETS METIERS DANS DES FICHIERS
+///////////////////////////////////////////////////////////////////////////////
+
 ostream& operator<<(ostream& out, const Doctor& d) {
     // Ecriture dans le flux de sortie au format CSV
-    out << d.ID << ";" << d.firstName << ";" << d.name << ";" << d.mail << ";" << d.mdp;
+    out << d.ID << ";" << d.firstName << ";" << d.name << ";" << d.mail << ";" << d.mdp << ";" << endl;
     return out;
 }
 
@@ -31,15 +35,23 @@ istream& operator>>(istream& in, Doctor& d) {
     return in;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
+///////////////////////////////////////////////////////////////////////////////
+
 Doctor_ptr fs::signInDoctor(string username, string password) {
+
     // TODO
+
     return nullptr;
 }
 
 Doctor_ptr fs::signUpDoctor(string username, string password) {
     ofstream os(fs::DOCTORS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
+
         // TODO
+
     }
     return nullptr;
 }
