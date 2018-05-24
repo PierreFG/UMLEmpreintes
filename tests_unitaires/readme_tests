@@ -1,9 +1,0 @@
-Comment faire fonctionner ce framework de test ?
-C'est tout simple, il faut dans un premier temps écrire ton test unitaire (ta fonction) dans le fichier Unitaire.cpp. Ensuite, tu dois ajouter l'appel à ce test grâce au switch de la fonction main (respecter la cohérence des numéros stp).
-Une fois que c'est fait, tu dois ouvrir le fichier inputFile. A la suite de ce qui est écrit, tu dois rajouter la phrase TestXX ou XX est le numéro de ton test.
-Dans les lignes qui suivent, tu peux rajouter les éventuelles entrées (standard, clavier) nécessaires pour que le test fonctionne.
-Une fois que tout est fait, tu n'as plus qu'à lancer l'instruction :
-
-bash ProgTest.sh
-
-Te laisser guider, et tout ira bien ! 
