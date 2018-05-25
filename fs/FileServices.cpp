@@ -77,15 +77,15 @@ ostream& operator<<(ostream& out, const AnalysisResult& r) {
 }
 
 istream& operator>>(istream& in, AnalysisResult& r) {
-    // Lecture d'une ligne de données sous forme de texte
+    // Lecture d'une ligne de donnï¿½es sous forme de texte
     string buffer;
     if(!getline(in, buffer) || buffer.empty()) {
-        // Indique une erreur si la ligne de données n'est pas conforme
+        // Indique une erreur si la ligne de donnï¿½es n'est pas conforme
         in.setstate(ios::failbit);
         return in;
     }
 
-    // Copie les données dans un flux et parse ce flux de données
+    // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
     bool success = (data >> r.doctor->ID)
         && getline(data, buffer, ';') // ignore le ';'
@@ -93,7 +93,7 @@ istream& operator>>(istream& in, AnalysisResult& r) {
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
-    // Indique une erreur si les données parsées sont non conformes
+    // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
     if(!success) {
         in.setstate(ios::failbit);
     }
@@ -137,17 +137,6 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     ofstream os(fs::DOCTORS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
         os << *doctor;
-        success = os.good();
-        os.close();
-    }
-    return success;
-}
-
-bool fs::saveRule(Rule_ptr r){
-    bool success = false;
-    ofstream os (fs::RULES_PATH.c_str());
-    if(os.is_open()) {
-        os << *r;
         success = os.good();
         os.close();
     }
@@ -265,4 +254,16 @@ map<string,int> fs::loadOneHotString(){
 		}
 	}
 	return oneHot;
+}
+
+
+bool fs::saveRule(Rule_ptr r){
+    bool success = false;
+    ofstream os (fs::RULES_PATH.c_str());
+    if(os.is_open()) {
+        os << *r;
+        success = os.good();
+        os.close();
+    }
+    return success;
 }
