@@ -22,6 +22,7 @@ void UI::intro(){
 	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
 	cout << "Copyrights : Pierre Faure--Giovagnoli, Romain Fournier, Alexis Le Conte, Louis Ohl"<<endl<<endl;
 	cout <<"\033[0m";
+	return;
 }
 
 shared_ptr<Doctor> UI::connectionMenu(){
@@ -37,10 +38,12 @@ shared_ptr<Doctor> UI::connectionMenu(){
 		char tab[] = {'i','c','q'};
 		set<char> expected(tab, tab+3);
 		char res=inputChar(expected);
-		if (res=='i'){
+		if (res=='i')
+		{
 			*d=seizeInformation();
 		}
-		else if (res=='c'){
+		else if (res=='c')
+		{
 			bool ok=false;
 			string email,password;
 			while(!ok){

@@ -36,7 +36,8 @@ public:
     //------------------------------------------- Surcharge d'opérateurs
     Mat operator+(const Mat& B);//addition de matrices
     Mat operator*(double c); //multiplication scalaire
-    Mat operator*(const Mat& B) ; //multiplication de matrices
+    Mat operator*(const Mat& B) ; //multiplication à droite par une matrice
+    Vect operator*(const Vect& V); //multiplication à droite par un vecteur
    
 protected:
 	//----------------------------------------------------- Attributs privés
