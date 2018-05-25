@@ -8,7 +8,7 @@
 //-------------------------------------------------------- Include syst?me
 #include <iostream>
 #include <cassert>
-#include <stdlib.h>
+#include <cmath>
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques

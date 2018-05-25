@@ -2,10 +2,14 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include personnel
-#include "StrToMath.h"
+#include "analysis/StrToMath.h"
+#include "analysis/Vect.h"
+
 
 //-------------------------------------------------------- Include syst?me
 #include <algorithm>
+#include <cassert>
+
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
 map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
@@ -13,12 +17,12 @@ map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
     int nbPrints = datas.size();
     std::vector<string>::iterator it;
     map<int,vector<string>> valpossibles;
-    for(int i=0;i<nbStrings.i++){
-        valpossibles.insert(i,vector<string>() );
+    for(int i=0;i<nbStrings;i++){
+        valpossibles.insert(pair<int,vector<string> >(i, vector<string>()));
         for(int j=0; j=0; j<nbPrints){
-            it=find(valpossibles[i].value.begin(), valpossibles[i].value.end(), datas[j].getAttrStr()[i] );
-            if(it == valpossibles[i].value.end()){
-                valpossibles[i].value.push_back(datas[j].getAttrStr()[i]);
+            it=find(valpossibles[i].begin(), valpossibles[i].end(), datas[j].getAttrStr()[i] );
+            if(it == valpossibles[i].end()){
+                valpossibles[i].push_back(datas[j].getAttrStr()[i]);
             }
         }
     }
@@ -26,14 +30,14 @@ map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
 }
 Mat StrToMath :: generateMat(vector<Print> datas){
     map<int,vector<string>> valpossibles = listVals(datas);
-    Mat M();
+    Mat M;
     int nbPrints = datas.size();
     int nbDoubles = datas[0].getAttr().size();
     int nbStrings = datas[0].getAttrStr().size();
     int nbVals=0;
     int ind =0;
-    vector<string> vals();
-    Vect buffer();
+    vector<string> vals;
+    Vect buffer;
     std::vector<string>::iterator it;
     for(int i=0; i<nbPrints; i++){
         buffer.clear();
@@ -41,7 +45,8 @@ Mat StrToMath :: generateMat(vector<Print> datas){
             buffer.addvalue(datas[i].getAttr()[j]);
         }
         for(int j=0;j<nbStrings;j++){
-            vals = valpossibles.find(j);
+            vals.clear();
+            vals = valpossibles[j];
             nbVals=vals.size();
             it=find(vals.begin(),vals.end(),datas[i].getAttrStr()[j]);
             assert(it!=vals.end());

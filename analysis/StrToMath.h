@@ -15,7 +15,7 @@
 #include <map>
 
 //------------------------------------------------------ Include Personnel
-#include "model/Print.h"
+#include "model/print.h"
 #include "analysis/Mat.h"
 #include "analysis/Vect.h"
 using namespace std; 
@@ -25,7 +25,7 @@ class StrToMath
 public:
 	//---------------------------------------------------- Fonctions publiquess
     map<int,vector<string>> listVals(vector<Print> datas);
-    Mat generateMat(vector<Print> datas, map<int,vector<string>> valpossibles);
+    Mat generateMat(vector<Print> datas);
     
 	//-------------------------------------------- Constructeurs - destructeur
 	StrToMath();
