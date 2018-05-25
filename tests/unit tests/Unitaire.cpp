@@ -1,10 +1,12 @@
 #include <iostream>
 
+#include <set>
+
 #include "fs/FileServices.h"
 #include "model/doctor.h"
 
 using namespace std;
-/*using namespace UI;
+using namespace UI;
 
 void test1(){
 	//Vérification de la saisie correcte d'un entier
@@ -13,15 +15,16 @@ void test1(){
 		a = inputInt();
 		cout << a << endl;
 	}
-}*/
-
-void test1(){
-	cout << "yo"<<endl;
 }
 
 void test2(){
-	cout << "lol"<<endl;
-	cerr<<"Une erreur"<<endl;
+	//Vérification du fonctionnement de la saisie d'un char parmi une liste proposée
+	char tab[] = {'i','c','q'};
+	set<char> expected(tab, tab+3);
+	while (cin.good()){
+		char a= inputChar(expected);	
+	}
+	cout << a << endl;
 }
 
 void test3(){

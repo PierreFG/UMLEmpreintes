@@ -39,6 +39,9 @@ namespace fs {
     Doctor_ptr signUpDoctor(string username, string password);
 
     vector<Print> getPrint(string filename);
+	//Get the prints associated with the file
+	//It also looks at the metadatas in order to
+	//have a correct form
 
 }
 

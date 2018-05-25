@@ -55,3 +55,58 @@ Doctor_ptr fs::signUpDoctor(string username, string password) {
     }
     return nullptr;
 }
+
+vector<Print> fs::getPrint(string filename){
+	//First of all, load all metadatas and analyse them
+	ifstream isMeta("meta_"+filename);
+	string buffer;
+	
+	//Since we know every data is in order and that there's exactly n different types,
+	//we only need to store a number between 0 and n-1 to indicate the type of the i-th
+	//data.
+	
+	vector<int> types;
+	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad()){
+		getline(isMeta, buffer);
+		string type = buffer.substr(buffer.find(";"));
+		if (type=="ID"){
+			types.push_back(0);
+		} else if (type=="double"){
+			types.push_back(1);
+		} else if (type=="string"){
+			types.push_back(2);
+		}
+	}
+	
+	//Then parse all files and get the prints
+	vector<Print> vec;
+	
+	ifstream is(filename.c_str());
+	
+	while (!(is.eof() || is.fail() || is.bad()){
+		getline(is, buffer);
+		stringstream data(buffer);
+		Print print;
+		for(int i=0; i<types.size(); i++){
+			string value;
+			getline(buffer, value, ";");
+			switch(types[i]){
+				case 0:
+				{
+					
+					break;
+				}
+				case 1:
+				{
+					break;
+				}
+				case 2:
+				{
+					break;
+				}
+			}
+		}
+		string type = buffer.substr(buffer.find(";"));
+		
+	}
+}
