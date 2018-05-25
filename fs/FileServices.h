@@ -48,6 +48,8 @@ namespace fs {
 
     bool saveRule(Rule_ptr r);
 
+    Rule_ptr getRule();
+
 	void saveOneHotString(map<string, int> oneHot);
 	/* This saves the one hot coding associated with a string
 	* the integer specifies the number of the string column

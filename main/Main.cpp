@@ -12,7 +12,7 @@ void usage(){
 	return;
 }
 
-int main(int argc, char* argv[]) {
+/*int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	char optstring[]="i";
 	int c;
@@ -44,7 +44,7 @@ int main(int argc, char* argv[]) {
 	mainMenu(*d);
 
 	return 0;
-}
+}*/
 
 /*#include<map>
 #include<vector>
@@ -68,3 +68,13 @@ int main(){
 
 	return 0;
 }*/
+
+
+#include "model/rule.h"
+#include "fs/FileServices.h"
+using namespace fs;
+int main(){
+	Rule_ptr r = fs::getRule();
+	cout << *r;
+	return 0;
+}

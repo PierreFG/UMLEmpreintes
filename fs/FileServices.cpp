@@ -220,6 +220,38 @@ vector<Print> fs::getPrint(string filename){
 bool fs::saveResult(AnalysisResult_ptr r) {
 
 }
+
+Rule_ptr fs::getRule(){
+    ifstream is(fs::RULES_PATH.c_str(), ios::in);
+    if(!is.is_open()) return nullptr;
+
+    map<string,vector<double>> m;
+
+    while (!(is.eof() || is.fail() || is.bad())){
+        vector<double> v;
+
+        string line; //1 ligne du csv
+        getline(is, line);
+        stringstream data(line);
+
+        string d; //maladie
+        getline(data, d, ';');
+        string buffer = d;
+        while(buffer.compare("") != 0){
+            getline(data, buffer, ';');
+            cout << fs::stoi(buffer);
+            v.push_back(fs::stoi(buffer));
+        }
+        m[d] = v;
+    }
+
+    
+
+
+    Rule_ptr r = make_shared<Rule>(m);
+    return r;
+}
+
 /*
 bool fs::addResultToLog(AnalysisResult_ptr r) {
     // V�rification de la conformit� de l'analyse � enregistrer
