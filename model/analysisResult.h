@@ -20,6 +20,8 @@ public:
     friend ostream& operator<<(ostream& out, const AnalysisResult& r);
     friend istream& operator>>(istream& in, AnalysisResult& r);
 
+    Doctor_ptr getDoctor() const;
+
 protected:
     map<string, double> proba;
     long printID;
