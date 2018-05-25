@@ -5,3 +5,7 @@ AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile):proba(p
 }
 
 AnalysisResult::~AnalysisResult(){}
+
+Doctor_ptr AnalysisResult::getDoctor() const {
+    return doctor;
+}
