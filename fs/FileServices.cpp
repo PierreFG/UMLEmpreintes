@@ -24,11 +24,45 @@ istream& operator>>(istream& in, Doctor& d) {
     // Copie les données dans un flux et parse ce flux de données
     stringstream data(buffer);
     bool success = (data >> d.ID)
-        && getline(data, buffer, ';') // ignore le premier ';'
+        && getline(data, buffer, ';') // ignore le ';'
         && getline(data, d.firstName, ';')
         && getline(data, d.name, ';')
         && getline(data, d.mail, ';')
         && getline(data, d.mdp, ';');
+
+    // Indique une erreur si les données parsées sont non conformes
+    if(!success) {
+        in.setstate(ios::failbit);
+    }
+    return in;
+}
+
+
+
+
+
+ostream& operator<<(ostream& out, const AnalysisResult& r) {
+    // Ecriture dans le flux de sortie au format CSV
+    out << r.doctor->ID << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
+    return out;
+}
+
+istream& operator>>(istream& in, AnalysisResult& r) {
+    // Lecture d'une ligne de données sous forme de texte
+    string buffer;
+    if(!getline(in, buffer) || buffer.empty()) {
+        // Indique une erreur si la ligne de données n'est pas conforme
+        in.setstate(ios::failbit);
+        return in;
+    }
+
+    // Copie les données dans un flux et parse ce flux de données
+    stringstream data(buffer);
+    bool success = (data >> r.doctor->ID)
+        && getline(data, buffer, ';') // ignore le ';'
+        && getline(data, r.date, ';')
+        && getline(data, r.file, ';')
+        && (data >> r.printID);
 
     // Indique une erreur si les données parsées sont non conformes
     if(!success) {
