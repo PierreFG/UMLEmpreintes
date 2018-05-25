@@ -68,7 +68,7 @@ shared_ptr<Doctor> UI::connectionMenu(){
 		}
 		else if (res=='q'){
 			notConnected=false;
-			cout <<"Quitter"<<endl;
+			cout <<"A bientôt"<<endl;
 		}
 	} while(notConnected);
 	return d;

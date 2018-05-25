@@ -8,11 +8,15 @@ vector<string> Print::getDiseases(){
     return diseases;
 }
 
-double* Print::getAttr(){
+vector<double> Print::getAttr(){
     return attr;
 }
 
-Print::Print(vector<string> pdiseases, double* pattr):diseases(pdiseases), attr(pattr)
+vector<string> Print::getAttrStr(){
+    return attrStr;
+}
+
+Print::Print(vector<string> pdiseases, vector<double> pattr, vector<double> pattrStr):diseases(pdiseases), attr(pattr), attrStr(pattrStr)
 {
     ID = 0;
 }
