@@ -31,8 +31,14 @@ namespace fs {
 
     const string FORMAT_PATH = "data/format.cfg";
     const string RULES_PATH = "data/rules.csv";
+	const string ONE_HOT_RULE_PATH= "data/ohrule.csv";
     const string LOGS_PATH = "data/logs/";
     const string DOCTORS_PATH = "data/doctors.csv";
+    const string OUTPUT_PATH = "out/";
+
+    string itos(int i);
+
+    int stoi(string s);
 
     Doctor_ptr signInDoctor(string username, string password);
 
@@ -40,6 +46,21 @@ namespace fs {
 
     vector<Print> getPrint(string filename);
 
+    bool saveRule(Rule_ptr r);
+
+	void saveOneHotString(map<string, int> oneHot);
+	/* This saves the one hot coding associated with a string
+	* the integer specifies the number of the string column
+	* of the matrix which should be set to 1.
+	*/
+
+	map<string, int> loadOneHotString();
+	/* Loads in memory from a file the one hot coding transposition
+	* of every possible string in a print. See method saveOneHotString above.
+	*/
+
+    bool saveResult(AnalysisResult_ptr r);
+    bool addResultToLog(AnalysisResult_ptr r);
 }
 
 #endif // FILESERVICES_H_INCLUDED

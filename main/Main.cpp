@@ -41,7 +41,30 @@ int main(int argc, char* argv[]) {
 	if(d=nullptr){
 		return 0;
 	}
-	mainMenu(d);
-	
+	mainMenu(*d);
+
 	return 0;
 }
+
+/*#include<map>
+#include<vector>
+#include "model/rule.h"
+#include "fs/FileServices.h"
+using namespace fs;
+
+int main(){
+	map<string,vector<double>> map1;
+	vector<double> r; r.push_back(5.0); r.push_back(4.0);
+	map1["rhume"] = r;
+	vector<double> c; c.push_back(5.0); c.push_back(2.0);
+	map1["cancer"] = c;
+	Rule_ptr ru = make_shared<Rule>(map1);
+	
+	if(saveRule(ru)){
+		cout << "Rule saved !" << endl;
+	}else{
+		cout << "Something wrong happened..." << endl;
+	}
+
+	return 0;
+}*/

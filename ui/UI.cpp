@@ -132,7 +132,7 @@ char UI::inputChar(set<char> expected){
 			charac=result[0];
 		}
 		if (expected.find(charac)==expected.end()){
-			cout << "Ce caract�re n'est pas demand� !"<<endl;
+			cout << "Ce caractere n'est pas demande !"<<endl;
 		} else {
 			ok=true;
 		}
