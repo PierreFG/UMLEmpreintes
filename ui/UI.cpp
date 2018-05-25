@@ -40,7 +40,9 @@ shared_ptr<Doctor> UI::connectionMenu(){
 		char res=inputChar(expected);
 		if (res=='i')
 		{
-			*d=seizeInformation();
+			d=make_shared<Doctor>(seizeInformation());
+			fs::signUpDoctor(d);
+			cout<<*d<<endl;
 		}
 		else if (res=='c')
 		{
@@ -137,7 +139,6 @@ char UI::inputChar(set<char> expected){
 			ok=true;
 		}
 	}
-
 	return charac;
 
 }

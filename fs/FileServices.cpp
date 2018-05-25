@@ -220,7 +220,7 @@ vector<Print> fs::getPrint(string filename){
 bool fs::saveResult(AnalysisResult_ptr r) {
 
 }
-
+/*
 bool fs::addResultToLog(AnalysisResult_ptr r) {
     // V�rification de la conformit� de l'analyse � enregistrer
     if(r == nullptr) {
@@ -266,3 +266,4 @@ map<string,int> fs::loadOneHotString(){
 	}
 	return oneHot;
 }
+*/
