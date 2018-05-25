@@ -33,6 +33,11 @@ namespace fs {
     const string RULES_PATH = "data/rules.csv";
     const string LOGS_PATH = "data/logs/";
     const string DOCTORS_PATH = "data/doctors.csv";
+    const string OUTPUT_PATH = "out/";
+
+    string itos(int i);
+
+    int stoi(string s);
 
     Doctor_ptr signInDoctor(string username, string password);
 
@@ -42,6 +47,12 @@ namespace fs {
 	//Get the prints associated with the file
 	//It also looks at the metadatas in order to
 	//have a correct form
+
+	bool saveResult(AnalysisResult_ptr r);
+
+    bool addResultToLog(AnalysisResult_ptr r);
+
+    vector<AnalysisResult_ptr> readLogs(long doctorID);
 
 }
 
