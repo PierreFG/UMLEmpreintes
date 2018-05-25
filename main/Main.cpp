@@ -1,10 +1,11 @@
 #include <iostream>
 #include <unistd.h>
-using namespace std;
 
 #include "model/doctor.h"
 #include "ui/UI.h"
-using namespace UI;
+
+using namespace std;
+using namespace ui;
 
 void usage(){
 	cerr << "usage : ./app [-i]" << endl;
@@ -17,7 +18,7 @@ void usage(){
 	char optstring[]="i";
 	int c;
 	bool i = false;
-	while( (c=getopt (argc, argv, optstring)) != EOF ) 
+	while( (c=getopt (argc, argv, optstring)) != EOF )
    	{
 		switch(c){
 			case 'i':
@@ -28,7 +29,7 @@ void usage(){
 				break;
 		}
    	}
-	
+
 	//****CHARGEMENT DE LA BASE DE DONNE (si -i)
 	if(i){
 		return 0;
@@ -59,7 +60,7 @@ int main(){
 	vector<double> c; c.push_back(5.0); c.push_back(2.0);
 	map1["cancer"] = c;
 	Rule_ptr ru = make_shared<Rule>(map1);
-	
+
 	if(saveRule(ru)){
 		cout << "Rule saved !" << endl;
 	}else{
@@ -69,7 +70,7 @@ int main(){
 	return 0;
 }*/
 
-
+/*
 #include "model/rule.h"
 #include "fs/FileServices.h"
 using namespace fs;
@@ -78,3 +79,4 @@ int main(){
 	cout << *r;
 	return 0;
 }
+*/

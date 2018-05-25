@@ -15,6 +15,7 @@ class AnalysisResult
 
 public:
     AnalysisResult (map<string, double> pproba, string pfile);
+    AnalysisResult();
     virtual ~AnalysisResult ();
 
     friend ostream& operator<<(ostream& out, const AnalysisResult& r);

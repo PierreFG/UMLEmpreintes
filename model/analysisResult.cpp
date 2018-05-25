@@ -4,6 +4,10 @@ AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile):proba(p
     printID = 0;
 }
 
+AnalysisResult::AnalysisResult() {
+    printID = 0;
+}
+
 AnalysisResult::~AnalysisResult(){}
 
 Doctor_ptr AnalysisResult::getDoctor() const {

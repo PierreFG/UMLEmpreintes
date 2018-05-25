@@ -3,10 +3,13 @@
 #include <set>
 
 #include "fs/FileServices.h"
+#include "ui/UI.h"
 #include "model/doctor.h"
+#include "analysis/Vect.h"
+#include "analysis/Mat.h"
 
 using namespace std;
-using namespace UI;
+using namespace ui;
 
 void test1(){
 	//Vérification de la saisie correcte d'un entier
@@ -19,10 +22,10 @@ void test1(){
 
 void test2(){
 	//Vérification du fonctionnement de la saisie d'un char parmi une liste proposée
-	char tab[] = {'i','c','q'};
+	char tab[] = {'i','c','q'}, a;
 	set<char> expected(tab, tab+3);
 	while (cin.good()){
-		char a= inputChar(expected);	
+		a = inputChar(expected);
 	}
 	cout << a << endl;
 }
@@ -77,7 +80,7 @@ void testD3(){
     cout<<v*u<<endl;
     u=u*0.25;
     u.afficher();
-    
+
 
 }
 //TEST MATRICE
@@ -185,7 +188,7 @@ void testD8(){
     M.afficher();
     cout<<"M*M^-1"<<endl;
     Mat U = M*K;
-    U.afficher();   
+    U.afficher();
     cout<<"M^-1*M"<<endl;
     Mat V = K*M;
     V.afficher();
@@ -203,10 +206,10 @@ void testD9(){
     M.set(2,1,3);
     M.set(2,2,12);
     M.afficher();
-    
+
 }
 
-int main(){
+int main() {
 	int test;
 	cin >> test;
 	cin.ignore();

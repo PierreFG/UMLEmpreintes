@@ -16,7 +16,7 @@
 
 using namespace std;
 
-void UI::intro(){
+void ui::intro(){
 	cout << "\033[031m"<<endl;
 	cout << "Analyseur d'empreintes" << endl;
 	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
@@ -25,7 +25,7 @@ void UI::intro(){
 	return;
 }
 
-shared_ptr<Doctor> UI::connectionMenu(){
+shared_ptr<Doctor> ui::connectionMenu(){
 	shared_ptr<Doctor> d=nullptr;
 
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
@@ -76,7 +76,7 @@ shared_ptr<Doctor> UI::connectionMenu(){
 	return d;
 }
 
-void UI::mainMenu(Doctor d){
+void ui::mainMenu(Doctor d){
 	char car;
 
 	cout << "Bonjour M. " << d.getName() <<"."<<endl;
@@ -100,7 +100,7 @@ void UI::mainMenu(Doctor d){
 	cout <<"Au revoir M. " << d.getName() << "." << endl;
 }
 
-int UI::inputInt(){
+int ui::inputInt(){
 	bool ok=false;
 	int res=0;
 	while(!ok){
@@ -116,13 +116,13 @@ int UI::inputInt(){
 	return res;
 }
 
-string UI::inputString(){
+string ui::inputString(){
 	string line;
 	getline(cin, line);
 	return line;
 }
 
-char UI::inputChar(set<char> expected){
+char ui::inputChar(set<char> expected){
 	char charac='\0';
 	bool ok=false;
 	while (!ok){
@@ -143,7 +143,7 @@ char UI::inputChar(set<char> expected){
 
 }
 
-Doctor UI::seizeInformation(){
+Doctor ui::seizeInformation(){
 	cout <<"Formulaire d'inscription"<<endl<<endl;
 	bool ok=false;
 	string firstname, lastname, email, password, confirm;

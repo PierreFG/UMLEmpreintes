@@ -65,6 +65,7 @@ namespace fs {
 
     bool saveResult(AnalysisResult_ptr r);
     bool addResultToLog(AnalysisResult_ptr r);
+    vector<AnalysisResult_ptr> readLogs(long doctorID);
 }
 
 #endif // FILESERVICES_H_INCLUDED

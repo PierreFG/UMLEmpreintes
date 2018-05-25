@@ -110,7 +110,7 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
 
-Doctor_ptr findDoctorByID(long id) {
+Doctor_ptr fs::findDoctorByID(long id) {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
         Doctor tmp;
@@ -270,14 +270,14 @@ Rule_ptr fs::getRule(){
         m[d] = v;
     }
 
-    
+
 
 
     Rule_ptr r = make_shared<Rule>(m);
     return r;
 }
 
-/*
+
 bool fs::addResultToLog(AnalysisResult_ptr r) {
     // Vérification de la conformité de l'analyse à enregistrer
     if(r == nullptr) {
@@ -288,7 +288,7 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
     bool success = false;
     ofstream os(fs::LOGS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
-        os << *doctor;
+        os << *r;
 		bool success = false;
     }
     return success;
@@ -301,15 +301,15 @@ vector<AnalysisResult_ptr> fs::readLogs(long doctorID) {
         AnalysisResult tmp;
         // Parcours de tous les docteurs inscrits
         while(is >> tmp) {
-            if(tmp.getDoctor->getID() == doctorID) {
-                results.push_back(tmp);
+            if(tmp.getDoctor()->getID() == doctorID) {
+                results.push_back(make_shared<AnalysisResult>(tmp));
             }
         }
         is.close();
     }
     return results;
 }
-
+/*
 void fs::saveOneHotString(map<string, int> oneHot){
 	//That'll be a basic csv
 	ofstream os(ONE_HOT_RULE_PATH);

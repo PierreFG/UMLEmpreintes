@@ -64,7 +64,7 @@ Mat StrToMath :: generateMat(vector<Print> datas){
     return M;
 }
 
-int main(){}
+//int main(){}
 //--------------------------------------------- Constructeurs-Destructeurs
 
 StrToMath :: StrToMath(){

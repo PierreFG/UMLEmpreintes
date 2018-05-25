@@ -13,7 +13,7 @@
 #include <set>
 #include "model/doctor.h"
 
-namespace UI {
+namespace ui {
 
 		std::shared_ptr<Doctor> connectionMenu();
 		//Displays the connection Menu
