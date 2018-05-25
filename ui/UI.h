@@ -33,7 +33,7 @@ namespace UI {
 		//Forces the user to seize a character
 		//that is contained in the set expected.
 		
-		intro();
+		void intro();
 		//Default constructor of the interface.
 		//Shows a small introduction message about
 		//the software and its rights.

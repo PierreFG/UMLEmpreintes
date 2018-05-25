@@ -14,12 +14,13 @@
 
 using namespace std;
 
-UI::intro(){
+void UI::intro(){
 	cout << "\033[031m"<<endl;
 	cout << "Analyseur d'empreintes" << endl;
 	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
 	cout << "Copyrights : Pierre Faure--Giovagnoli, Romain Fournier, Alexis Le Conte, Louis Ohl"<<endl<<endl;
 	cout <<"\033[0m";
+	return;
 }
 
 void UI::connectionMenu(){
