@@ -39,7 +39,7 @@ namespace fs {
 
     bool signUpDoctor(Doctor_ptr doctor);
 
-    vector<Print> getPrint(string filename);
+    vector<Print> getPrints(string filename);
 	//Get the prints associated with the file
 	//It also looks at the metadatas in order to
 	//have a correct form
@@ -55,6 +55,8 @@ namespace fs {
 	* of every possible string in a print. See method saveOneHotString above.
 	*/
 	
+
+    bool saveRule(Rule_ptr r);
 }
 
 #endif // FILESERVICES_H_INCLUDED
