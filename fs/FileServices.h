@@ -40,6 +40,8 @@ namespace fs {
 
     vector<Print> getPrint(string filename);
 
+    bool saveRule(Rule_ptr r);
+
 }
 
 #endif // FILESERVICES_H_INCLUDED

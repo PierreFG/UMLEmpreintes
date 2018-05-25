@@ -12,16 +12,30 @@ ostream& operator<<(ostream& out, const Doctor& d) {
     return out;
 }
 
+ostream& operator<<(ostream& out, const Rule& r) {
+    // Ecriture dans le flux de sortie au format CSV
+    string result;
+    for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
+        out << it->first << ";";
+        vector<double> v = it->second;
+        for(auto it2 = v.begin(); it2!=v.end(); ++it2){
+            out << *it2 << ";";
+        }
+        out << endl;
+    }
+    return out;
+}
+
 istream& operator>>(istream& in, Doctor& d) {
-    // Lecture d'une ligne de données sous forme de texte
+    // Lecture d'une ligne de donnï¿½es sous forme de texte
     string buffer;
     if(!getline(in, buffer) || buffer.empty()) {
-        // Indique une erreur si la ligne de données n'est pas conforme
+        // Indique une erreur si la ligne de donnï¿½es n'est pas conforme
         in.setstate(ios::failbit);
         return in;
     }
 
-    // Copie les données dans un flux et parse ce flux de données
+    // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
     bool success = (data >> d.ID)
         && getline(data, buffer, ';') // ignore le premier ';'
@@ -30,7 +44,7 @@ istream& operator>>(istream& in, Doctor& d) {
         && getline(data, d.mail, ';')
         && getline(data, d.mdp, ';');
 
-    // Indique une erreur si les données parsées sont non conformes
+    // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
     if(!success) {
         in.setstate(ios::failbit);
     }
@@ -59,7 +73,7 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 }
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
-    // Vérification de la conformité du personnel à inscrire
+    // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
     if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
@@ -69,12 +83,22 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
     }
-
     // Ajout du personnel dans le fichier
     bool success = false;
     ofstream os(fs::DOCTORS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
         os << *doctor;
+        success = os.good();
+        os.close();
+    }
+    return success;
+}
+
+bool fs::saveRule(Rule_ptr r){
+    bool success = false;
+    ofstream os (fs::RULES_PATH.c_str());
+    if(os.is_open()) {
+        os << *r;
         success = os.good();
         os.close();
     }
