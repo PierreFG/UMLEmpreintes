@@ -128,9 +128,6 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 bool fs::saveRule(Rule_ptr r){
     bool success = false;
     ofstream os (fs::RULES_PATH.c_str());
@@ -141,8 +138,7 @@ bool fs::saveRule(Rule_ptr r){
     }
     return success;
 }
-=======
->>>>>>> 8fa95ffead5f0fecae9e7c595a423bd90297d2d8
+
 vector<Print> fs::getPrint(string filename){
 	//First of all, load all metadatas and analyse them
 	ifstream isMeta("meta_"+filename);
@@ -153,7 +149,7 @@ vector<Print> fs::getPrint(string filename){
 	//data.
 	
 	vector<int> types;
-	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad()){
+	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad())){
 		getline(isMeta, buffer);
 		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
@@ -174,14 +170,14 @@ vector<Print> fs::getPrint(string filename){
 	vector<string> vecStr;
 	vector<double> vecDou;
 	vector<string> vecDis;
-	while (!(is.eof() || is.fail() || is.bad()){
+	while (!(is.eof() || is.fail() || is.bad())){
 		getline(is, buffer);
 		stringstream data(buffer);
-		for(int i=0; i<types.size() && ; i++){
+		for(int i=0; i<types.size(); i++){
 			string value;
-			getline(buffer, value, ";");
+			getline(data, value, ';');
 			if(types.at(i)==0){
-				int a =stoi(value);
+				int a = fs::stoi(value);
 				if (a==id){
 					
 					break;
@@ -231,18 +227,4 @@ map<string,int> fs::loadOneHotString(){
 	}
 	return oneHot;
 }
-<<<<<<< HEAD
 
-bool fs::saveRule(Rule_ptr r){
-    bool success = false;
-    ofstream os (fs::RULES_PATH.c_str());
-    if(os.is_open()) {
-        os << *r;
-        success = os.good();
-        os.close();
-    }
-    return success;
-}
-=======
->>>>>>> d6e15725e18882c2bd467b6ed25cf3792a51d7c4
->>>>>>> 8fa95ffead5f0fecae9e7c595a423bd90297d2d8
