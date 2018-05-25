@@ -143,6 +143,17 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
+bool fs::saveRule(Rule_ptr r){
+    bool success = false;
+    ofstream os (fs::RULES_PATH.c_str());
+    if(os.is_open()) {
+        os << *r;
+        success = os.good();
+        os.close();
+    }
+    return success;
+}
+
 vector<Print> fs::getPrint(string filename){
 	//First of all, load all metadatas and analyse them
 	ifstream isMeta("meta_"+filename);
@@ -155,7 +166,7 @@ vector<Print> fs::getPrint(string filename){
 	vector<int> types;
 	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad())){
 		getline(isMeta, buffer);
-		string type = buffer.substr(buffer.find(";"));
+		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
 			types.push_back(0);
 		} else if (type=="double"){
@@ -206,9 +217,6 @@ vector<Print> fs::getPrint(string filename){
 	return vec;
 }
 
-
-
-
 bool fs::saveResult(AnalysisResult_ptr r) {
 
 }
@@ -231,4 +239,30 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
 
 vector<AnalysisResult_ptr> fs::readLogs(long doctorID) {
 
+}
+
+void fs::saveOneHotString(map<string, int> oneHot){
+	//That'll be a basic csv
+	ofstream os(ONE_HOT_RULE_PATH);
+	if (os.is_open()){
+		for(map<string,int>::iterator it=oneHot.begin(); it!=oneHot.end() && os.good(); it++){
+			os<<it->first<<";"<<it->second<<endl;
+		}
+	}
+}
+
+map<string,int> fs::loadOneHotString(){
+	ifstream is(ONE_HOT_RULE_PATH);
+	map<string, int> ontHot;
+	if(is.is_open()){
+		while(is.good()){
+			string buffer;
+			getline(is, buffer);
+			string str1,str2;
+			str1=buffer.substr(0,buffer.find(";"));
+			str2=buffer.substr(buffer.find(";")+1);
+			oneHot.insert(pair<string, int>(str1, stoi(str2)));
+		}
+	}
+	return oneHot;
 }
