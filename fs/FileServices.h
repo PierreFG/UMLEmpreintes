@@ -36,7 +36,7 @@ namespace fs {
 
     Doctor_ptr signInDoctor(string username, string password);
 
-    Doctor_ptr signUpDoctor(string username, string password);
+    bool signUpDoctor(Doctor_ptr doctor);
 
     vector<Print> getPrint(string filename);
 
