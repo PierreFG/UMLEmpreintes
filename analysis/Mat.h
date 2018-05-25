@@ -12,7 +12,7 @@
 
 
 //------------------------------------------------------ Include Personnel
-#include "Vect.h"
+#include "analysis/Vect.h"
 using namespace std; 
 
 class Mat
@@ -27,6 +27,7 @@ public:
     Mat inv(); // inverse de la matrice par la méthode de Gauss-Jordan
     void set(int i, int j, double x);
     void afficher();
+    int addline(Vect v);
 	//-------------------------------------------- Constructeurs - destructeur
 	Mat();
     Mat(int i, int j);

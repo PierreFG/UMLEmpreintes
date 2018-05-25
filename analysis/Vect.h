@@ -30,6 +30,8 @@ public:
     void resize(int l); //modifier taille du vecteur
     void afficher();
     void set(int j, double k);
+    int addvalue(double x);
+    void clear();
 
 	//-------------------------------------------- Constructeurs - destructeur
     Vect();

@@ -10,20 +10,26 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include Système
-
+#include <vector>
+#include <string>
+#include <map>
 
 //------------------------------------------------------ Include Personnel
 #include "model/Print.h"
+#include "analysis/Mat.h"
+#include "analysis/Vect.h"
 using namespace std; 
 
 class StrToMath
 {
 public:
 	//---------------------------------------------------- Fonctions publiquess
-    void count(vector<Print> datas);
+    map<int,vector<string>> listVals(vector<Print> datas);
+    Mat generateMat(vector<Print> datas, map<int,vector<string>> valpossibles);
     
 	//-------------------------------------------- Constructeurs - destructeur
-	
+	StrToMath();
+    virtual ~StrToMath();
     //------------------------------------------- Surcharge d'opérateurs
     
    
