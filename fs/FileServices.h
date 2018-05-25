@@ -54,6 +54,8 @@ namespace fs {
 
     vector<AnalysisResult_ptr> readLogs(long doctorID);
 
+    bool saveRule(Rule_ptr r);
+
 }
 
 #endif // FILESERVICES_H_INCLUDED

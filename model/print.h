@@ -16,6 +16,7 @@ public:
     long getID();
     vector<string> getDiseases();
     vector<double> getAttr();
+    vector<string> getAttrStr();
 
 
 protected:

@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 #include <vector>
+#include <memory>
 using namespace std;
 
 class Rule
@@ -16,8 +17,12 @@ public:
 
     map<string,vector<double>> getAsso();
 
+    friend ostream& operator<<(ostream& out, const Rule& r);
+
 protected:
     map<string,vector<double>> asso;
 };
+
+typedef shared_ptr<Rule> Rule_ptr;
 
 #endif // RULE_H
