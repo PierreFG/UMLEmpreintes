@@ -4,6 +4,9 @@
 
 #include <string>
 #include <map>
+
+#include "model/doctor.h"
+
 using namespace std;
 
 class AnalysisResult
@@ -13,10 +16,15 @@ public:
     AnalysisResult (map<string, double> pproba, string pfile);
     virtual ~AnalysisResult ();
 
+    friend ostream& operator<<(ostream& out, const AnalysisResult& r);
+    friend istream& operator>>(istream& in, AnalysisResult& r);
+
 protected:
-    long ID;
     map<string, double> proba;
+    long printID;
     string file;
+    string date;
+    Doctor_ptr doctor;
 };
 
 #endif // ANALYSISRESULT_H
