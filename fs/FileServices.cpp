@@ -128,6 +128,21 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+bool fs::saveRule(Rule_ptr r){
+    bool success = false;
+    ofstream os (fs::RULES_PATH.c_str());
+    if(os.is_open()) {
+        os << *r;
+        success = os.good();
+        os.close();
+    }
+    return success;
+}
+=======
+>>>>>>> 8fa95ffead5f0fecae9e7c595a423bd90297d2d8
 vector<Print> fs::getPrint(string filename){
 	//First of all, load all metadatas and analyse them
 	ifstream isMeta("meta_"+filename);
@@ -216,6 +231,7 @@ map<string,int> fs::loadOneHotString(){
 	}
 	return oneHot;
 }
+<<<<<<< HEAD
 
 bool fs::saveRule(Rule_ptr r){
     bool success = false;
@@ -227,3 +243,6 @@ bool fs::saveRule(Rule_ptr r){
     }
     return success;
 }
+=======
+>>>>>>> d6e15725e18882c2bd467b6ed25cf3792a51d7c4
+>>>>>>> 8fa95ffead5f0fecae9e7c595a423bd90297d2d8
