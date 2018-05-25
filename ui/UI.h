@@ -33,7 +33,6 @@ namespace UI {
 		char inputChar(set<char> expected);
 		//Forces the user to seize a character
 		//that is contained in the set expected.
-
 		void intro();
 		//Default constructor of the interface.
 		//Shows a small introduction message about

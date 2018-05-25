@@ -10,18 +10,19 @@ class Print
 {
 
 public:
-    Print (vector<string>, double*);
+    Print (vector<string>, vector<double>, vector<string>);
     virtual ~Print ();
 
     long getID();
     vector<string> getDiseases();
-    double* getAttr();
+    vector<double> getAttr();
 
 
 protected:
     long ID;
     vector<string> diseases;
-    double* attr;
+    vector<double> attr;
+    vector<string> attrStr;
     
 };
 
