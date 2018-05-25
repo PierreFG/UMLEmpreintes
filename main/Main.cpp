@@ -38,7 +38,7 @@ int main(int argc, char* argv[]) {
 	shared_ptr<Doctor> d;
 	intro();
 	d = connectionMenu();
-	if(d=nullptr){
+	if(d==nullptr){
 		return 0;
 	}
 	mainMenu(*d);

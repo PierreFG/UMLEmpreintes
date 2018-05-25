@@ -32,7 +32,7 @@ namespace fs {
     const string FORMAT_PATH = "data/format.cfg";
     const string RULES_PATH = "data/rules.csv";
 	const string ONE_HOT_RULE_PATH= "data/ohrule.csv";
-    const string LOGS_PATH = "data/logs/";
+    const string LOGS_PATH = "data/logs.csv";
     const string DOCTORS_PATH = "data/doctors.csv";
     const string OUTPUT_PATH = "out/";
 
@@ -41,6 +41,8 @@ namespace fs {
     int stoi(string s);
 
     Doctor_ptr signInDoctor(string username, string password);
+
+    Doctor_ptr findDoctorByID(long id);
 
     bool signUpDoctor(Doctor_ptr doctor);
 
