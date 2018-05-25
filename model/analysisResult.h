@@ -3,6 +3,7 @@
 #define ANALYSISRESULT_H
 
 #include <string>
+#include <memory>
 #include <map>
 
 #include "model/doctor.h"
@@ -26,5 +27,7 @@ protected:
     string date;
     Doctor_ptr doctor;
 };
+
+typedef shared_ptr<AnalysisResult> AnalysisResult_ptr;
 
 #endif // ANALYSISRESULT_H

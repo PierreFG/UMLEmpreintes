@@ -34,6 +34,11 @@ namespace fs {
 	const string ONE_HOT_RULE_PATH= "data/ohrule.csv";
     const string LOGS_PATH = "data/logs/";
     const string DOCTORS_PATH = "data/doctors.csv";
+    const string OUTPUT_PATH = "out/";
+
+    string itos(int i);
+
+    int stoi(string s);
 
     Doctor_ptr signInDoctor(string username, string password);
 
@@ -48,7 +53,7 @@ namespace fs {
 	* the integer specifies the number of the string column
 	* of the matrix which should be set to 1.
 	*/
-	
+
 	map<string, int> loadOneHotString();
 	/* Loads in memory from a file the one hot coding transposition
 	* of every possible string in a print. See method saveOneHotString above.
