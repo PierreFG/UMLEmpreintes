@@ -14,7 +14,10 @@ string fs::itos(int i) {
 }
 
 int fs::stoi(string s) {
-    return 0;
+    int result;
+    stringstream buffer(s);
+    buffer >> result;
+    return result;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,15 +45,15 @@ ostream& operator<<(ostream& out, const Rule& r) {
 }
 
 istream& operator>>(istream& in, Doctor& d) {
-    // Lecture d'une ligne de donn�es sous forme de texte
+    // Lecture d'une ligne de donnï¿½es sous forme de texte
     string buffer;
     if(!getline(in, buffer) || buffer.empty()) {
-        // Indique une erreur si la ligne de donn�es n'est pas conforme
+        // Indique une erreur si la ligne de donnï¿½es n'est pas conforme
         in.setstate(ios::failbit);
         return in;
     }
 
-    // Copie les donn�es dans un flux et parse ce flux de donn�es
+    // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
     bool success = (data >> d.ID)
         && getline(data, buffer, ';') // ignore le ';'
@@ -59,7 +62,7 @@ istream& operator>>(istream& in, Doctor& d) {
         && getline(data, d.mail, ';')
         && getline(data, d.mdp, ';');
 
-    // Indique une erreur si les donn�es pars�es sont non conformes
+    // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
     if(!success) {
         in.setstate(ios::failbit);
     }
@@ -77,23 +80,26 @@ ostream& operator<<(ostream& out, const AnalysisResult& r) {
 }
 
 istream& operator>>(istream& in, AnalysisResult& r) {
-    // Lecture d'une ligne de donn�es sous forme de texte
+    // Lecture d'une ligne de donnï¿½es sous forme de texte
     string buffer;
     if(!getline(in, buffer) || buffer.empty()) {
-        // Indique une erreur si la ligne de donn�es n'est pas conforme
+        // Indique une erreur si la ligne de donnï¿½es n'est pas conforme
         in.setstate(ios::failbit);
         return in;
     }
 
-    // Copie les donn�es dans un flux et parse ce flux de donn�es
+    // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
-    bool success = (data >> r.doctor->ID)
+    long doctorID;
+    bool success = (data >> doctorID)
         && getline(data, buffer, ';') // ignore le ';'
         && getline(data, r.date, ';')
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
-    // Indique une erreur si les donn�es pars�es sont non conformes
+    r.doctor = fs::findDoctorByID(doctorID);
+
+    // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
     if(!success) {
         in.setstate(ios::failbit);
     }
@@ -103,6 +109,22 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 ///////////////////////////////////////////////////////////////////////////////
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
+
+Doctor_ptr findDoctorByID(long id) {
+    ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        Doctor tmp;
+        // Parcours de tous les docteurs inscrits
+        while(is >> tmp) {
+            if(tmp.getID() == id) {
+                is.close();
+                return make_shared<Doctor>(tmp);
+            }
+        }
+        is.close();
+    }
+    return nullptr;
+}
 
 Doctor_ptr fs::signInDoctor(string username, string password) {
     Doctor_ptr doctor = nullptr;
@@ -122,16 +144,19 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 }
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
-    // V�rification de la conformit� du personnel � inscrire
+    // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
     if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
     || doctor->getFirstName().empty()
     || doctor->getName().empty()
-    || doctor->getID() == 0
+    || doctor->getID() != 0
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
     }
+
+    // donner un ID
+
     // Ajout du personnel dans le fichier
     bool success = false;
     ofstream os(fs::DOCTORS_PATH.c_str(), ios::out | ios::app);
@@ -254,14 +279,14 @@ Rule_ptr fs::getRule(){
 
 /*
 bool fs::addResultToLog(AnalysisResult_ptr r) {
-    // V�rification de la conformit� de l'analyse � enregistrer
+    // Vérification de la conformité de l'analyse à enregistrer
     if(r == nullptr) {
         return false;
     }
 
     // Ajout de l'analyse dans le fichier de logs
     bool success = false;
-    ofstream os((fs::LOGS_PATH + "analyse-" + r->file + "-" + fs::itos(r->printID)).c_str(), ios::out | ios::app);
+    ofstream os(fs::LOGS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
         os << *doctor;
 		bool success = false;
@@ -270,7 +295,19 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
 }
 
 vector<AnalysisResult_ptr> fs::readLogs(long doctorID) {
-
+    vector<AnalysisResult_ptr> results;
+    ifstream is(fs::LOGS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        AnalysisResult tmp;
+        // Parcours de tous les docteurs inscrits
+        while(is >> tmp) {
+            if(tmp.getDoctor->getID() == doctorID) {
+                results.push_back(tmp);
+            }
+        }
+        is.close();
+    }
+    return results;
 }
 
 void fs::saveOneHotString(map<string, int> oneHot){

@@ -2,13 +2,13 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include personnel
-#include "Vect.h"
-#include "Mat.h"
+#include "analysis/Vect.h"
+#include "analysis/Mat.h"
 
 //-------------------------------------------------------- Include syst?me
 #include <iostream>
 #include <cassert>
-#include <stdlib.h>
+#include <cmath>
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
@@ -86,6 +86,11 @@ Mat Mat::inv(){
     return I;
 }
 
+int Mat::addline(Vect v){
+    m=m+1;
+    data.push_back(v);
+    return m;
+}
 void Mat::set(int i, int j, double x){
     assert(i<m&&j<data[0].n);
     data[i].data[j]=x;
@@ -153,8 +158,8 @@ Vect Mat::operator*(const Vect& V){
 //-------------------------------------------- Constructeurs - destructeur
 
 Mat::Mat(){
-    m=1;
-    data.resize(1);
+    m=0;
+    data.resize(0);
 }
 Mat::Mat(int pm, int pn){
     m=pm;

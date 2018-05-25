@@ -2,7 +2,7 @@
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include personnel
-#include "Vect.h"
+#include "analysis/Vect.h"
 
 //-------------------------------------------------------- Include syst�me
 #include <iostream>
@@ -12,7 +12,31 @@
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
 
+int Vect::addvalue(double x){
+    n=n+1;
+    data.push_back(x);
+}
+void Vect::resize(int l){
+    data.resize(l);
+    n=l;
+}
 
+void Vect::set(int j, double k){
+    assert(j<n);
+    data[j]=k;
+}
+
+void Vect::afficher(){
+    for(int i=0;i<n;i++){
+        cout<<data[i]<<' ';
+    }
+    cout<<endl;
+}
+
+void Vect::clear(){
+    data.clear();
+    n=0;
+}
 //---------------------------------------------------- Surcharge d'opérateurs
 Vect Vect::operator+(const Vect& B) {
 	assert(n==B.n); 
@@ -52,27 +76,12 @@ Vect::operator double(){
 	return data[1]; 
 }
 
-void Vect::resize(int l){
-    data.resize(l);
-    n=l;
-}
 
-void Vect::set(int j, double k){
-    assert(j<n);
-    data[j]=k;
-}
-
-void Vect::afficher(){
-    for(int i=0;i<n;i++){
-        cout<<data[i]<<' ';
-    }
-    cout<<endl;
-}
 //-------------------------------------------- Constructeurs - destructeur
 
 Vect::Vect(){
-    n=1;
-    data.resize(1);
+    n=0;
+    data.resize(0);
 }
 Vect::Vect(int pn){
     n=pn;

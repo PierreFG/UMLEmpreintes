@@ -1,7 +1,7 @@
 //-------------------------------------------------------- Include syst�me
 #include <iostream>
 //------------------------------------------------------ Include personnel
-#include "Mat.h"
+#include "analysis/Mat.h"
 
 using namespace std;
 
