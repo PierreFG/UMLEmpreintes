@@ -17,11 +17,11 @@
 using namespace std;
 
 void ui::intro(){
-	cout << "\033[031m"<<endl;
+	cout << Colorize(Colorize::RED) << endl;
 	cout << "Analyseur d'empreintes" << endl;
 	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
 	cout << "Copyrights : Pierre Faure--Giovagnoli, Romain Fournier, Alexis Le Conte, Louis Ohl"<<endl<<endl;
-	cout <<"\033[0m";
+	cout << Colorize(Colorize::DEFAULT);
 	return;
 }
 
@@ -81,9 +81,7 @@ void ui::mainMenu(Doctor d){
 		cout << "Pour analyser un fichier d'empreintes, tapez (a)." << endl;
 		cout << "Pour consulter l'historique de votre activite, tapez (h)." << endl;
 		cout << "Pour vous deconnecter, tapez (d)."<<endl;
-		char tab[] = {'a', 'h', 'd'};
-		set<char> expected(tab, tab+3);
-		car=inputChar(expected);
+		car=inputChar({'a', 'h', 'd'});
 		if (car=='a'){
 			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
 			string path=inputString();
@@ -165,9 +163,7 @@ Doctor ui::seizeInformation(){
 		cout << "Vous etes : " << firstname << " " << lastname << ". ";
 		cout << "Votre mail : " << email<<endl;
 		cout << "Ces informations vous correspondent-elles ? (o/n)" <<endl;
-		char tab[] = {'o','n'};
-		set<char> expected(tab, tab+2);
-		char res = inputChar(expected);
+		char res = inputChar({'o','n'});
 		if (res=='o'){
 			ok=true;
 		}
