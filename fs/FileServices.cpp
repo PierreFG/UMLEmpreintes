@@ -168,6 +168,17 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
+bool fs::saveRule(Rule_ptr r){
+    bool success = false;
+    ofstream os (fs::RULES_PATH.c_str());
+    if(os.is_open()) {
+        os << *r;
+        success = os.good();
+        os.close();
+    }
+    return success;
+}
+
 vector<Print> fs::getPrint(string filename){
 	//First of all, load all metadatas and analyse them
 	ifstream isMeta("meta_"+filename);
@@ -202,8 +213,8 @@ vector<Print> fs::getPrint(string filename){
 	while (!(is.eof() || is.fail() || is.bad())){
 		getline(is, buffer);
 		stringstream data(buffer);
-		for(int i=0; i<types.size() /*&& */; i++){
-			string value;
+        string value;
+		for(int i=0; i<types.size(); i++){
 			getline(data, value, ';');
 			if(types.at(i)==0){
 				int a = fs::stoi(value);
@@ -213,18 +224,18 @@ vector<Print> fs::getPrint(string filename){
 				}
 				//Save print
 				Print p(id, vecDis, vecDou, vecStr);
-				vec.push_bask(p);
+				vec.push_back(p);
 				id=a;
 				vecDis.clear();
 				vecDou.clear();
 				vecStr.clear();
 			} else if (types.at(i)==1){
-				vedDou.push_back(stod(value));
+				vecDou.push_back(stod(value));
 			} else if (types.at(i)==2){
 				vecStr.push_back(value);
 			}
 		}
-		getline(buffer, value);
+		getline(data, value);
 		vecDis.push_back(value);
 	}
 
@@ -234,7 +245,7 @@ vector<Print> fs::getPrint(string filename){
 bool fs::saveResult(AnalysisResult_ptr r) {
 
 }
-
+/*
 bool fs::addResultToLog(AnalysisResult_ptr r) {
     // Vérification de la conformité de l'analyse à enregistrer
     if(r == nullptr) {
@@ -292,15 +303,4 @@ map<string,int> fs::loadOneHotString(){
 	}
 	return oneHot;
 }
-
-
-bool fs::saveRule(Rule_ptr r){
-    bool success = false;
-    ofstream os (fs::RULES_PATH.c_str());
-    if(os.is_open()) {
-        os << *r;
-        success = os.good();
-        os.close();
-    }
-    return success;
-}
+*/

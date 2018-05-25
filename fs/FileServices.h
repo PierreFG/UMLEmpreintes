@@ -46,20 +46,7 @@ namespace fs {
 
     bool signUpDoctor(Doctor_ptr doctor);
 
-
     vector<Print> getPrint(string filename);
-
-    bool saveRule(Rule_ptr r);
-
-	//Get the prints associated with the file
-	//It also looks at the metadatas in order to
-	//have a correct form
-
-	bool saveResult(AnalysisResult_ptr r);
-
-    bool addResultToLog(AnalysisResult_ptr r);
-
-    vector<AnalysisResult_ptr> readLogs(long doctorID);
 
     bool saveRule(Rule_ptr r);
 
@@ -74,6 +61,8 @@ namespace fs {
 	* of every possible string in a print. See method saveOneHotString above.
 	*/
 
+    bool saveResult(AnalysisResult_ptr r);
+    bool addResultToLog(AnalysisResult_ptr r);
 }
 
 #endif // FILESERVICES_H_INCLUDED

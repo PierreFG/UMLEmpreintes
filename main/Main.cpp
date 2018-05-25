@@ -12,7 +12,7 @@ void usage(){
 	return;
 }
 
-/*int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	char optstring[]="i";
 	int c;
@@ -38,15 +38,15 @@ void usage(){
 	shared_ptr<Doctor> d;
 	intro();
 	d = connectionMenu();
-	if(d=nullptr){
+	if(d==nullptr){
 		return 0;
 	}
-	mainMenu(d);
+	mainMenu(*d);
 
 	return 0;
-}*/
+}
 
-#include<map>
+/*#include<map>
 #include<vector>
 #include "model/rule.h"
 #include "fs/FileServices.h"
@@ -67,4 +67,4 @@ int main(){
 	}
 
 	return 0;
-}
+}*/
