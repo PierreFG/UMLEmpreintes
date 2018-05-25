@@ -103,35 +103,43 @@ vector<Print> fs::getPrint(string filename){
 		}
 	}
 	
-	//Then parse all files and get the prints
+	//Then parse all file and get the prints
 	vector<Print> vec;
 	
 	ifstream is(filename.c_str());
 	
+	int id=-1;
+	vector<string> vecStr;
+	vector<double> vecDou;
+	vector<string> vecDis;
 	while (!(is.eof() || is.fail() || is.bad()){
 		getline(is, buffer);
 		stringstream data(buffer);
-		Print print;
-		for(int i=0; i<types.size(); i++){
+		for(int i=0; i<types.size() && ; i++){
 			string value;
 			getline(buffer, value, ";");
-			switch(types[i]){
-				case 0:
-				{
+			if(types.at(i)==0){
+				int a =stoi(value);
+				if (a==id){
 					
 					break;
 				}
-				case 1:
-				{
-					break;
-				}
-				case 2:
-				{
-					break;
-				}
+				//Save print
+				Print p(id, vecDis, vecDou, vecStr);
+				vec.push_bask(p);
+				id=a;
+				vecDis.clear();
+				vecDou.clear();
+				vecStr.clear();
+			} else if (types.at(i)==1){
+				vedDou.push_back(stod(value));
+			} else if (types.at(i)==2){
+				vecStr.push_back(value);
 			}
 		}
-		string type = buffer.substr(buffer.find(";"));
-		
+		getline(buffer, value);
+		vecDis.push_back(value);
 	}
+	
+	return vec;
 }
