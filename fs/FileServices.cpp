@@ -1,5 +1,7 @@
 #include "fs/FileServices.h"
 
+using namespace std;
+
 ///////////////////////////////////////////////////////////////////////////////
 /// LECTURE / ECRITURE DES OBJETS METIERS DANS DES FICHIERS
 ///////////////////////////////////////////////////////////////////////////////
@@ -40,20 +42,43 @@ istream& operator>>(istream& in, Doctor& d) {
 ///////////////////////////////////////////////////////////////////////////////
 
 Doctor_ptr fs::signInDoctor(string username, string password) {
-
-    // TODO
-
-    return nullptr;
+    Doctor_ptr doctor = nullptr;
+    ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        Doctor tmp;
+        // Parcours de tous les docteurs inscrits
+        while(is >> tmp) {
+            if(tmp.getMail() == username && tmp.getPassword() == password) {
+                doctor = make_shared<Doctor>(tmp);
+                break;
+            }
+        }
+        is.close();
+    }
+    return doctor;
 }
 
-Doctor_ptr fs::signUpDoctor(string username, string password) {
+bool fs::signUpDoctor(Doctor_ptr doctor) {
+    // Vérification de la conformité du personnel à inscrire
+    if(doctor == nullptr
+    || doctor->getMail().empty()
+    || doctor->getPassword().empty()
+    || doctor->getFirstName().empty()
+    || doctor->getName().empty()
+    || doctor->getID() == 0
+    || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
+        return false;
+    }
+
+    // Ajout du personnel dans le fichier
+    bool success = false;
     ofstream os(fs::DOCTORS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
-
-        // TODO
-
+        os << *doctor;
+        success = os.good();
+        os.close();
     }
-    return nullptr;
+    return success;
 }
 
 vector<Print> fs::getPrint(string filename){

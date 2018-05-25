@@ -23,6 +23,7 @@ public:
     string getName();
     string getFirstName();
     string getMail();
+    string getPassword();
 
 protected:
     long ID;

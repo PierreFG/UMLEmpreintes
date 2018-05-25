@@ -72,14 +72,6 @@ Mat Mat::inv(){
             for(int i=0;i<m;i++){
 
                 if(i!=r){
-                    // ligne i - ligne r * A[i][j]
-                    /*cout<<"pop"<<endl;
-                
-                    cout<<"I["<<i<<"] : ";
-                    I.data[i].afficher();
-                    cout<<"I["<<r<<"] : ";
-                    I.data[r].afficher();
-                    cout<<"G["<<i<<","<<j<<"] : "<<G.data[i].data[j]<<endl;*/
                     val=(double)(G.data[i].data[j]);
                     I.data[i] =(I.data[i]+((I.data[r])*(((double)(-1))*val)));
                     G.data[i] =(G.data[i]+((G.data[r])*(((double)(-1))*val)));
@@ -119,6 +111,8 @@ Mat Mat::operator*(double c){
     return B;
 }
 Mat Mat::operator*(const Mat& B){
+    cout<<"mat G :"<<m<<" "<<data[0].n<<endl;
+    cout<<"mat D :"<<B.m<<" "<<B.data[0].n<<endl;
     assert(data[0].n==B.m && m ==B.data[0].n);
     int n =data[0].n;
     Mat R = Mat(m,B.data[0].n);
@@ -140,6 +134,17 @@ Mat Mat::operator+(const Mat& B){
     for(int i =0; i<m; i++){
         for(int j=0; j<n; j++){
             R.data[i].data[j]=data[i].data[j] + B.data[i].data[j];
+        }
+    }
+    return R;
+}
+
+Vect Mat::operator*(const Vect& V){
+    assert(data[0].n==V.n);
+    Vect R(m);
+    for(int i=0;i<m;i++){
+        for(int j=0;j<V.n;j++){
+            R.data[i]=R.data[i]+data[i].data[j]*V.data[j];
         }
     }
     return R;
@@ -184,10 +189,10 @@ Mat::~Mat(){
 }
 //-------------------------------------------- Getter
 
-int Mat::nbRows() const{
+int Mat::nbColumns() const{
 	return data[0].n;
 }
 
-int Mat::nbColumns() const {
+int Mat::nbRows() const {
 	return m;
 }
