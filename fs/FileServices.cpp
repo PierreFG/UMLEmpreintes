@@ -188,8 +188,8 @@ vector<Print> fs::getPrint(string filename){
 	while (!(is.eof() || is.fail() || is.bad())){
 		getline(is, buffer);
 		stringstream data(buffer);
+        string value;
 		for(int i=0; i<types.size(); i++){
-			string value;
 			getline(data, value, ';');
 			if(types.at(i)==0){
 				int a = fs::stoi(value);
@@ -199,18 +199,18 @@ vector<Print> fs::getPrint(string filename){
 				}
 				//Save print
 				Print p(id, vecDis, vecDou, vecStr);
-				vec.push_bask(p);
+				vec.push_back(p);
 				id=a;
 				vecDis.clear();
 				vecDou.clear();
 				vecStr.clear();
 			} else if (types.at(i)==1){
-				vedDou.push_back(stod(value));
+				vecDou.push_back(stod(value));
 			} else if (types.at(i)==2){
 				vecStr.push_back(value);
 			}
 		}
-		getline(buffer, value);
+		getline(data, value);
 		vecDis.push_back(value);
 	}
 

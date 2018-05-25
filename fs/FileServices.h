@@ -58,6 +58,9 @@ namespace fs {
 	/* Loads in memory from a file the one hot coding transposition
 	* of every possible string in a print. See method saveOneHotString above.
 	*/
+
+    bool saveResult(AnalysisResult_ptr r);
+    bool addResultToLog(AnalysisResult_ptr r);
 }
 
 #endif // FILESERVICES_H_INCLUDED
