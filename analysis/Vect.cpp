@@ -15,6 +15,7 @@
 int Vect::addvalue(double x){
     n=n+1;
     data.push_back(x);
+    return n;
 }
 void Vect::resize(int l){
     data.resize(l);
@@ -39,7 +40,7 @@ void Vect::clear(){
 }
 //---------------------------------------------------- Surcharge d'opérateurs
 Vect Vect::operator+(const Vect& B) {
-	assert(n==B.n); 
+	assert(n==B.n);
     Vect V = Vect(n);
 	for(int i=0; i<n; i++){
         V.data[i] = data[i]+B.data[i];
@@ -63,7 +64,7 @@ void Vect::operator=(const Vect& B){
 }
 
 double Vect::operator*(const Vect& B){
-	assert(n==B.n); 
+	assert(n==B.n);
 	double u = 0;
 	for(int i=0; i<n;i++){
 		u = u + data[i]*B.data[i];
@@ -73,7 +74,7 @@ double Vect::operator*(const Vect& B){
 
 Vect::operator double(){
 	assert(n==1);
-	return data[1]; 
+	return data[1];
 }
 
 

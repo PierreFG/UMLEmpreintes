@@ -35,9 +35,7 @@ shared_ptr<Doctor> ui::connectionMenu(){
 	do{
 		cout<< "Possedez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
 		cout<<"Pour quitter l'application, tapez (q)"<<endl;
-		char tab[] = {'i','c','q'};
-		set<char> expected(tab, tab+3);
-		char res=inputChar(expected);
+		char res=inputChar({'i','c','q'});
 		if (res=='i')
 		{
 			d=make_shared<Doctor>(seizeInformation());
@@ -59,9 +57,7 @@ shared_ptr<Doctor> ui::connectionMenu(){
 					notConnected=false;
 				} else {
 					cout << "Erreur d'authentification, recommencer ? (o/n)"<< endl;
-					char yn[] = {'o','n'};
-					set<char> expected(tab, tab+3);
-					res=inputChar(expected);
+					res=inputChar({'o', 'n'});
 					if (res=='n'){
 						ok=true;
 					}

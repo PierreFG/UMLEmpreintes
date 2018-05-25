@@ -214,7 +214,7 @@ vector<Print> fs::getPrint(string filename){
 		getline(is, buffer);
 		stringstream data(buffer);
         string value;
-		for(int i=0; i<types.size(); i++){
+		for(unsigned int i=0; i<types.size(); i++){
 			getline(data, value, ';');
 			if(types.at(i)==0){
 				int a = fs::stoi(value);
@@ -243,7 +243,8 @@ vector<Print> fs::getPrint(string filename){
 }
 
 bool fs::saveResult(AnalysisResult_ptr r) {
-
+    // Not implemented
+    return false;
 }
 
 Rule_ptr fs::getRule(){
@@ -289,7 +290,7 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
     ofstream os(fs::LOGS_PATH.c_str(), ios::out | ios::app);
     if(os.is_open()) {
         os << *r;
-		bool success = false;
+		success = false;
     }
     return success;
 }

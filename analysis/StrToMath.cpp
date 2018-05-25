@@ -19,7 +19,7 @@ map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
     map<int,vector<string>> valpossibles;
     for(int i=0;i<nbStrings;i++){
         valpossibles.insert(pair<int,vector<string> >(i, vector<string>()));
-        for(int j=0; j=0; j<nbPrints){
+        for(int j=0; j<nbPrints; j++){
             it=find(valpossibles[i].begin(), valpossibles[i].end(), datas[j].getAttrStr()[i] );
             if(it == valpossibles[i].end()){
                 valpossibles[i].push_back(datas[j].getAttrStr()[i]);
