@@ -1,26 +1,33 @@
 #include <iostream>
 #include <unistd.h>
-//#include "./ui/UI.h"
-//optarg
 using namespace std;
-//using namespace UI;
 
-void error(){
+#include "ui/UI.h"
+using namespace UI;
+
+void usage(){
 	cerr << "bad arguments" << endl;
+	return;
 }
 
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
+	char optstring[]="i";
+	int c;
 	bool i = false;
-	if(argc > 2){
-		error();
-		return 1;
-	}else if(argv[1]){
-		cout << argv[1];
-	}
-
-
-	/**intro();
-	connectionMenu();**/
+	while( (c=getopt (argc, argv, optstring)) != EOF ) 
+   	{
+		switch(c){
+			case 'i':
+				i = true;
+				break;
+			case '?':
+				usage();
+				break;
+		}
+   	}
+   
+	intro();
+	connectionMenu();
 	return 0;
 }

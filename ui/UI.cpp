@@ -9,8 +9,10 @@
 
 #include <iostream>
 #include <set>
-#include "../modele/doctor.h"
+#include <memory>
+#include "model/doctor.h"
 #include "UI.h"
+#include "fs/FileServices.h"
 
 using namespace std;
 
@@ -23,32 +25,60 @@ void UI::intro(){
 	return;
 }
 
-void UI::connectionMenu(){
+shared_ptr<Doctor> UI::connectionMenu(){
+	shared_ptr<Doctor> d=nullptr;
+
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
-	
+
 	bool notConnected=true;
-	cout<< "Possedez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
-	cout<<"Pour quitter l'application, tapez (q)"<<endl;
-	char tab[] = {'i','c','q'};
-	set<char> expected(tab, tab+3); 
-	char res=inputChar(expected);
-	if (res=='i'){
-		cout << "Inscription"<<endl;
-	}
-	if (res=='c'){
-		cout << "CouCou"<<endl;
-	}
-	if (res=='q'){
-		notConnected=false;
-		cout <<"Quitter"<<endl;
-	}
+
+	do{
+		cout<< "Possedez-vous un compte (c) ou voulez-vous vous inscrire (i) ?"<<endl;
+		cout<<"Pour quitter l'application, tapez (q)"<<endl;
+		char tab[] = {'i','c','q'};
+		set<char> expected(tab, tab+3);
+		char res=inputChar(expected);
+		if (res=='i')
+		{
+			*d=seizeInformation();
+		}
+		else if (res=='c')
+		{
+			bool ok=false;
+			string email,password;
+			while(!ok){
+				cout << "Saisissez votre mail :" << endl;
+				email=inputString();
+				cout << "Saisissez votre mot de passe :"<<endl;
+				password=inputString();
+				d = fs::signUpDoctor(email, password);
+				if (d!=nullptr){
+					ok=true;
+					notConnected=false;
+				} else {
+					cout << "Erreur d'authentification, recommencer ? (o/n)"<< endl;
+					char yn[] = {'o','n'};
+					set<char> expected(tab, tab+3);
+					res=inputChar(expected);
+					if (res=='n'){
+						ok=true;
+					}
+				}
+			}
+		}
+		else if (res=='q'){
+			notConnected=false;
+			cout <<"Quitter"<<endl;
+		}
+	} while(notConnected);
+	return d;
 }
 
 void UI::mainMenu(Doctor d){
 	char car;
-	
+
 	cout << "Bonjour M. " << d.getName() <<"."<<endl;
-	
+
 	while (car!='d'){
 		cout << "Pour analyser un fichier d'empreintes, tapez (a)." << endl;
 		cout << "Pour consulter l'historique de votre activite, tapez (h)." << endl;
@@ -56,6 +86,14 @@ void UI::mainMenu(Doctor d){
 		char tab[] = {'a', 'h', 'd'};
 		set<char> expected(tab, tab+3);
 		car=inputChar(expected);
+		if (car=='a'){
+			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
+			string path=inputString();
+			//Appeler la méthode d'analyse d'une empreinte
+
+		} else if(car=='h'){
+			//Appeler la méthode historique
+		}
 	}
 	cout <<"Au revoir M. " << d.getName() << "." << endl;
 }
@@ -99,9 +137,9 @@ char UI::inputChar(set<char> expected){
 			ok=true;
 		}
 	}
-	
+
 	return charac;
-	
+
 }
 
 Doctor UI::seizeInformation(){

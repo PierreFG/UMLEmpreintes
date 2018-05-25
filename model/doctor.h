@@ -4,17 +4,20 @@
 
 #include <string>
 #include <iostream>
+#include <memory>
+
 using namespace std;
 
 class Doctor
 {
 
 public:
+    Doctor ( );
     Doctor (string pname, string pfirstName, string pemail, string pmdp);
     virtual ~Doctor ();
 
-    friend ostream& operator << (ostream &out, Doctor &d);
-	
+    friend ostream& operator<<(ostream &out, const Doctor &d);
+    friend istream& operator>>(istream &in, Doctor &d);
 
     long getID();
     string getName();
@@ -28,6 +31,8 @@ protected:
     string mail;
     string mdp;
 };
+
+typedef shared_ptr<Doctor> Doctor_ptr;
 
 //-------------------------------- Autres définitions dépendantes de <Xxx>
 
