@@ -51,7 +51,7 @@ shared_ptr<Doctor> UI::connectionMenu(){
 				email=inputString();
 				cout << "Saisissez votre mot de passe :"<<endl;
 				password=inputString();
-				d = fs::signUpDoctor(email, password);
+				d = fs::signInDoctor(email, password);
 				if (d!=nullptr){
 					ok=true;
 					notConnected=false;
