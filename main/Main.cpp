@@ -2,11 +2,13 @@
 #include <unistd.h>
 using namespace std;
 
+#include "model/doctor.h"
 #include "ui/UI.h"
 using namespace UI;
 
 void usage(){
-	cerr << "bad arguments" << endl;
+	cerr << "usage : ./app [-i]" << endl;
+	exit(1);
 	return;
 }
 
@@ -26,8 +28,20 @@ int main(int argc, char* argv[]) {
 				break;
 		}
    	}
-   
+	
+	//****CHARGEMENT DE LA BASE DE DONNE (si -i)
+	if(i){
+		return 0;
+	}
+
+	//****MAIN APP
+	shared_ptr<Doctor> d;
 	intro();
-	connectionMenu();
+	d = connectionMenu();
+	if(d=nullptr){
+		return 0;
+	}
+	mainMenu(d);
+	
 	return 0;
 }
