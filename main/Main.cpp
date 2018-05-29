@@ -13,7 +13,7 @@ void usage(){
 	return;
 }
 
-/*int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	char optstring[]="i";
 	int c;
@@ -45,7 +45,7 @@ void usage(){
 	mainMenu(*d);
 
 	return 0;
-}*/
+}
 
 /*#include<map>
 #include<vector>

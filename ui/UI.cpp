@@ -39,8 +39,15 @@ shared_ptr<Doctor> ui::connectionMenu(){
 		if (res=='i')
 		{
 			d=make_shared<Doctor>(seizeInformation());
-			fs::signUpDoctor(d);
-			cout<<*d<<endl;
+			if(fs::signUpDoctor(d)){
+				cout << Colorize(Colorize::GREEN) << endl;
+				cout << "Votre inscription a ete realisee avec succes !"<<endl;
+				cout << Colorize(Colorize::DEFAULT) << endl;
+			} else {
+				cout << Colorize(Colorize::RED) << endl;
+				cout << "Mmh... Il semblerait que nous n'ayons pas pu realiser l'inscription. Peut-etre cette adresse mail existe deja ?"<<endl;
+				cout << Colorize(Colorize::DEFAULT) << endl;
+			}
 		}
 		else if (res=='c')
 		{
@@ -66,6 +73,7 @@ shared_ptr<Doctor> ui::connectionMenu(){
 		}
 		else if (res=='q'){
 			notConnected=false;
+			d=nullptr;
 			cout <<"A bientôt"<<endl;
 		}
 	} while(notConnected);
@@ -78,6 +86,7 @@ void ui::mainMenu(Doctor d){
 	cout << "Bonjour M. " << d.getName() <<"."<<endl;
 
 	while (car!='d'){
+		cout << endl<<endl;
 		cout << "Pour analyser un fichier d'empreintes, tapez (a)." << endl;
 		cout << "Pour consulter l'historique de votre activite, tapez (h)." << endl;
 		cout << "Pour vous deconnecter, tapez (d)."<<endl;

@@ -11,6 +11,8 @@
 #include <iostream>
 #include <memory>
 #include <set>
+#include <sstream>
+#include <string>
 #include "model/doctor.h"
 
 namespace ui {
@@ -45,21 +47,28 @@ namespace ui {
 
     class Colorize {
     public:
-        enum {DEFAULT = 0, RED};
+        enum {DEFAULT = 0, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};
         explicit Colorize(int c = DEFAULT) : color(c) {}
         inline friend ostream& operator<<(ostream& out, const Colorize& colorizer) {
-            string code = "";
+            std::stringstream ss;
             switch(colorizer.color) {
             case DEFAULT:
-                code = "\033[0m";
+                ss <<"\033[0m";
                 break;
             case RED:
-                code = "\033[031m";
-                break;
+            case GREEN:
+            case YELLOW:
+            case BLUE:
+            case MAGENTA:
+            case CYAN:
+            case WHITE:
+            	out << colorizer.color<<endl;
+            	ss << "\033[3"<<colorizer.color<<"m";
+            	break;
             default:
                 break;
             }
-            return out << code << flush;
+            return out << ss.str() << flush;
         }
     private:
         int color;
