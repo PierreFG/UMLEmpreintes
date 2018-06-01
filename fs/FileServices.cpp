@@ -5,6 +5,19 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////
 /// FONCTIONS UTILITAIRES
 ///////////////////////////////////////////////////////////////////////////////
+string fs::cTimeToString(){
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+
+    time (&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer,sizeof(buffer),"%d-%m-%Y %I:%M:%S",timeinfo);
+    std::string str(buffer);
+
+    return str;
+}
 
 string fs::itos(int i) {
     string result;
@@ -75,7 +88,7 @@ istream& operator>>(istream& in, Doctor& d) {
 
 ostream& operator<<(ostream& out, const AnalysisResult& r) {
     // Ecriture dans le flux de sortie au format CSV
-    out << r.doctor->ID << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
+    out << r.doctor->getID() << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
     return out;
 }
 

@@ -22,6 +22,7 @@ public:
     friend istream& operator>>(istream& in, AnalysisResult& r);
 
     Doctor_ptr getDoctor() const;
+    string getDate() const;
 
 protected:
     map<string, double> proba;

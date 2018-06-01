@@ -36,6 +36,7 @@ namespace fs {
     const string DOCTORS_PATH = "data/doctors.csv";
     const string OUTPUT_PATH = "out/";
 
+    string cTimeToString();
     string itos(int i);
 
     int stoi(string s);

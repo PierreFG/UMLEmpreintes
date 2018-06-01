@@ -20,7 +20,6 @@ public:
 
     friend ostream& operator<<(ostream &out, const Doctor &d);
     friend istream& operator>>(istream &in, Doctor &d);
-    friend ostream& operator<<(ostream& out, const AnalysisResult& r);
     friend istream& operator>>(istream& in, AnalysisResult& r);
 
     long getID();
