@@ -163,7 +163,7 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
     // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
-    /*if(doctor == nullptr
+    if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
     || doctor->getFirstName().empty()
@@ -171,7 +171,8 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     || doctor->getID() != 0
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
-    }*/
+    }
+
     // donner un ID
     if((doctor->ID = generateDoctorID()) == 0) {
         return false;
@@ -231,8 +232,7 @@ vector<Print> fs::getPrint(string filename){
 	//data.
 
 	vector<int> types;
-	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad())){
-		getline(isMeta, buffer);
+	while (getline(isMeta, buffer)) {
 		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
 			types.push_back(0);
