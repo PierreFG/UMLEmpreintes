@@ -10,6 +10,7 @@ class Print
 {
 
 public:
+    friend ostream& operator << (ostream& out, const Print& p);
     Print (long id, vector<string>, vector<double>, vector<string>);
     virtual ~Print ();
 
@@ -24,7 +25,7 @@ protected:
     vector<string> diseases;
     vector<double> attr;
     vector<string> attrStr;
-    
+
 };
 
 #endif // Print_H

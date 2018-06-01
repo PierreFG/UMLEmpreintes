@@ -42,7 +42,7 @@ Mat Mat::inv(){
     Vect bufferI;
     double pivot = 0;
     double val=0;
-    
+
     for(int j =0;j<m;j++){
         //k=find max sur la colonne
         k=r+1;
@@ -56,8 +56,8 @@ Mat Mat::inv(){
             r++;
 
              //divise ligne k par A[k,j]
-            for(int jp=0;jp<m;jp++){      
-                I.data[k].data[jp]=((I.data[k].data[jp])/pivot);         
+            for(int jp=0;jp<m;jp++){
+                I.data[k].data[jp]=((I.data[k].data[jp])/pivot);
                 G.data[k].data[jp]=((G.data[k].data[jp])/pivot);
             }
             //swipe line k and r
@@ -68,7 +68,7 @@ Mat Mat::inv(){
                 G.data[k].data[jp]=bufferG.data[jp];
                 I.data[r].data[jp]=I.data[k].data[jp];
                 I.data[k].data[jp]=bufferI.data[jp];
-            }            
+            }
             for(int i=0;i<m;i++){
 
                 if(i!=r){
@@ -77,9 +77,9 @@ Mat Mat::inv(){
                     G.data[i] =(G.data[i]+((G.data[r])*(((double)(-1))*val)));
                 }
             }
-            
+
         }
-        
+
     }
     cout<<"G après gauss :"<<endl;
     G.afficher();
@@ -127,7 +127,7 @@ Mat Mat::operator*(const Mat& B){
             for(int k=0;k<n;k++){
                 R.data[i].data[j]+=data[i].data[k]*B.data[k].data[j];
             }
-        }    
+        }
     }
     return R;
 }
@@ -185,7 +185,7 @@ Mat::Mat(int n){
     data.resize(n);
     for(int i=0;i<n;i++){
         data[i].resize(n);
-        data[i].data[i]=1;        
+        data[i].data[i]=1;
     }
 }
 

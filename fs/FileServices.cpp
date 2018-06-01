@@ -1,4 +1,6 @@
+#include <iostream>
 #include "fs/FileServices.h"
+
 
 using namespace std;
 
@@ -14,6 +16,13 @@ string fs::itos(int i) {
 }
 
 int fs::stoi(string s) {
+    int result;
+    stringstream buffer(s);
+    buffer >> result;
+    return result;
+}
+
+double fs::stod(string s){
     int result;
     stringstream buffer(s);
     buffer >> result;
@@ -70,9 +79,6 @@ istream& operator>>(istream& in, Doctor& d) {
 }
 
 
-
-
-
 ostream& operator<<(ostream& out, const AnalysisResult& r) {
     // Ecriture dans le flux de sortie au format CSV
     out << r.doctor->ID << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
@@ -106,6 +112,17 @@ istream& operator>>(istream& in, AnalysisResult& r) {
     return in;
 }
 
+ostream& operator << (ostream& out, const Print& p){
+    cout << "Voici une empreinte : " << endl;
+    for(vector<double>::iterator it=p.attr.begin(); it!=p.attr.end(); it++){
+        cout << it << "; ";
+    }
+    cout << endl;
+    for (vector<string>::iterator it=p.attrStr.begin(); it!=p.attrStr.end(); it++){
+        cout << it << "; ";
+    }
+    cout << endl;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
@@ -145,7 +162,7 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
     // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
-    if(doctor == nullptr
+    /*if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
     || doctor->getFirstName().empty()
@@ -153,8 +170,7 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     || doctor->getID() != 0
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
-    }
-
+    }*/
     // donner un ID
 
     // Ajout du personnel dans le fichier
