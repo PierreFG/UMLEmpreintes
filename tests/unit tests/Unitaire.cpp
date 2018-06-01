@@ -7,6 +7,7 @@
 #include "model/doctor.h"
 #include "analysis/Vect.h"
 #include "analysis/Mat.h"
+#include "model/print.h"
 
 using namespace std;
 using namespace ui;
@@ -206,6 +207,17 @@ void testD9(){
     M.set(2,1,3);
     M.set(2,2,12);
     M.afficher();
+
+}
+
+void testD10{
+    //Test de la génération d'une matrice à partir du set d'empreintes
+    vector<Print> V;
+    vector<string> S1={"AT","OUI"};
+    vector<string> S2={"AA","OUI"};
+    vector<int> I1={1,1,4}
+    vector<int> I2={1,4,1}
+    
 
 }
 

@@ -104,4 +104,8 @@ int Vect::size() const{
 	return n;
 }
 
+vector<double> Vect::getData(){
+    return data;
+}
+
 

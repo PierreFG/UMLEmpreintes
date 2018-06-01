@@ -32,6 +32,7 @@ public:
     void set(int j, double k);
     int addvalue(double x);
     void clear();
+    vector<double> getData();
 
 	//-------------------------------------------- Constructeurs - destructeur
     Vect();

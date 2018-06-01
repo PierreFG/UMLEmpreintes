@@ -12,7 +12,7 @@ class Rule
 {
 
 public:
-    Rule (map<string,vector<double>>);
+    Rule (map<string,vector<double>> ,map<int,vector<string>>);
     virtual ~Rule ();
 
     map<string,vector<double>> getAsso();
@@ -21,6 +21,7 @@ public:
 
 protected:
     map<string,vector<double>> asso;
+    map<int,vector<string>> oneHotRule;
 };
 
 typedef shared_ptr<Rule> Rule_ptr;

@@ -3,12 +3,12 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include personnel
 #include "analysis/StrToMath.h"
-#include "analysis/Vect.h"
 
 
 //-------------------------------------------------------- Include syst?me
 #include <algorithm>
 #include <cassert>
+
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
@@ -29,9 +29,23 @@ map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
     return valpossibles;
 }
 
-Mat StrToMath :: generateMat(vector<Print> datas){
-    map<int,vector<string>> valpossibles = listVals(datas);
+vector<string> StrToMath :: listDiseases(vector<Print> datas){
+    int nbPrints = datas.size();
+    vector<string> valpossibles;
+    for(int i=0;i<nbPrints;i++){
+        for(int j=0; j<datas[i].getDiseases().size(); j++){
+            auto it=find(valpossibles.begin(), valpossibles.end(), datas[i].getDiseases()[j] );
+            if(it == valpossibles.end()){
+                valpossibles.push_back(datas[i].getDiseases()[j]);
+            }
+        }
+    }
+    return valpossibles;
+}
+
+pair<Mat,Vect> StrToMath :: generateMat(vector<Print> datas, string disease, map<int,vector<string>> valpossibles){
     Mat M;
+    Vect Y;
     int nbPrints = datas.size();
     int nbDoubles = datas[0].getAttr().size();
     int nbStrings = datas[0].getAttrStr().size();
@@ -41,31 +55,65 @@ Mat StrToMath :: generateMat(vector<Print> datas){
     Vect buffer;
     std::vector<string>::iterator it;
     for(int i=0; i<nbPrints; i++){
-        buffer.clear();
-        buffer.addvalue(1);
-        for(int j=0;j<nbDoubles;j++){
-            buffer.addvalue(datas[i].getAttr()[j]);
-        }
-        for(int j=0;j<nbStrings;j++){
-            vals.clear();
-            vals = valpossibles[j];
-            nbVals=vals.size();
-            it=find(vals.begin(),vals.end(),datas[i].getAttrStr()[j]);
-            assert(it!=vals.end());
-            ind = vals.end()-it;
-            for(int k=0;k<nbVals;k++){
-                if(i!=ind){
-                    buffer.addvalue(0);
-                }else{
-                    buffer.addvalue(1);
+        for(int d=0;d<datas[i].getDiseases().size();d++){
+            buffer.clear();
+            buffer.addvalue(1);
+            for(int j=0;j<nbDoubles;j++){
+                buffer.addvalue(datas[i].getAttr()[j]);
+            }
+            for(int j=0;j<nbStrings;j++){
+                vals.clear();
+                vals = valpossibles[j];
+                nbVals=vals.size();
+                it=find(vals.begin(),vals.end(),datas[i].getAttrStr()[j]);
+                assert(it!=vals.end());
+                ind = vals.end()-it;
+                for(int k=0;k<nbVals;k++){
+                    if(k!=ind){
+                        buffer.addvalue(0);
+                    }else{
+                        buffer.addvalue(1);
+                    }
                 }
             }
+            M.addline(buffer);
+            if(datas[i].getDiseases()[d] == disease){
+                Y.addvalue(1);
+            }else{
+                Y.addvalue(0);
+            }
         }
-        M.addline(buffer);
     }
-    return M;
+    pair<Mat,Vect> Eq(M,Y);
+    return Eq;
 }
 
+vector<double> StrToMath :: transformPrint(Print p, map<int,vector<string>> valpossibles){
+    int nbDoubles = p.getAttr().size();
+    int nbStrings = p.getAttrStr().size();
+    int ind=0;
+    int nbVals;
+    vector<double> result;
+    vector<string> vals;
+    for(int j=0;j<nbDoubles;j++){
+        result.push_back(p.getAttr()[j]);
+    }
+    for(int j=0;j<nbStrings;j++){
+        vals = valpossibles[j];
+        nbVals=vals.size();
+        auto it=find(vals.begin(),vals.end(),p.getAttrStr()[j]);
+        assert(it!=vals.end());
+        ind = vals.end()-it;
+        for(int k=0;k<nbVals;k++){
+            if(k!=ind){
+                result.push_back(0);
+            }else{
+                result.push_back(1);
+            }
+        }
+    }
+    return result;
+}
 //int main(){}
 //--------------------------------------------- Constructeurs-Destructeurs
 

@@ -13,11 +13,13 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <stdlib.h>
 
 //------------------------------------------------------ Include Personnel
 #include "model/print.h"
 #include "analysis/Mat.h"
 #include "analysis/Vect.h"
+
 using namespace std; 
 
 class StrToMath
@@ -25,8 +27,9 @@ class StrToMath
 public:
 	//---------------------------------------------------- Fonctions publiquess
     map<int,vector<string>> listVals(vector<Print> datas);
-    Mat generateMat(vector<Print> datas);
-    
+    pair<Mat,Vect> generateMat(vector<Print> datas, string disease, map<int,vector<string>> valpossibles);
+    vector<double> transformPrint(Print p, map<int,vector<string>> valpossibles);
+    vector<string> listDiseases(vector<Print> datas);
 	//-------------------------------------------- Constructeurs - destructeur
 	StrToMath();
     virtual ~StrToMath();
@@ -37,5 +40,4 @@ protected:
 	//----------------------------------------------------- Attributs privés
     
 };
-
 #endif // STRTOMATH_H
