@@ -9,6 +9,13 @@
 using namespace std;
 
 class AnalysisResult;
+class Doctor;
+
+typedef shared_ptr<Doctor> Doctor_ptr;
+
+namespace fs {
+    bool signUpDoctor(Doctor_ptr);
+}
 
 class Doctor
 {
@@ -23,6 +30,8 @@ public:
     friend ostream& operator<<(ostream& out, const AnalysisResult& r);
     friend istream& operator>>(istream& in, AnalysisResult& r);
 
+    friend bool fs::signUpDoctor(Doctor_ptr);
+
     long getID();
     string getName();
     string getFirstName();
@@ -36,8 +45,6 @@ protected:
     string mail;
     string mdp;
 };
-
-typedef shared_ptr<Doctor> Doctor_ptr;
 
 //-------------------------------- Autres définitions dépendantes de <Xxx>
 

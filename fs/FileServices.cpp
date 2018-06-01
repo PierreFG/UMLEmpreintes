@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "fs/FileServices.h"
 
 using namespace std;
@@ -156,6 +158,9 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     }
 
     // donner un ID
+    if((doctor->ID = generateDoctorID()) == 0) {
+        return false;
+    }
 
     // Ajout du personnel dans le fichier
     bool success = false;
@@ -166,6 +171,28 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
         os.close();
     }
     return success;
+}
+
+long fs::generateDoctorID() {
+    ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        vector<long> idList{};
+        Doctor tmp;
+        while(is >> tmp) {
+            idList.push_back(tmp.getID());
+        }
+        sort(idList.begin(), idList.end());
+        long nextID = idList.size()+1;
+        for(int i=0; i<idList.size(); i++) {
+            if(idList[i] > i+1) {
+                nextID = i+1;
+                break;
+            }
+        }
+        is.close();
+        return nextID;
+    }
+    return 0;
 }
 
 bool fs::saveRule(Rule_ptr r){

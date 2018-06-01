@@ -44,6 +44,8 @@ namespace fs {
 
     Doctor_ptr findDoctorByID(long id);
 
+    long generateDoctorID();
+
     bool signUpDoctor(Doctor_ptr doctor);
 
     vector<Print> getPrint(string filename);
