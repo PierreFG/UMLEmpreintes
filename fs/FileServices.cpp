@@ -18,14 +18,18 @@ string fs::itos(int i) {
 int fs::stoi(string s) {
     int result;
     stringstream buffer(s);
-    buffer >> result;
+    if(!(buffer >> result)){
+        result=-1;
+    }
     return result;
 }
 
 double fs::stod(string s){
-    int result;
+    double result;
     stringstream buffer(s);
-    buffer >> result;
+    if(!(buffer >> result)){
+        result=-1;
+    }
     return result;
 }
 
@@ -119,6 +123,11 @@ ostream& operator << (ostream& out, const Print& p){
     }
     cout << endl;
     for (vector<string>::const_iterator it=p.attrStr.cbegin(); it!=p.attrStr.cend(); it++){
+        cout << *it << "; ";
+    }
+    cout << endl;
+    cout << "Les maladies associées sont : "<<endl;
+    for (vector<string>::const_iterator it=p.diseases.cbegin(); it!=p.diseases.cend(); it++){
         cout << *it << "; ";
     }
     cout << endl;
@@ -231,8 +240,7 @@ vector<Print> fs::getPrint(string filename){
 	//data.
 
 	vector<int> types;
-	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad())){
-		getline(isMeta, buffer);
+	while(getline(isMeta, buffer)) {
 		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
 			types.push_back(0);
@@ -248,38 +256,63 @@ vector<Print> fs::getPrint(string filename){
 
 	ifstream is(filename.c_str());
 
-	int id=-1;
+    //count the lines
+    int total=0;
+    while (getline(is, buffer) && !is.eof()) { total++;}
+    is.close();
+
+    is.open(filename.c_str());
+
+	int id = -1;
+	int ligne=0;
 	vector<string> vecStr;
 	vector<double> vecDou;
 	vector<string> vecDis;
-	while (!(is.eof() || is.fail() || is.bad())){
-		getline(is, buffer);
-		stringstream data(buffer);
-        string value;
-		for(unsigned int i=0; i<types.size(); i++){
-			getline(data, value, ';');
-			if(types.at(i)==0){
-				int a = fs::stoi(value);
-				if (a==id){
-
-					break;
-				}
-				//Save print
-				Print p(id, vecDis, vecDou, vecStr);
-				vec.push_back(p);
-				id=a;
-				vecDis.clear();
-				vecDou.clear();
-				vecStr.clear();
-			} else if (types.at(i)==1){
-				vecDou.push_back(stod(value));
-			} else if (types.at(i)==2){
-				vecStr.push_back(value);
-			}
-		}
-		getline(data, value);
-		vecDis.push_back(value);
+	if (is.is_open()){
+        string useless;
+        getline(is, useless);
+        ligne++;
+        while (getline(is, buffer)){
+            stringstream data(buffer);
+            string value;
+            for(unsigned int i=0; i<types.size(); i++){
+                getline(data, value, ';');
+                if(types.at(i)==0){
+                    int a = fs::stoi(value);
+                    if (a==id){
+                        for(int index=i; index<types.size(); index++){
+                            getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
+                        }
+                        break;
+                    }
+                    //Save print
+                    if(id != -1) {
+                        Print p(id, vecDis, vecDou, vecStr);
+                        vec.push_back(p);
+                    }
+                    id=a;
+                    vecDis.clear();
+                    vecDou.clear();
+                    vecStr.clear();
+                } else if (types.at(i)==1){
+                    vecDou.push_back(stod(value));
+                } else if (types.at(i)==2){
+                    vecStr.push_back(value);
+                }
+            }
+            getline(data, value);
+            if (value!=""){
+                vecDis.push_back(value);
+            }
+            ligne++;
+            cout << ligne << endl;
+            if(ligne==total){
+                Print p(id, vecDis, vecDou, vecStr);
+                vec.push_back(p);
+            }
+        }
 	}
+
 
 	return vec;
 }
