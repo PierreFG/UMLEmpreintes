@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <ctime>
+
 #include "fs/FileServices.h"
 
 using namespace std;
@@ -6,8 +9,20 @@ using namespace std;
 /// FONCTIONS UTILITAIRES
 ///////////////////////////////////////////////////////////////////////////////
 
+string fs::getCurrentTime(){
+    time_t t = time(0);
+    tm* now = localtime(&t);
+    stringstream buffer;
+    buffer << now->tm_year + 1900 << "-";
+    buffer << now->tm_mon + 1 << "-";
+    buffer << now->tm_mday << " ";
+    buffer << now->tm_hour << ":";
+    buffer << now->tm_min << ":";
+    buffer << now->tm_sec;
+    return buffer.str();
+}
+
 string fs::itos(int i) {
-    string result;
     stringstream buffer;
     buffer << i;
     return buffer.str();
@@ -16,7 +31,18 @@ string fs::itos(int i) {
 int fs::stoi(string s) {
     int result;
     stringstream buffer(s);
-    buffer >> result;
+    if(!(buffer >> result)){
+        result=-1;
+    }
+    return result;
+}
+
+double fs::stod(string s){
+    double result;
+    stringstream buffer(s);
+    if(!(buffer >> result)){
+        result=-1;
+    }
     return result;
 }
 
@@ -31,11 +57,19 @@ ostream& operator<<(ostream& out, const Doctor& d) {
 }
 
 ostream& operator<<(ostream& out, const Rule& r) {
-    // Ecriture dans le flux de sortie au format CSV
-    string result;
+
     for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
         out << it->first << ";";
         vector<double> v = it->second;
+        for(auto it2 = v.begin(); it2!=v.end(); ++it2){
+            out << *it2 << ";";
+        }
+        out << endl;
+    }
+    out << "?"<< endl;
+    for (auto it =r.oneHotRule.begin(); it!=r.oneHotRule.end(); it++){
+        out << it->first << ";";
+        vector<string> v = it->second;
         for(auto it2 = v.begin(); it2!=v.end(); ++it2){
             out << *it2 << ";";
         }
@@ -70,12 +104,9 @@ istream& operator>>(istream& in, Doctor& d) {
 }
 
 
-
-
-
 ostream& operator<<(ostream& out, const AnalysisResult& r) {
     // Ecriture dans le flux de sortie au format CSV
-    out << r.doctor->ID << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
+    out << r.doctor->getID() << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
     return out;
 }
 
@@ -106,6 +137,23 @@ istream& operator>>(istream& in, AnalysisResult& r) {
     return in;
 }
 
+ostream& operator << (ostream& out, const Print& p){
+    cout << "Voici une empreinte : " << endl;
+    for(vector<double>::const_iterator it=p.attr.cbegin(); it!=p.attr.cend(); it++){
+        cout << *it << "; ";
+    }
+    cout << endl;
+    for (vector<string>::const_iterator it=p.attrStr.cbegin(); it!=p.attrStr.cend(); it++){
+        cout << *it << "; ";
+    }
+    cout << endl;
+    cout << "Les maladies associées sont : "<<endl;
+    for (vector<string>::const_iterator it=p.diseases.cbegin(); it!=p.diseases.cend(); it++){
+        cout << *it << "; ";
+    }
+    cout << endl;
+    return out;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
@@ -156,6 +204,9 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     }
 
     // donner un ID
+    if((doctor->ID = generateDoctorID()) == 0) {
+        return false;
+    }
 
     // Ajout du personnel dans le fichier
     bool success = false;
@@ -166,6 +217,28 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
         os.close();
     }
     return success;
+}
+
+long fs::generateDoctorID() {
+    ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        vector<long> idList{};
+        Doctor tmp;
+        while(is >> tmp) {
+            idList.push_back(tmp.getID());
+        }
+        sort(idList.begin(), idList.end());
+        long nextID = idList.size()+1;
+        for(int i=0; i<idList.size(); i++) {
+            if(idList[i] > i+1) {
+                nextID = i+1;
+                break;
+            }
+        }
+        is.close();
+        return nextID;
+    }
+    return 0;
 }
 
 bool fs::saveRule(Rule_ptr r){
@@ -189,8 +262,7 @@ vector<Print> fs::getPrint(string filename){
 	//data.
 
 	vector<int> types;
-	while (!(isMeta.eof() || isMeta.fail() || isMeta.bad())){
-		getline(isMeta, buffer);
+	while(getline(isMeta, buffer)) {
 		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
 			types.push_back(0);
@@ -206,38 +278,63 @@ vector<Print> fs::getPrint(string filename){
 
 	ifstream is(filename.c_str());
 
-	int id=-1;
+    //count the lines
+    int total=0;
+    while (getline(is, buffer) && !is.eof()) { total++;}
+    is.close();
+
+    is.open(filename.c_str());
+
+	int id = -1;
+	int ligne=0;
 	vector<string> vecStr;
 	vector<double> vecDou;
 	vector<string> vecDis;
-	while (!(is.eof() || is.fail() || is.bad())){
-		getline(is, buffer);
-		stringstream data(buffer);
-        string value;
-		for(unsigned int i=0; i<types.size(); i++){
-			getline(data, value, ';');
-			if(types.at(i)==0){
-				int a = fs::stoi(value);
-				if (a==id){
-
-					break;
-				}
-				//Save print
-				Print p(id, vecDis, vecDou, vecStr);
-				vec.push_back(p);
-				id=a;
-				vecDis.clear();
-				vecDou.clear();
-				vecStr.clear();
-			} else if (types.at(i)==1){
-				vecDou.push_back(stod(value));
-			} else if (types.at(i)==2){
-				vecStr.push_back(value);
-			}
-		}
-		getline(data, value);
-		vecDis.push_back(value);
+	if (is.is_open()){
+        string useless;
+        getline(is, useless);
+        ligne++;
+        while (getline(is, buffer)){
+            stringstream data(buffer);
+            string value;
+            for(unsigned int i=0; i<types.size(); i++){
+                getline(data, value, ';');
+                if(types.at(i)==0){
+                    int a = fs::stoi(value);
+                    if (a==id){
+                        for(int index=i; index<types.size(); index++){
+                            getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
+                        }
+                        break;
+                    }
+                    //Save print
+                    if(id != -1) {
+                        Print p(id, vecDis, vecDou, vecStr);
+                        vec.push_back(p);
+                    }
+                    id=a;
+                    vecDis.clear();
+                    vecDou.clear();
+                    vecStr.clear();
+                } else if (types.at(i)==1){
+                    vecDou.push_back(fs::stod(value));
+                } else if (types.at(i)==2){
+                    vecStr.push_back(value);
+                }
+            }
+            getline(data, value);
+            if (value!=""){
+                vecDis.push_back(value);
+            }
+            ligne++;
+            cout << ligne << endl;
+            if(ligne==total){
+                Print p(id, vecDis, vecDou, vecStr);
+                vec.push_back(p);
+            }
+        }
 	}
+
 
 	return vec;
 }
@@ -252,26 +349,45 @@ Rule_ptr fs::getRule(){
     if(!is.is_open()) return nullptr;
 
     map<string,vector<double>> m;
-
-    while (!(is.eof() || is.fail() || is.bad())){
-        vector<double> v;
-
-        string line; //1 ligne du csv
-        getline(is, line);
-        stringstream data(line);
-
-        string d; //maladie
-        getline(data, d, ';');
-        string buffer = d;
-        getline(data, buffer, ';');
-        while(buffer.compare("") != 0){
-            //cout << fs::stoi(buffer) << " | ";
-            v.push_back(fs::stoi(buffer));
-            getline(data, buffer, ';');
+    map<int, vector<string>> one;
+    string line; //1 ligne du csv
+    bool oneHot=false;
+    while (getline(is, line)){
+        if (line=="?"){
+            oneHot=true;
+            continue;
         }
-        m[d] = v;
+        if (oneHot){
+            vector<string> v;
+            stringstream data(line);
+
+            string d; //maladie
+            getline(data, d, ';');
+            string buffer = d;
+            getline(data, buffer, ';');
+            while(buffer.compare("") != 0){
+                //cout << fs::stoi(buffer) << " | ";
+                v.push_back(buffer);
+                getline(data, buffer, ';');
+            }
+            one[fs::stoi(d)] = v;
+        } else {
+            vector<double> v;
+            stringstream data(line);
+
+            string d; //maladie
+            getline(data, d, ';');
+            string buffer = d;
+            getline(data, buffer, ';');
+            while(buffer.compare("") != 0){
+                //cout << fs::stoi(buffer) << " | ";
+                v.push_back(fs::stoi(buffer));
+                getline(data, buffer, ';');
+            }
+            m[d] = v;
+        }
     }
-    Rule_ptr r = make_shared<Rule>(m);
+    Rule_ptr r = make_shared<Rule>(m, one);
     return r;
 }
 

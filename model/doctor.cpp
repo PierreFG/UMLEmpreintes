@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "doctor.h"
+#include "fs/FileServices.h"
 
 /* !!!! On utilisera ces opérateurs pour les écritures / lectures dans les fichiers. Pour l'affichage à l'écran, c'est le module UI qui définit comment ça s'affiche. Ce sera plus cohérent !
 ostream& operator << (ostream &out, Doctor &d){
@@ -29,11 +30,11 @@ string Doctor::getPassword() {
     return mdp;
 }
 
-Doctor::Doctor() : ID(0) {}
+Doctor::Doctor() : ID(fs::generateDoctorID()) {}
 
 Doctor::Doctor (string pname, string pfN, string pmail, string pmdp):name(pname),firstName(pfN), mail(pmail), mdp(pmdp)
 {
-    ID = 0;
+    ID = fs::generateDoctorID();
 }
 
 Doctor::~Doctor(){

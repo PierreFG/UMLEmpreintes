@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include <set>
+#include <map>
+#include <vector>
 
 #include "fs/FileServices.h"
 #include "ui/UI.h"
@@ -8,37 +10,11 @@
 #include "analysis/Vect.h"
 #include "analysis/Mat.h"
 #include "model/print.h"
+#include "model/rule.h"
 
 using namespace std;
 using namespace ui;
-
-void test1(){
-	//Vérification de la saisie correcte d'un entier
-	int a=0;
-	while (cin.good()){
-		a = inputInt();
-		cout << a << endl;
-	}
-}
-
-void test2(){
-	//Vérification du fonctionnement de la saisie d'un char parmi une liste proposée
-	char tab[] = {'i','c','q'}, a;
-	set<char> expected(tab, tab+3);
-	while (cin.good()){
-		a = inputChar(expected);
-	}
-	cout << a << endl;
-}
-
-void test3(){
-	cerr<<"Juste une erreur"<<endl;
-}
-
-void test4(){
-	cout <<"division interdite"<<endl;
-	int i = 2/0;
-}
+using namespace fs;
 
 void TU_05() {
     Doctor doc;
@@ -47,6 +23,15 @@ void TU_05() {
         cout << "#" << i++ << ": " << doc;
     }
 
+}
+
+//TEST des fonctions du fs
+//getPrints
+void testB1(){
+    vector<Print> vp = fs::getPrint("prints.csv");
+    for(vector<Print>::iterator it = vp.begin(); it!=vp.end(); it++){
+        cout << *it << endl;
+    }
 }
 
 // TEST VECTEURS
@@ -219,28 +204,40 @@ void testD10{
     vector<int> I2={1,4,1}
     
 
+void testC2(){
+    map<string,vector<double>> map1;
+	vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
+	map1["rhume"] = v1;
+	vector<double> v2; v2.push_back(5.0); v2.push_back(2.0);
+	map1["cancer"] = v2;
+    vector<double> v3;
+	map1["varicelle"] = v3;
+	map<int, vector<string>> chaud;
+	vector<string> v4; v4.push_back("yo"); v4.push_back("lol");
+	chaud[1]=v4;
+	vector<string> v5; v5.push_back("kikou");
+	chaud[2]=v5;
+	Rule_ptr ru = make_shared<Rule>(map1, chaud);
+    fs::saveRule(ru);
+	Rule_ptr r = fs::getRule();
+	cout << *r;
 }
 
 int main() {
-	int test;
+	int test=-1;
 	cin >> test;
 	cin.ignore();
 	switch(test){
-		case 1:
-			test1();
-			break;
-		case 2:
-			test2();
-			break;
-		case 3:
-			test3();
-			break;
-		case 4:
-			test4();
-			break;
+        case 1:
+            testB1();
+            break;
+        case 2:
+            testC2();
+            break;
         case 5:
             TU_05();
             break;
 	}
+
 	return 0;
 }

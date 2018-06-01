@@ -9,16 +9,16 @@ using namespace ui;
 
 void usage(){
 	cerr << "usage : ./app [-i]" << endl;
-	exit(1);
+	//exit(1);
 	return;
 }
-/*
+
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	char optstring[]="i";
 	int c;
 	bool i = false;
-	while( (c=getopt (argc, argv, optstring)) != EOF )
+	while( (c=getopt (argc, argv, optstring)) != -1 )
    	{
 		switch(c){
 			case 'i':
@@ -36,16 +36,18 @@ int main(int argc, char* argv[]) {
 	}
 
 	//****MAIN APP
-	shared_ptr<Doctor> d;
 	intro();
-	d = connectionMenu();
-	if(d==nullptr){
-		return 0;
+	while(true){
+		shared_ptr<Doctor> d;
+		d = connectionMenu();
+		if(d==nullptr){
+			return 0;
+		}
+		mainMenu(*d);
 	}
-	mainMenu(*d);
 
 	return 0;
-}*/
+}
 
 /*#include<map>
 #include<vector>
@@ -71,11 +73,24 @@ int main(){
 }*/
 
 
-#include "model/rule.h"
+/*#include "model/rule.h"
 #include "fs/FileServices.h"
 using namespace fs;
 int main(){
 	Rule_ptr r = fs::getRule();
 	cout << *r;
 	return 0;
-}
+}*/
+
+/*#include "model/analysisResult.h"
+#include <map>
+#include "fs/FileServices.h"
+using namespace fs;
+int main(){
+	map<string, double> proba;
+	proba["Hepatite"]=39.0; proba["Rhume"]=69.2;
+	AnalysisResult_ptr ar = make_shared<AnalysisResult>(proba, "./empreinte01.csv");
+	cout << *ar;
+	addResultToLog(ar);
+	return 0;
+}*/
