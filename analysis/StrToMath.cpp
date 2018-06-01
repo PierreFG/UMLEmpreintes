@@ -28,6 +28,7 @@ map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
     }
     return valpossibles;
 }
+
 Mat StrToMath :: generateMat(vector<Print> datas){
     map<int,vector<string>> valpossibles = listVals(datas);
     Mat M;
@@ -41,6 +42,7 @@ Mat StrToMath :: generateMat(vector<Print> datas){
     std::vector<string>::iterator it;
     for(int i=0; i<nbPrints; i++){
         buffer.clear();
+        buffer.addvalue(1);
         for(int j=0;j<nbDoubles;j++){
             buffer.addvalue(datas[i].getAttr()[j]);
         }
