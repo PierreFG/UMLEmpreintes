@@ -14,7 +14,7 @@ B : Validation du test système 3 (màj des règles)
 
 C : Validation du test système 5 (analyse régulière)
 1 : valider getPrints
-2 : valider le chargement des règles (getRules)
+2 : valider saveRule et getRule
 3 : valider saveResults
 4 : valider le calcul matriciel
 5 : valider analysePrint

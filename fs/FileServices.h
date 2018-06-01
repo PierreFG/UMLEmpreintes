@@ -36,12 +36,17 @@ namespace fs {
     const string DOCTORS_PATH = "data/doctors.csv";
     const string OUTPUT_PATH = "out/";
 
+    ///*****UTILITY FUNCTIONS
+    string cTimeToString();
+    /*  Returns the Date and Time in String Format
+    *   Date parsing : jj-mm-yyyy hh:mm:ss
+    */
+
     string itos(int i);
-
     int stoi(string s);
-
     double stod(string s);
 
+    ///*****IN&OUT FUNCTIONS
     Doctor_ptr signInDoctor(string username, string password);
 
     Doctor_ptr findDoctorByID(long id);
