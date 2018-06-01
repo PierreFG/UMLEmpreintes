@@ -202,7 +202,12 @@ void testC2(){
 	map1["cancer"] = v2;
     vector<double> v3;
 	map1["varicelle"] = v3;
-	Rule_ptr ru = make_shared<Rule>(map1);
+	map<int, vector<string>> chaud;
+	vector<string> v4; v4.push_back("yo"); v4.push_back("lol");
+	chaud[1]=v4;
+	vector<string> v5; v5.push_back("kikou");
+	chaud[2]=v5;
+	Rule_ptr ru = make_shared<Rule>(map1, chaud);
     fs::saveRule(ru);
 	Rule_ptr r = fs::getRule();
 	cout << *r;

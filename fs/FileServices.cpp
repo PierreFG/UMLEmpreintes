@@ -57,11 +57,19 @@ ostream& operator<<(ostream& out, const Doctor& d) {
 }
 
 ostream& operator<<(ostream& out, const Rule& r) {
-    // Ecriture dans le flux de sortie au format CSV
-    string result;
+
     for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
         out << it->first << ";";
         vector<double> v = it->second;
+        for(auto it2 = v.begin(); it2!=v.end(); ++it2){
+            out << *it2 << ";";
+        }
+        out << endl;
+    }
+    out << "?"<< endl;
+    for (auto it =r.oneHotRule.begin(); it!=r.oneHotRule.end(); it++){
+        out << it->first << ";";
+        vector<string> v = it->second;
         for(auto it2 = v.begin(); it2!=v.end(); ++it2){
             out << *it2 << ";";
         }
@@ -340,23 +348,45 @@ Rule_ptr fs::getRule(){
     if(!is.is_open()) return nullptr;
 
     map<string,vector<double>> m;
+    map<int, vector<string>> one;
     string line; //1 ligne du csv
+    bool oneHot=false;
     while (getline(is, line)){
-        vector<double> v;
-        stringstream data(line);
-
-        string d; //maladie
-        getline(data, d, ';');
-        string buffer = d;
-        getline(data, buffer, ';');
-        while(buffer.compare("") != 0){
-            //cout << fs::stoi(buffer) << " | ";
-            v.push_back(fs::stoi(buffer));
-            getline(data, buffer, ';');
+        if (line=="?"){
+            oneHot=true;
+            continue;
         }
-        m[d] = v;
+        if (oneHot){
+            vector<string> v;
+            stringstream data(line);
+
+            string d; //maladie
+            getline(data, d, ';');
+            string buffer = d;
+            getline(data, buffer, ';');
+            while(buffer.compare("") != 0){
+                //cout << fs::stoi(buffer) << " | ";
+                v.push_back(buffer);
+                getline(data, buffer, ';');
+            }
+            one[fs::stoi(d)] = v;
+        } else {
+            vector<double> v;
+            stringstream data(line);
+
+            string d; //maladie
+            getline(data, d, ';');
+            string buffer = d;
+            getline(data, buffer, ';');
+            while(buffer.compare("") != 0){
+                //cout << fs::stoi(buffer) << " | ";
+                v.push_back(fs::stoi(buffer));
+                getline(data, buffer, ';');
+            }
+            m[d] = v;
+        }
     }
-    Rule_ptr r = make_shared<Rule>(m);
+    Rule_ptr r = make_shared<Rule>(m, one);
     return r;
 }
 
