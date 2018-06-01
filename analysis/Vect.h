@@ -39,8 +39,8 @@ public:
     Vect(int np);
     ~Vect();
     Vect(const Vect&);
-
-    
+    Vect(vector<double>);
+        
 
 
 protected:

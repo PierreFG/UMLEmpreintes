@@ -16,6 +16,7 @@ public:
     virtual ~Rule ();
 
     map<string,vector<double>> getAsso();
+    map<int,vector<string>> getOneHotRule();
 
     friend ostream& operator<<(ostream& out, const Rule& r);
 
