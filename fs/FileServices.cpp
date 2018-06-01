@@ -1,4 +1,6 @@
+#include <algorithm>
 #include "fs/FileServices.h"
+
 
 using namespace std;
 
@@ -27,6 +29,13 @@ string fs::itos(int i) {
 }
 
 int fs::stoi(string s) {
+    int result;
+    stringstream buffer(s);
+    buffer >> result;
+    return result;
+}
+
+double fs::stod(string s){
     int result;
     stringstream buffer(s);
     buffer >> result;
@@ -83,9 +92,6 @@ istream& operator>>(istream& in, Doctor& d) {
 }
 
 
-
-
-
 ostream& operator<<(ostream& out, const AnalysisResult& r) {
     // Ecriture dans le flux de sortie au format CSV
     out << r.doctor->getID() << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
@@ -119,6 +125,18 @@ istream& operator>>(istream& in, AnalysisResult& r) {
     return in;
 }
 
+ostream& operator << (ostream& out, const Print& p){
+    cout << "Voici une empreinte : " << endl;
+    for(vector<double>::const_iterator it=p.attr.cbegin(); it!=p.attr.cend(); it++){
+        cout << *it << "; ";
+    }
+    cout << endl;
+    for (vector<string>::const_iterator it=p.attrStr.cbegin(); it!=p.attrStr.cend(); it++){
+        cout << *it << "; ";
+    }
+    cout << endl;
+    return out;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
@@ -158,7 +176,7 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
     // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
-    if(doctor == nullptr
+    /*if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
     || doctor->getFirstName().empty()
@@ -166,9 +184,11 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     || doctor->getID() != 0
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
-    }
-
+    }*/
     // donner un ID
+    if((doctor->ID = generateDoctorID()) == 0) {
+        return false;
+    }
 
     // Ajout du personnel dans le fichier
     bool success = false;
@@ -179,6 +199,28 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
         os.close();
     }
     return success;
+}
+
+long fs::generateDoctorID() {
+    ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        vector<long> idList{};
+        Doctor tmp;
+        while(is >> tmp) {
+            idList.push_back(tmp.getID());
+        }
+        sort(idList.begin(), idList.end());
+        long nextID = idList.size()+1;
+        for(int i=0; i<idList.size(); i++) {
+            if(idList[i] > i+1) {
+                nextID = i+1;
+                break;
+            }
+        }
+        is.close();
+        return nextID;
+    }
+    return 0;
 }
 
 bool fs::saveRule(Rule_ptr r){

@@ -9,7 +9,7 @@ using namespace ui;
 
 void usage(){
 	cerr << "usage : ./app [-i]" << endl;
-	exit(1);
+	//exit(1);
 	return;
 }
 /*
@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 	char optstring[]="i";
 	int c;
 	bool i = false;
-	while( (c=getopt (argc, argv, optstring)) != EOF )
+	while( (c=getopt (argc, argv, optstring)) != -1 )
    	{
 		switch(c){
 			case 'i':

@@ -41,9 +41,13 @@ namespace fs {
 
     int stoi(string s);
 
+    double stod(string s);
+
     Doctor_ptr signInDoctor(string username, string password);
 
     Doctor_ptr findDoctorByID(long id);
+
+    long generateDoctorID();
 
     bool signUpDoctor(Doctor_ptr doctor);
 
