@@ -12,7 +12,7 @@ void usage(){
 	exit(1);
 	return;
 }
-
+/*
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	char optstring[]="i";
@@ -45,7 +45,7 @@ int main(int argc, char* argv[]) {
 	mainMenu(*d);
 
 	return 0;
-}
+}*/
 
 /*#include<map>
 #include<vector>
@@ -70,7 +70,7 @@ int main(){
 	return 0;
 }*/
 
-/*
+
 #include "model/rule.h"
 #include "fs/FileServices.h"
 using namespace fs;
@@ -79,4 +79,3 @@ int main(){
 	cout << *r;
 	return 0;
 }
-*/

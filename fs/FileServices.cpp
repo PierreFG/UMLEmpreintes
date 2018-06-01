@@ -290,17 +290,14 @@ Rule_ptr fs::getRule(){
         string d; //maladie
         getline(data, d, ';');
         string buffer = d;
+        getline(data, buffer, ';');
         while(buffer.compare("") != 0){
-            getline(data, buffer, ';');
-            cout << fs::stoi(buffer);
+            //cout << fs::stoi(buffer) << " | ";
             v.push_back(fs::stoi(buffer));
+            getline(data, buffer, ';');
         }
         m[d] = v;
     }
-
-
-
-
     Rule_ptr r = make_shared<Rule>(m);
     return r;
 }
