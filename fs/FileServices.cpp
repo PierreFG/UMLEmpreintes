@@ -114,14 +114,15 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 
 ostream& operator << (ostream& out, const Print& p){
     cout << "Voici une empreinte : " << endl;
-    for(vector<double>::iterator it=p.attr.begin(); it!=p.attr.end(); it++){
-        cout << it << "; ";
+    for(vector<double>::const_iterator it=p.attr.cbegin(); it!=p.attr.cend(); it++){
+        cout << *it << "; ";
     }
     cout << endl;
-    for (vector<string>::iterator it=p.attrStr.begin(); it!=p.attrStr.end(); it++){
-        cout << it << "; ";
+    for (vector<string>::const_iterator it=p.attrStr.cbegin(); it!=p.attrStr.cend(); it++){
+        cout << *it << "; ";
     }
     cout << endl;
+    return out;
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
