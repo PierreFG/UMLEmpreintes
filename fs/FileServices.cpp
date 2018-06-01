@@ -1,4 +1,4 @@
-#include <iostream>
+#include <algorithm>
 #include "fs/FileServices.h"
 
 
@@ -172,6 +172,9 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
         return false;
     }*/
     // donner un ID
+    if((doctor->ID = generateDoctorID()) == 0) {
+        return false;
+    }
 
     // Ajout du personnel dans le fichier
     bool success = false;
@@ -182,6 +185,28 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
         os.close();
     }
     return success;
+}
+
+long fs::generateDoctorID() {
+    ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
+    if(is.is_open()) {
+        vector<long> idList{};
+        Doctor tmp;
+        while(is >> tmp) {
+            idList.push_back(tmp.getID());
+        }
+        sort(idList.begin(), idList.end());
+        long nextID = idList.size()+1;
+        for(int i=0; i<idList.size(); i++) {
+            if(idList[i] > i+1) {
+                nextID = i+1;
+                break;
+            }
+        }
+        is.close();
+        return nextID;
+    }
+    return 0;
 }
 
 bool fs::saveRule(Rule_ptr r){
@@ -279,17 +304,14 @@ Rule_ptr fs::getRule(){
         string d; //maladie
         getline(data, d, ';');
         string buffer = d;
+        getline(data, buffer, ';');
         while(buffer.compare("") != 0){
-            getline(data, buffer, ';');
-            cout << fs::stoi(buffer);
+            //cout << fs::stoi(buffer) << " | ";
             v.push_back(fs::stoi(buffer));
+            getline(data, buffer, ';');
         }
         m[d] = v;
     }
-
-
-
-
     Rule_ptr r = make_shared<Rule>(m);
     return r;
 }
