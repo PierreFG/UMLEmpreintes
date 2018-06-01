@@ -4,11 +4,7 @@
 
 AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile):proba(pproba),file(pfile) {
     printID = 0;
-<<<<<<< HEAD
     date = fs::getCurrentTime();
-=======
-    //date = fs::cTimeToString();
->>>>>>> f012e093c848221a3c829941b499a2d71a4a4382
     doctor = make_shared<Doctor>("Faure", "Pierre", "monMail", "a");
 }
 
