@@ -9,10 +9,13 @@
 
 #include <iostream>
 #include <set>
+#include <vector>
 #include <memory>
-#include "model/doctor.h"
+
 #include "UI.h"
+#include "model/doctor.h"
 #include "fs/FileServices.h"
+#include "model/analysisResult.h"
 
 using namespace std;
 
@@ -98,6 +101,17 @@ void ui::mainMenu(Doctor d){
 
 		} else if(car=='h'){
 			//Appeler la méthode historique
+			vector<AnalysisResult_ptr> res = fs::readLogs(d.getID());
+			if (res.size()!=0){
+				cout << "Votre historique : " << endl;
+				for(vector<AnalysisResult_ptr>::iterator it = res.begin(); it!=res.end(); it++){
+					cout << *it<<endl;
+				}
+				
+			} else {
+				cout << "Votre historique est vide à l'heure actuelle" << endl<<endl;
+			}
+						
 		}
 	}
 	cout <<"Au revoir M. " << d.getName() << "." << endl;
@@ -110,7 +124,7 @@ int ui::inputInt(){
 		string line;
 		getline(cin, line);
 		try{
-			res = stoi(line);
+			res = fs::stoi(line);
 			ok=true;
 		}catch(exception e){
 
