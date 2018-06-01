@@ -176,7 +176,7 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
     // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
-    /*if(doctor == nullptr
+    if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
     || doctor->getFirstName().empty()
@@ -184,7 +184,7 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     || doctor->getID() != 0
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
-    }*/
+    }
     // donner un ID
     if((doctor->ID = generateDoctorID()) == 0) {
         return false;
@@ -285,7 +285,7 @@ vector<Print> fs::getPrint(string filename){
 				vecDou.clear();
 				vecStr.clear();
 			} else if (types.at(i)==1){
-				vecDou.push_back(stod(value));
+				vecDou.push_back(fs::stod(value));
 			} else if (types.at(i)==2){
 				vecStr.push_back(value);
 			}

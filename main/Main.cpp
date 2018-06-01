@@ -12,7 +12,7 @@ void usage(){
 	//exit(1);
 	return;
 }
-/*
+
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	char optstring[]="i";
@@ -36,16 +36,18 @@ int main(int argc, char* argv[]) {
 	}
 
 	//****MAIN APP
-	shared_ptr<Doctor> d;
 	intro();
-	d = connectionMenu();
-	if(d==nullptr){
-		return 0;
+	while(true){
+		shared_ptr<Doctor> d;
+		d = connectionMenu();
+		if(d==nullptr){
+			return 0;
+		}
+		mainMenu(*d);
 	}
-	mainMenu(*d);
 
 	return 0;
-}*/
+}
 
 /*#include<map>
 #include<vector>
@@ -80,7 +82,7 @@ int main(){
 	return 0;
 }*/
 
-#include "model/analysisResult.h"
+/*#include "model/analysisResult.h"
 #include <map>
 #include "fs/FileServices.h"
 using namespace fs;
@@ -91,4 +93,4 @@ int main(){
 	cout << *ar;
 	addResultToLog(ar);
 	return 0;
-}
+}*/
