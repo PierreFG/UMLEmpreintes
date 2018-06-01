@@ -203,7 +203,7 @@ void testC2(){
     vector<double> v3;
 	map1["varicelle"] = v3;
 	Rule_ptr ru = make_shared<Rule>(map1);
-
+    fs::saveRule(ru);
 	Rule_ptr r = fs::getRule();
 	cout << *r;
 }
@@ -215,6 +215,9 @@ int main() {
 	switch(test){
         case 1:
             testB1();
+            break;
+        case 2:
+            testC2();
             break;
         case 5:
             TU_05();

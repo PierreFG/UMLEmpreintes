@@ -7,7 +7,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////
 /// FONCTIONS UTILITAIRES
 ///////////////////////////////////////////////////////////////////////////////
-string fs::cTimeToString(){
+/*string fs::cTimeToString(){
     time_t rawtime;
     struct tm * timeinfo;
     char buffer[80];
@@ -19,7 +19,7 @@ string fs::cTimeToString(){
     std::string str(buffer);
 
     return str;
-}
+}*/
 
 string fs::itos(int i) {
     string result;
@@ -340,12 +340,9 @@ Rule_ptr fs::getRule(){
     if(!is.is_open()) return nullptr;
 
     map<string,vector<double>> m;
-
-    while (!(is.eof() || is.fail() || is.bad())){
+    string line; //1 ligne du csv
+    while (getline(is, line)){
         vector<double> v;
-
-        string line; //1 ligne du csv
-        getline(is, line);
         stringstream data(line);
 
         string d; //maladie
