@@ -7,6 +7,19 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////
 /// FONCTIONS UTILITAIRES
 ///////////////////////////////////////////////////////////////////////////////
+string fs::cTimeToString(){
+    time_t rawtime;
+    struct tm * timeinfo;
+    char buffer[80];
+
+    time (&rawtime);
+    timeinfo = localtime(&rawtime);
+
+    strftime(buffer,sizeof(buffer),"%d-%m-%Y %I:%M:%S",timeinfo);
+    std::string str(buffer);
+
+    return str;
+}
 
 string fs::itos(int i) {
     string result;
@@ -85,7 +98,7 @@ istream& operator>>(istream& in, Doctor& d) {
 
 ostream& operator<<(ostream& out, const AnalysisResult& r) {
     // Ecriture dans le flux de sortie au format CSV
-    out << r.doctor->ID << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
+    out << r.doctor->getID() << ";" << r.date << ";" << r.file << ";" << r.printID << ";" << endl;
     return out;
 }
 
@@ -172,7 +185,7 @@ Doctor_ptr fs::signInDoctor(string username, string password) {
 
 bool fs::signUpDoctor(Doctor_ptr doctor) {
     // Vï¿½rification de la conformitï¿½ du personnel ï¿½ inscrire
-    /*if(doctor == nullptr
+    if(doctor == nullptr
     || doctor->getMail().empty()
     || doctor->getPassword().empty()
     || doctor->getFirstName().empty()
@@ -180,7 +193,7 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     || doctor->getID() != 0
     || fs::signInDoctor(doctor->getMail(), doctor->getPassword()) != nullptr) {
         return false;
-    }*/
+    }
     // donner un ID
     if((doctor->ID = generateDoctorID()) == 0) {
         return false;

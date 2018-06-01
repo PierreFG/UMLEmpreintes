@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <set>
+#include <map>
 #include <vector>
 
 #include "fs/FileServices.h"
@@ -8,9 +9,11 @@
 #include "model/doctor.h"
 #include "analysis/Vect.h"
 #include "analysis/Mat.h"
+#include "model/rule.h"
 
 using namespace std;
 using namespace ui;
+using namespace fs;
 
 void TU_05() {
     Doctor doc;
@@ -191,6 +194,19 @@ void testD9(){
 
 }
 
+void testC2(){
+    map<string,vector<double>> map1;
+	vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
+	map1["rhume"] = v1;
+	vector<double> v2; v2.push_back(5.0); v2.push_back(2.0);
+	map1["cancer"] = v2;
+    vector<double> v3;
+	map1["varicelle"] = v3;
+	Rule_ptr ru = make_shared<Rule>(map1);
+
+	Rule_ptr r = fs::getRule();
+	cout << *r;
+}
 
 int main() {
 	int test=-1;
