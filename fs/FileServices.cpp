@@ -1,28 +1,28 @@
 #include <algorithm>
-#include "fs/FileServices.h"
+#include <ctime>
 
+#include "fs/FileServices.h"
 
 using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////////
 /// FONCTIONS UTILITAIRES
 ///////////////////////////////////////////////////////////////////////////////
-string fs::cTimeToString(){
-    time_t rawtime;
-    struct tm * timeinfo;
-    char buffer[80];
 
-    time (&rawtime);
-    timeinfo = localtime(&rawtime);
-
-    strftime(buffer,sizeof(buffer),"%d-%m-%Y %I:%M:%S",timeinfo);
-    std::string str(buffer);
-
-    return str;
+string fs::getCurrentTime(){
+    time_t t = time(0);
+    tm* now = localtime(&t);
+    stringstream buffer;
+    buffer << now->tm_year + 1900 << "-";
+    buffer << now->tm_mon + 1 << "-";
+    buffer << now->tm_mday << " ";
+    buffer << now->tm_hour << ":";
+    buffer << now->tm_min << ":";
+    buffer << now->tm_sec;
+    return buffer.str();
 }
 
 string fs::itos(int i) {
-    string result;
     stringstream buffer;
     buffer << i;
     return buffer.str();
@@ -309,7 +309,7 @@ vector<Print> fs::getPrint(string filename){
                     vecDou.clear();
                     vecStr.clear();
                 } else if (types.at(i)==1){
-                    vecDou.push_back(stod(value));
+                    vecDou.push_back(fs::stod(value));
                 } else if (types.at(i)==2){
                     vecStr.push_back(value);
                 }

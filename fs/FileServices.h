@@ -37,7 +37,7 @@ namespace fs {
     const string OUTPUT_PATH = "out/";
 
     ///*****UTILITY FUNCTIONS
-    string cTimeToString();
+    string getCurrentTime();
     /*  Returns the Date and Time in String Format
     *   Date parsing : jj-mm-yyyy hh:mm:ss
     */
