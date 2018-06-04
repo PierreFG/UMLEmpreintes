@@ -25,6 +25,21 @@ void TU_05() {
 
 }
 
+//Validation de signInDoctor
+void testA1(){
+	Doctor d("Jean", "Jacques", "j.j@cancer", "coucou");
+	cout << signUpDoctor(make_shared<Doctor>(d))<<endl;
+}
+
+//Validation de signUpDoctor
+void testA2(){
+	Doctor_ptr d = signInDoctor("j.j@cancer", "coucou");
+	cout << *d << endl;
+}
+
+
+
+
 //TEST des fonctions du fs
 //getPrints
 void testB1(){
@@ -32,6 +47,41 @@ void testB1(){
     for(vector<Print>::iterator it = vp.begin(); it!=vp.end(); it++){
         cout << *it << endl;
     }
+}
+
+//Generation d'un ID pour le docteur
+void testB2(){
+	cout << generateDoctorID() << endl;
+}
+
+
+//Validation de saveRule et getRule (simultané)
+void testB3(){
+    map<string,vector<double>> map1;
+	vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
+	map1["rhume"] = v1;
+	vector<double> v2; v2.push_back(5.0); v2.push_back(2.0);
+	map1["cancer"] = v2;
+    vector<double> v3;
+	map1["varicelle"] = v3;
+	map<int, vector<string>> chaud;
+	vector<string> v4; v4.push_back("yo"); v4.push_back("lol");
+	chaud[1]=v4;
+	vector<string> v5; v5.push_back("kikou");
+	chaud[2]=v5;
+	Rule_ptr ru = make_shared<Rule>(map1, chaud);
+    fs::saveRule(ru);
+	Rule_ptr r = fs::getRule();
+	cout << "Expected : " << *ru << endl;
+	cout << "Obtained : " << *r << endl;
+}
+
+void testB4(){
+	
+}
+
+void testB5(){
+
 }
 
 // TEST VECTEURS
@@ -195,48 +245,73 @@ void testD9(){
 
 }
 
-void testD10{
+void testD10(){
     //Test de la génération d'une matrice à partir du set d'empreintes
     vector<Print> V;
     vector<string> S1={"AT","OUI"};
     vector<string> S2={"AA","OUI"};
-    vector<int> I1={1,1,4}
-    vector<int> I2={1,4,1}
-    
+    vector<int> I1={1,1,4};
+    vector<int> I2={1,4,1};
+ }
 
-void testC2(){
-    map<string,vector<double>> map1;
-	vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
-	map1["rhume"] = v1;
-	vector<double> v2; v2.push_back(5.0); v2.push_back(2.0);
-	map1["cancer"] = v2;
-    vector<double> v3;
-	map1["varicelle"] = v3;
-	map<int, vector<string>> chaud;
-	vector<string> v4; v4.push_back("yo"); v4.push_back("lol");
-	chaud[1]=v4;
-	vector<string> v5; v5.push_back("kikou");
-	chaud[2]=v5;
-	Rule_ptr ru = make_shared<Rule>(map1, chaud);
-    fs::saveRule(ru);
-	Rule_ptr r = fs::getRule();
-	cout << *r;
-}
+
 
 int main() {
 	int test=-1;
 	cin >> test;
 	cin.ignore();
 	switch(test){
-        case 1:
+		case 1:
+			testA1();
+			break;
+		case 2:
+			testA2();
+			break;
+        case 3:
             testB1();
             break;
-        case 2:
-            testC2();
-            break;
+        case 4:
+        	testB2();
+        	break;
         case 5:
-            TU_05();
-            break;
+        	testB3();
+        	break;
+        case 6:
+        	testB4();
+        	break;
+        case 7:
+        	testB5();
+        	break;
+        case 8:
+        	testD1();
+        	break;
+        case 9:
+        	testD2();
+        	break;
+        case 10:
+        	testD3();
+        	break;
+        case 11:
+        	testD4();
+        	break;
+        case 12:
+        	testD5();
+        	break;
+        case 13:
+        	testD6();
+        	break;
+        case 14:
+        	testD7();
+        	break;
+        case 15:
+        	testD8();
+        	break;
+        case 16:
+        	testD9();
+        	break;
+        case 17:
+        	testD10();
+        	break;
 	}
 
 	return 0;
