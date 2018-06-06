@@ -4,6 +4,8 @@
 
 #include <string>
 #include <vector>
+#include <memory>
+
 using namespace std;
 
 class Print
@@ -27,5 +29,7 @@ protected:
     vector<string> attrStr;
 
 };
+
+typedef std::shared_ptr<Print> Print_ptr;
 
 #endif // Print_H

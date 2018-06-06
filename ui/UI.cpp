@@ -12,14 +12,15 @@
 #include <vector>
 #include <memory>
 
-#include "UI.h"
+#include "ui/UI.h"
 #include "model/doctor.h"
-#include "fs/FileServices.h"
 #include "model/analysisResult.h"
+#include "analysis/PrintAnalyser.h"
+#include "fs/FileServices.h"
 
 using namespace std;
 
-void ui::intro(){
+void ui::intro() {
 	cout << Colorize(Colorize::RED) << endl;
 	cout << "Analyseur d'empreintes" << endl;
 	cout << "Application developpee dans un contexte de TP \"Genie logiciel\" a l'INSA de Lyon"<<endl;
@@ -28,8 +29,8 @@ void ui::intro(){
 	return;
 }
 
-shared_ptr<Doctor> ui::connectionMenu(){
-	shared_ptr<Doctor> d=nullptr;
+Doctor_ptr ui::connectionMenu() {
+	Doctor_ptr d = nullptr;
 
 	cout << "Bienvenue sur l'analyseur d'empreintes !"<<endl<<endl;
 
@@ -41,7 +42,7 @@ shared_ptr<Doctor> ui::connectionMenu(){
 		char res=inputChar({'i','c','q'});
 		if (res=='i')
 		{
-			d=make_shared<Doctor>(seizeInformation());
+			d = seizeInformation();
 			if(fs::signUpDoctor(d)){
 				cout << Colorize(Colorize::GREEN) << endl;
 				cout << "Votre inscription a ete realisee avec succes !"<<endl;
@@ -83,10 +84,10 @@ shared_ptr<Doctor> ui::connectionMenu(){
 	return d;
 }
 
-void ui::mainMenu(Doctor d){
+void ui::mainMenu(Doctor_ptr d){
 	char car;
 
-	cout << "Bonjour M. " << d.getName() <<"."<<endl;
+	cout << "Bonjour M. " << d->getName() <<"."<<endl;
 
 	while (car!='d'){
 		cout << endl<<endl;
@@ -96,25 +97,27 @@ void ui::mainMenu(Doctor d){
 		car=inputChar({'a', 'h', 'd'});
 		if (car=='a'){
 			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
-			string path=inputString();
+			string path = inputString();
 			//Appeler la méthode d'analyse d'une empreinte
+
+			analyser.SetDoctor(d);
 
 		} else if(car=='h'){
 			//Appeler la méthode historique
-			vector<AnalysisResult_ptr> res = fs::readLogs(d.getID());
-			if (res.size()!=0){
+			vector<AnalysisResult_ptr> res = fs::readLogs(d->getID());
+			if (!res.empty()){
 				cout << "Votre historique : " << endl;
-				for(vector<AnalysisResult_ptr>::iterator it = res.begin(); it!=res.end(); it++){
-					cout << *it<<endl;
+				for(auto it = res.begin(); it!=res.end(); it++){
+					cout << **it <<endl;
 				}
-				
+
 			} else {
 				cout << "Votre historique est vide à l'heure actuelle" << endl<<endl;
 			}
-						
+
 		}
 	}
-	cout <<"Au revoir M. " << d.getName() << "." << endl;
+	cout <<"Au revoir M. " << d->getName() << "." << endl;
 }
 
 int ui::inputInt(){
@@ -160,7 +163,7 @@ char ui::inputChar(set<char> expected){
 
 }
 
-Doctor ui::seizeInformation(){
+Doctor_ptr ui::seizeInformation(){
 	cout <<"Formulaire d'inscription"<<endl<<endl;
 	bool ok=false;
 	string firstname, lastname, email, password, confirm;
@@ -191,6 +194,5 @@ Doctor ui::seizeInformation(){
 			ok=true;
 		}
 	} while(!ok);
-	Doctor d(firstname, lastname, email, password);
-	return d;
+	return make_shared<Doctor>(firstname, lastname, email, password);
 }

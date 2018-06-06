@@ -128,6 +128,8 @@ istream& operator>>(istream& in, AnalysisResult& r) {
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
+        cout << doctorID << endl;
+
     r.doctor = fs::findDoctorByID(doctorID);
 
     // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
@@ -229,7 +231,7 @@ long fs::generateDoctorID() {
         }
         sort(idList.begin(), idList.end());
         long nextID = idList.size()+1;
-        for(int i=0; i<idList.size(); i++) {
+        for(unsigned int i=0; i<idList.size(); i++) {
             if(idList[i] > i+1) {
                 nextID = i+1;
                 break;
@@ -252,7 +254,7 @@ bool fs::saveRule(Rule_ptr r){
     return success;
 }
 
-vector<Print> fs::getPrint(string filename){
+vector<Print_ptr> fs::getPrints(string filename){
 	//First of all, load all metadatas and analyse them
 	ifstream isMeta("meta_"+filename);
 	string buffer;
@@ -274,7 +276,7 @@ vector<Print> fs::getPrint(string filename){
 	}
 
 	//Then parse all file and get the prints
-	vector<Print> vec;
+	vector<Print_ptr> vec;
 
 	ifstream is(filename.c_str());
 
@@ -302,15 +304,14 @@ vector<Print> fs::getPrint(string filename){
                 if(types.at(i)==0){
                     int a = fs::stoi(value);
                     if (a==id){
-                        for(int index=i; index<types.size(); index++){
+                        for(unsigned int index=i; index<types.size(); index++){
                             getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
                         }
                         break;
                     }
                     //Save print
                     if(id != -1) {
-                        Print p(id, vecDis, vecDou, vecStr);
-                        vec.push_back(p);
+                        vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
                     }
                     id=a;
                     vecDis.clear();
@@ -329,8 +330,7 @@ vector<Print> fs::getPrint(string filename){
             ligne++;
             cout << ligne << endl;
             if(ligne==total){
-                Print p(id, vecDis, vecDou, vecStr);
-                vec.push_back(p);
+                vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
             }
         }
 	}

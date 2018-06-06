@@ -55,7 +55,7 @@ namespace fs {
 
     bool signUpDoctor(Doctor_ptr doctor);
 
-    vector<Print> getPrint(string filename);
+    vector<Print_ptr> getPrints(string filename);
 
     bool saveRule(Rule_ptr r);
 

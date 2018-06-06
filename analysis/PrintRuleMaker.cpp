@@ -12,12 +12,12 @@
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
 
-Rule PrintRuleMaker::generateRule(vector<Print> datas){
+Rule PrintRuleMaker::generateRule(vector<Print_ptr> datas){
     StrToMath Tools;
     vector<string> diseases = Tools.listDiseases(datas);
     map<int,vector<string>> valpossibles = Tools.listVals(datas);
     map<string,vector<double>> M;
-    for(int i =0; i<diseases.size();i++){
+    for(unsigned int i =0; i<diseases.size();i++){
         pair<Mat,Vect> Eq = Tools.generateMat(datas, diseases[i], valpossibles);
         Mat G=((Eq.first).transpose()*(Eq.first));
         G=G.inv();
@@ -32,7 +32,8 @@ Rule PrintRuleMaker::generateRule(vector<Print> datas){
 //-------------------------------------------- Constructeurs - destructeur
 PrintRuleMaker :: PrintRuleMaker(){
 
-};
+}
+
 PrintRuleMaker :: ~PrintRuleMaker(){
 
-};
+}

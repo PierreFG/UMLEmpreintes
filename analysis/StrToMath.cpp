@@ -12,63 +12,63 @@
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-map<int,vector<string>> StrToMath :: listVals(vector<Print> datas){
-    int nbStrings = datas[0].getAttrStr().size();
+map<int,vector<string>> StrToMath::listVals(vector<Print_ptr> datas){
+    int nbStrings = datas[0]->getAttrStr().size();
     int nbPrints = datas.size();
     std::vector<string>::iterator it;
     map<int,vector<string>> valpossibles;
     for(int i=0;i<nbStrings;i++){
         valpossibles.insert(pair<int,vector<string> >(i, vector<string>()));
         for(int j=0; j<nbPrints; j++){
-            it=find(valpossibles[i].begin(), valpossibles[i].end(), datas[j].getAttrStr()[i] );
+            it=find(valpossibles[i].begin(), valpossibles[i].end(), datas[j]->getAttrStr()[i] );
             if(it == valpossibles[i].end()){
-                valpossibles[i].push_back(datas[j].getAttrStr()[i]);
+                valpossibles[i].push_back(datas[j]->getAttrStr()[i]);
             }
         }
     }
     return valpossibles;
 }
 
-vector<string> StrToMath :: listDiseases(vector<Print> datas){
-    int nbPrints = datas.size();
+vector<string> StrToMath :: listDiseases(vector<Print_ptr> datas){
+    unsigned int nbPrints = datas.size();
     vector<string> valpossibles;
-    for(int i=0;i<nbPrints;i++){
-        for(int j=0; j<datas[i].getDiseases().size(); j++){
-            auto it=find(valpossibles.begin(), valpossibles.end(), datas[i].getDiseases()[j] );
+    for(unsigned int i=0;i<nbPrints;i++){
+        for(unsigned int j=0; j<datas[i]->getDiseases().size(); j++){
+            auto it = find(valpossibles.begin(), valpossibles.end(), datas[i]->getDiseases()[j] );
             if(it == valpossibles.end()){
-                valpossibles.push_back(datas[i].getDiseases()[j]);
+                valpossibles.push_back(datas[i]->getDiseases()[j]);
             }
         }
     }
     return valpossibles;
 }
 
-pair<Mat,Vect> StrToMath :: generateMat(vector<Print> datas, string disease, map<int,vector<string>> valpossibles){
+pair<Mat,Vect> StrToMath::generateMat(vector<Print_ptr> datas, string disease, map<int,vector<string>> valpossibles){
     Mat M;
     Vect Y;
-    int nbPrints = datas.size();
-    int nbDoubles = datas[0].getAttr().size();
-    int nbStrings = datas[0].getAttrStr().size();
-    int nbVals=0;
-    int ind =0;
+    unsigned int nbPrints = datas.size();
+    unsigned int nbDoubles = datas[0]->getAttr().size();
+    unsigned int nbStrings = datas[0]->getAttrStr().size();
+    unsigned int nbVals=0;
+    unsigned int ind =0;
     vector<string> vals;
     Vect buffer;
     std::vector<string>::iterator it;
-    for(int i=0; i<nbPrints; i++){
-        for(int d=0;d<datas[i].getDiseases().size();d++){
+    for(unsigned int i=0; i<nbPrints; i++){
+        for(unsigned int d=0;d<datas[i]->getDiseases().size();d++){
             buffer.clear();
             buffer.addvalue(1);
-            for(int j=0;j<nbDoubles;j++){
-                buffer.addvalue(datas[i].getAttr()[j]);
+            for(unsigned int j=0;j<nbDoubles;j++){
+                buffer.addvalue(datas[i]->getAttr()[j]);
             }
-            for(int j=0;j<nbStrings;j++){
+            for(unsigned int j=0;j<nbStrings;j++){
                 vals.clear();
                 vals = valpossibles[j];
                 nbVals=vals.size();
-                it=find(vals.begin(),vals.end(),datas[i].getAttrStr()[j]);
+                it = find(vals.begin(),vals.end(),datas[i]->getAttrStr()[j]);
                 assert(it!=vals.end());
                 ind = vals.end()-it;
-                for(int k=0;k<nbVals;k++){
+                for(unsigned int k=0;k<nbVals;k++){
                     if(k!=ind){
                         buffer.addvalue(0);
                     }else{
@@ -77,7 +77,7 @@ pair<Mat,Vect> StrToMath :: generateMat(vector<Print> datas, string disease, map
                 }
             }
             M.addline(buffer);
-            if(datas[i].getDiseases()[d] == disease){
+            if(datas[i]->getDiseases()[d] == disease){
                 Y.addvalue(1);
             }else{
                 Y.addvalue(0);
@@ -88,20 +88,20 @@ pair<Mat,Vect> StrToMath :: generateMat(vector<Print> datas, string disease, map
     return Eq;
 }
 
-vector<double> StrToMath :: transformPrint(Print p, map<int,vector<string>> valpossibles){
-    int nbDoubles = p.getAttr().size();
-    int nbStrings = p.getAttrStr().size();
+vector<double> StrToMath::transformPrint(Print_ptr p, map<int,vector<string>> valpossibles){
+    int nbDoubles = p->getAttr().size();
+    int nbStrings = p->getAttrStr().size();
     int ind=0;
     int nbVals;
     vector<double> result;
     vector<string> vals;
     for(int j=0;j<nbDoubles;j++){
-        result.push_back(p.getAttr()[j]);
+        result.push_back(p->getAttr()[j]);
     }
     for(int j=0;j<nbStrings;j++){
         vals = valpossibles[j];
         nbVals=vals.size();
-        auto it=find(vals.begin(),vals.end(),p.getAttrStr()[j]);
+        auto it = find(vals.begin(),vals.end(),p->getAttrStr()[j]);
         assert(it!=vals.end());
         ind = vals.end()-it;
         for(int k=0;k<nbVals;k++){
