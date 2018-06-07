@@ -17,22 +17,26 @@
 #include "model/analysisResult.h"
 #include "model/print.h"
 
-using namespace std; 
+using namespace std;
 
 class PrintAnalyser{
     //---------------------------------------------------- Fonctions publiques
 public:
-    AnalysisResult analysePrint(string file);
-    void SetRule(Rule * r);
-    void SetDoctor(Doctor* d);
+    vector<AnalysisResult_ptr> analysePrints(string file);
+    void SetRule(Rule_ptr r);
+    void SetDoctor(Doctor_ptr d);
 //-------------------------------------------- Constructeurs - destructeur
 
     PrintAnalyser();
     virtual ~PrintAnalyser();
 //---------------------------------------------------- Attributs privés
 private:
-    Rule* usedRule;
-    Doctor* doctor;
+    Rule_ptr usedRule;
+    Doctor_ptr doctor;
 
 };
+
+// Instance de PrintAnalyser accessible dans toute l'application
+extern PrintAnalyser analyser;
+
 #endif // PRINTANALYSER_H

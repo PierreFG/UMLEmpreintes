@@ -17,10 +17,10 @@
 
 namespace ui {
 
-    std::shared_ptr<Doctor> connectionMenu();
+    Doctor_ptr connectionMenu();
     //Displays the connection Menu
 
-    void mainMenu(Doctor d);
+    void mainMenu(Doctor_ptr d);
     //Displays the main menu of the application
     //(once you're connected)
 
@@ -40,7 +40,7 @@ namespace ui {
     //Shows a small introduction message about
     //the software and its rights.
 
-    Doctor seizeInformation();
+    Doctor_ptr seizeInformation();
     //Invites the user to complete fields
     //about his datas in order to create a proper
     //Doctor instance
@@ -53,7 +53,7 @@ namespace ui {
             std::stringstream ss;
             switch(colorizer.color) {
             case DEFAULT:
-                ss <<"\033[0m";
+                ss << "\033[0m";
                 break;
             case RED:
             case GREEN:
@@ -62,8 +62,7 @@ namespace ui {
             case MAGENTA:
             case CYAN:
             case WHITE:
-            	out << colorizer.color<<endl;
-            	ss << "\033[3"<<colorizer.color<<"m";
+            	ss << "\033[3" << colorizer.color << "m";
             	break;
             default:
                 break;
