@@ -114,14 +114,5 @@ vector<double> StrToMath::transformPrint(Print_ptr p, map<int,vector<string>> va
     }
     return result;
 }
-//int main(){}
-//--------------------------------------------- Constructeurs-Destructeurs
-
-StrToMath :: StrToMath(){
-
-}
-StrToMath :: ~StrToMath(){
-
-}
 
 

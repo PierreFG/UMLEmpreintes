@@ -13,12 +13,11 @@
 //---------------------------------------------------- Fonctions publiques
 
 Rule PrintRuleMaker::generateRule(vector<Print_ptr> datas){
-    StrToMath Tools;
-    vector<string> diseases = Tools.listDiseases(datas);
-    map<int,vector<string>> valpossibles = Tools.listVals(datas);
+    vector<string> diseases = StrToMath::listDiseases(datas);
+    map<int,vector<string>> valpossibles = StrToMath::listVals(datas);
     map<string,vector<double>> M;
     for(unsigned int i =0; i<diseases.size();i++){
-        pair<Mat,Vect> Eq = Tools.generateMat(datas, diseases[i], valpossibles);
+        pair<Mat,Vect> Eq = StrToMath::generateMat(datas, diseases[i], valpossibles);
         Mat G=((Eq.first).transpose()*(Eq.first));
         G=G.inv();
         Vect D = ((Eq.first).transpose())*(Eq.second);

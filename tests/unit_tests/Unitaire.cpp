@@ -251,8 +251,14 @@ namespace test {
         vector<string> S2={"AA","OUI"};
         vector<int> I1={1,1,4};
         vector<int> I2={1,4,1};
-     }
+    }
 
+    //TEST OPERATIONS EMPREINTES
+    void test D11(){
+        string filename;
+        cin>>filename;
+        
+    }
 
 
     int main() {
