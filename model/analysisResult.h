@@ -23,6 +23,9 @@ public:
 
     Doctor_ptr getDoctor() const;
     string getDate() const;
+    long getPrintID() const;
+    string getFileName() const;
+     map<string, double> getProbas() const;
 
 protected:
     map<string, double> proba;

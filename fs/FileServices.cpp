@@ -224,7 +224,7 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
 long fs::generateDoctorID() {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
-        vector<long> idList{};
+        vector<unsigned long> idList{};
         Doctor tmp;
         while(is >> tmp) {
             idList.push_back(tmp.getID());
@@ -340,8 +340,46 @@ vector<Print_ptr> fs::getPrints(string filename){
 }
 
 bool fs::saveResult(AnalysisResult_ptr r) {
-    // Not implemented
-    return false;
+    bool success = false;
+    ofstream os(fs::OUTPUT_PATH.c_str() + r->getFileName + ".xml", ios::out | ios::app);
+    if(os.is_open()) {
+        os << "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>" << endl;
+        os << "<!DOCTYPE analysis [" << endl;
+        os << "<!ENTITY analysis (time, doctorid, fileid, printid, result*)>" << endl;
+        os << "<!ENTITY time (#PCDATA)>" << endl;
+        os << "<!ENTITY doctorid (#PCDATA)>" << endl;
+        os << "<!ENTITY fileid (#PCDATA)>" << endl;
+        os << "<!ENTITY printid (#PCDATA)>" << endl;
+        os << "<!ENTITY result (name, proba)>" << endl;
+        os << "<!ENTITY name (#PCDATA)>" << endl;
+        os << "<!ENTITY proba (#PCDATA)>" << endl;
+        os << "]>" << endl;
+        os << "<analysis>" << endl;
+        os << "  <time>" << endl;
+        os << "    " << r->getDate() << endl;
+        os << "  </time>" << endl;
+        os << "  <doctorid>" << endl;
+        os << "    " << r->getDoctor()->getID() << endl;
+        os << "  </doctorid>" << endl;
+        os << "  <fileid>" << endl;
+        os << "    " << r->getFileName() << endl;
+        os << "  </fileid>" << endl;
+        os << "  <printid>" << endl;
+        os << "    " << r->getPrintID() << endl;
+        os << "  </printid>" << endl;
+        for(auto& prb : r->getProbas()) {
+            os << "    <name>" << endl;
+            os << "      " << prb.first << endl;
+            os << "    </name>" << endl;
+            os << "    <proba>" << endl;
+            os << "      " << prb.second << endl;
+            os << "    </proba>" << endl;
+        }
+        os << "</analysis>" << endl;
+        success = os.good();
+        os.close();
+    }
+    return success;
 }
 
 Rule_ptr fs::getRule(){
