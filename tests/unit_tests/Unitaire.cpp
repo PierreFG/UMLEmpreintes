@@ -22,7 +22,6 @@ void TU_05() {
     while(cin >> doc) {
         cout << "#" << i++ << ": " << doc;
     }
-
 }
 
 //Validation de signInDoctor
