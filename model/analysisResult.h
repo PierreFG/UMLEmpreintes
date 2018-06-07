@@ -30,10 +30,10 @@ public:
 
 protected:
     map<string, double> proba;
-    printid_t printID;
     string file;
     string date;
     Doctor_ptr doctor;
+    printid_t printID;
 };
 
 typedef shared_ptr<AnalysisResult> AnalysisResult_ptr;

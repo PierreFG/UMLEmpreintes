@@ -349,12 +349,14 @@ bool fs::saveResult(AnalysisResult_ptr r) {
         os << "    " << r->getPrintID() << endl;
         os << "  </printid>" << endl;
         for(auto& prb : r->getProbas()) {
+            os << "  <result>" << endl;
             os << "    <name>" << endl;
             os << "      " << prb.first << endl;
             os << "    </name>" << endl;
             os << "    <proba>" << endl;
             os << "      " << prb.second << endl;
             os << "    </proba>" << endl;
+            os << "  </result>" << endl;
         }
         os << "</analysis>" << endl;
         success = os.good();
