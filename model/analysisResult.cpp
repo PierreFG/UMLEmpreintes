@@ -2,8 +2,7 @@
 #include "analysisResult.h"
 #include "fs/FileServices.h"
 
-AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile, Doctor_ptr pDoctor):proba(pproba),file(pfile) {
-    printID = 0;
+AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile, Doctor_ptr pDoctor,printid_t id):proba(pproba),file(pfile),printID(id){
     date = fs::getCurrentTime();
     doctor = pDoctor;
 }

@@ -9,7 +9,6 @@
 #include <algorithm>
 #include <cassert>
 
-
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
 map<int,vector<string>> StrToMath::listVals(vector<Print_ptr> datas){
