@@ -29,7 +29,7 @@ public:
 
 protected:
     map<string, double> proba;
-    long printID;
+    printid_t printID;
     string file;
     string date;
     Doctor_ptr doctor;

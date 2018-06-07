@@ -19,7 +19,7 @@ void usage() {
 	//exit(1);
 	return;
 }
-/*
+
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	string path;
@@ -40,10 +40,10 @@ int main(int argc, char* argv[]) {
    	}
 
 	//****MAJ DE LA BASE DE DONNE (si -i)
-	if(i){
+	if(i) {
 		vector<Print_ptr> v;
 		v = getPrints(path);
-		/*for(auto it=v.begin(); it!=v.end(); it++){
+		for(auto it=v.begin(); it!=v.end(); it++){
 			cout << *(*it) << endl;
 		}
 		PrintRuleMaker *prm = new PrintRuleMaker();
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-*/
+
 /*#include "model/analysisResult.h"
 #include <map>
 #include "fs/FileServices.h"

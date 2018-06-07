@@ -21,7 +21,7 @@ namespace test {
     //getPrints
     void UT_1_1() {
         vector<Print_ptr> vp = fs::getPrints("data/print");
-        for(auto it = vp.begin(); it != vp.end(); it++){
+        for(auto it = vp.begin(); it != vp.end(); it++) {
             cout << **it << endl;
         }
     }

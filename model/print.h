@@ -35,6 +35,6 @@ protected:
 
 };
 
-typedef std::shared_ptr<Print> Print_ptr;
+typedef shared_ptr<Print> Print_ptr;
 
 #endif // Print_H
