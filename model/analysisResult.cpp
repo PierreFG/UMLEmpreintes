@@ -2,10 +2,10 @@
 #include "analysisResult.h"
 #include "fs/FileServices.h"
 
-AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile) : proba(pproba), file(pfile) {
+AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile, Doctor_ptr pDoctor):proba(pproba),file(pfile) {
     printID = 0;
     date = fs::getCurrentTime();
-    doctor = make_shared<Doctor>("Faure", "Pierre", "monMail", "a");
+    doctor = pDoctor;
 }
 
 AnalysisResult::AnalysisResult() {

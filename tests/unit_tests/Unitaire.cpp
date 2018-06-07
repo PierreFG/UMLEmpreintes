@@ -48,9 +48,12 @@ namespace test {
 
     //Generation d'un ID pour le docteur
     void UT_1_2() {
-        //cin >>
-        //cin.ignore();
-        cout << generateDoctorID() << endl;
+        long long int n;
+        cin >> n;
+        cin.ignore();
+        for(long long int i=0; i<n; i++) {
+            cout << generateDoctorID() << endl;
+        }
     }
 
 	void UT_1_3(){
