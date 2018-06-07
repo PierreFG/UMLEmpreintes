@@ -260,7 +260,7 @@ bool fs::saveRule(Rule_ptr r){
 
 vector<Print_ptr> fs::getPrints(string filename){
 	//First of all, load all metadatas and analyse them
-	ifstream isMeta("meta_"+filename);
+	ifstream isMeta(filename + "_meta");
 	string buffer;
 
 	//Since we know every data is in order and that there's exactly n different types,
@@ -272,9 +272,9 @@ vector<Print_ptr> fs::getPrints(string filename){
 		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
 			types.push_back(0);
-		} else if (type=="double"){
+		} else if (type=="double") {
 			types.push_back(1);
-		} else if (type=="string"){
+		} else if (type=="string") {
 			types.push_back(2);
 		}
 	}
@@ -283,8 +283,45 @@ vector<Print_ptr> fs::getPrints(string filename){
 	vector<Print_ptr> vec;
 
 	ifstream is(filename.c_str());
+	if(is.is_open()) {
+        getline(is, buffer); // first line is useless
+        while(getline(is, buffer)) {
+            vector<double> dvec;
+            vector<string> svec;
+            printid_t id;
+            string disease;
+            stringstream data(buffer);
+            string tmp;
+            for(unsigned int i=0; i<types.size(); i++) {
+                if(types[i] == 0) {
+                    data >> id;
+                    getline(data, tmp, ';');
+                } else if(types[i] == 1) {
+                    double d;
+                    data >> d;
+                    getline(data, tmp, ';');
+                    dvec.push_back(d);
+                } else if(types[i] == 2) {
+                    string s;
+                    getline(data, s, ';');
+                    svec.push_back(s);
+                }
+            }
+            getline(data, disease, ';');
+            if(vec.size() == 0 || vec.back()->getID() != id) {
+                vector<string> disvec;
+                if(!disease.empty()) {
+                    disvec.push_back(disease);
+                }
+                vec.push_back(make_shared<Print>(id, disvec, dvec, svec));
+            } else {
+                vec.back()->addDisease(disease);
+            }
+        }
+        is.close();
+	}
 
-    //count the lines
+    /*//count the lines
     int total=0;
     while (getline(is, buffer) && !is.eof()) { total++;}
     is.close();
@@ -337,9 +374,7 @@ vector<Print_ptr> fs::getPrints(string filename){
                 vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
             }
         }
-	}
-
-
+	}*/
 	return vec;
 }
 

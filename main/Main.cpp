@@ -19,7 +19,7 @@ void usage() {
 	//exit(1);
 	return;
 }
-
+/*
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
 	string path;
@@ -68,7 +68,7 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-
+*/
 /*#include "model/analysisResult.h"
 #include <map>
 #include "fs/FileServices.h"

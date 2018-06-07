@@ -8,22 +8,27 @@
 
 using namespace std;
 
+typedef int64_t printid_t;
+
 class Print
 {
 
 public:
     friend ostream& operator << (ostream& out, const Print& p);
-    Print (long id, vector<string>, vector<double>, vector<string>);
-    virtual ~Print ();
+    Print (printid_t id, vector<string>, vector<double>, vector<string>);
+    Print();
+    virtual ~Print();
 
-    long getID();
-    vector<string> getDiseases();
-    vector<double> getAttr();
-    vector<string> getAttrStr();
+    void addDisease(string d);
+
+    long getID() const;
+    vector<string> getDiseases() const;
+    vector<double> getAttr() const;
+    vector<string> getAttrStr() const;
 
 
 protected:
-    long ID;
+    printid_t ID;
     vector<string> diseases;
     vector<double> attr;
     vector<string> attrStr;

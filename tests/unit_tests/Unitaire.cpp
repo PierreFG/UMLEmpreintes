@@ -21,11 +21,6 @@ namespace test {
 	//TESTS DU FS
 
 
-	void UT_1_3(){
-
-	}
-
-
     //Validation de signUpDoctor
     void testA2(){
         Doctor_ptr d = signInDoctor("j.j@cancer", "coucou");
@@ -35,7 +30,7 @@ namespace test {
     //TEST des fonctions du fs
     //getPrints
     void UT_1_1() {
-        vector<Print_ptr> vp = fs::getPrints("prints.csv");
+        vector<Print_ptr> vp = fs::getPrints("data/print");
         for(auto it = vp.begin(); it != vp.end(); it++){
             cout << **it << endl;
         }
@@ -71,55 +66,55 @@ namespace test {
         cout << "Obtained : " << *r << endl;
 	}
 
-	void UT_1_4(){
+	void UT_1_4() {
         Doctor_ptr d = seizeInformation();
-        cout << signUpDoctor(d)<<endl;
+        cout << signUpDoctor(d) << endl;
 	}
 
-	void UT_1_5(){
+	void UT_1_5() {
 		string mail = inputString();
 		string mdp = inputString();
         Doctor_ptr d = signInDoctor(mail,mdp);
         cout << *d << endl;
 	}
 
-	void UT_1_6(){
-		Doctor d("Jean", "Michel", "jm@chaudcourriel", "azerty");
+	void UT_1_6() {
+		Doctor_ptr d = make_shared<Doctor>("Jean", "Michel", "jm@chaudcourriel", "azerty");
 		map<string,double> map1;
         map1["rhume"] = 0.9;
         map1["cancer"] = 0.7;
         map1["varicelle"] = 0.3;
-        AnalysisResult a(map1,"empreintes.csv", d);
+        AnalysisResult_ptr a = make_shared<AnalysisResult>(map1,"empreintes.csv", d);
         saveResult(a);
 	}
 
-	void UT_1_7(){
+	void UT_1_7() {
 
 	}
 
-	void UT_1_8(){
+	void UT_1_8() {
 
 	}
 
 	//TESTS DE UI
 
-	void UT_2_1(){
+	void UT_2_1() {
 		string s=inputString();
 		cout << s << endl;
 	}
 
-	void UT_2_2(){
+	void UT_2_2() {
 		int a = inputInt();
 		cout << a << endl;
 	}
 
-	void UT_2_3(){
+	void UT_2_3() {
 		char c = inputChar({'a','b','c'});
 		cout << c << endl;
 	}
 
     // TEST VECTEURS
-    void UT_3_1(){
+    void UT_3_1() {
         //test de la construction de vecteur
         int n;
         cout<<"taille du vecteur?";
@@ -128,7 +123,7 @@ namespace test {
         v.afficher();
     }
 
-    void UT_3_2(){
+    void UT_3_2() {
         //test de la modif d'un vecteur
         Vect v(3);
         v.afficher();
@@ -136,7 +131,7 @@ namespace test {
         v.afficher();
     }
 
-    void UT_3_3(){
+    void UT_3_3() {
         //test des opérations vectorielles
         Vect v(3);
         v.set(2,(double) 1);
@@ -154,7 +149,7 @@ namespace test {
 
     }
     //TEST MATRICE
-    void UT_3_4(){
+    void UT_3_4() {
         //construction d'une matrice carrée
         Mat M(2);
         M.afficher();
@@ -167,7 +162,7 @@ namespace test {
         Ma.afficher();
     }
 
-    void UT_3_5(){
+    void UT_3_5() {
         //test d'une addition
         Mat M(3,2);
         Mat K(3,2);
@@ -181,7 +176,7 @@ namespace test {
         M.afficher();
     }
 
-    void UT_3_6(){
+    void UT_3_6() {
         //test de multiplication
         Mat M(3);
         Mat K(3);
@@ -212,7 +207,7 @@ namespace test {
         I.afficher();
     }
 
-    void UT_3_7(){
+    void UT_3_7() {
         //test de la transposée d'une matrice
         Mat M(3);
         for(int i=0;i<3;i++){
@@ -238,7 +233,7 @@ namespace test {
         P.afficher();
     }
 
-    void UT_3_8(){
+    void UT_3_8() {
         //test de l'inverse d'une matrice
         Mat M(3);
         M.set(0,0,5);
@@ -263,7 +258,7 @@ namespace test {
         Mat V = K*M;
         V.afficher();
     }
-    void UT_3_9(){
+    void UT_3_9() {
         //test du changement par ligne
         Mat M(3);
         M.set(0,0,5);
@@ -279,7 +274,7 @@ namespace test {
 
     }
 
-    void UT_3_10(){
+    void UT_3_10() {
         //Test de la génération d'une matrice à partir du set d'empreintes
         vector<Print> V;
         vector<string> S1={"AT","OUI"};
@@ -296,10 +291,10 @@ namespace test {
         cin.ignore();
         switch(test){
             case 1:
-                testA1();
+                //testA1();
                 break;
             case 2:
-                testA2();
+                //testA2();
                 break;
             case 3:
                 UT_1_1();
@@ -308,13 +303,13 @@ namespace test {
                 UT_1_2();
                 break;
             case 5:
-                testB3();
+                //testB3();
                 break;
             case 6:
-                testB4();
+                //testB4();
                 break;
             case 7:
-                testB5();
+                //testB5();
                 break;
             case 8:
                 UT_3_1();
@@ -351,4 +346,9 @@ namespace test {
         return 0;
     }
 
+}
+
+int main() {
+    test::main();
+    return 0;
 }
