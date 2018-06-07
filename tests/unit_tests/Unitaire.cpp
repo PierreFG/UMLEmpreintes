@@ -41,15 +41,17 @@ namespace test {
 
     //TEST des fonctions du fs
     //getPrints
-    void testB1(){
+    void UT_1_1() {
         vector<Print_ptr> vp = fs::getPrints("prints.csv");
-        for(auto it = vp.begin(); it!=vp.end(); it++){
+        for(auto it = vp.begin(); it != vp.end(); it++){
             cout << **it << endl;
         }
     }
 
     //Generation d'un ID pour le docteur
-    void testB2(){
+    void UT_1_2() {
+        //cin >>
+        //cin.ignore();
         cout << generateDoctorID() << endl;
     }
 
@@ -267,10 +269,10 @@ namespace test {
                 testA2();
                 break;
             case 3:
-                testB1();
+                UT_1_1();
                 break;
             case 4:
-                testB2();
+                UT_1_2();
                 break;
             case 5:
                 testB3();

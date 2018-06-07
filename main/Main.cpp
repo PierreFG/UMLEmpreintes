@@ -14,7 +14,7 @@ using namespace std;
 using namespace ui;
 using namespace fs;
 
-void usage(){
+void usage() {
 	cerr << "usage : ./app [-i]" << endl;
 	//exit(1);
 	return;
