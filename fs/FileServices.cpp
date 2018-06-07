@@ -59,6 +59,7 @@ ostream& operator<<(ostream& out, const Doctor& d) {
 
 ostream& operator<<(ostream& out, const Rule& r) {
     for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
+    	out << it->first<<";";
         vector<double> v = it->second;
         for(auto it2 = v.begin(); it2!=v.end(); ++it2){
             out << *it2 << ";";
@@ -395,17 +396,18 @@ Rule_ptr fs::getRule(){
 
             string d; //maladie
             getline(data, d, ';');
-            string buffer = d;
+            string buffer;
             getline(data, buffer, ';');
             while(buffer.compare("") != 0){
                 //cout << fs::stoi(buffer) << " | ";
-                v.push_back(fs::stoi(buffer));
+                v.push_back(fs::stod(buffer));
                 getline(data, buffer, ';');
             }
             m[d] = v;
         }
     }
     Rule_ptr r = make_shared<Rule>(m, one);
+    cout << *r << endl;
     return r;
 }
 

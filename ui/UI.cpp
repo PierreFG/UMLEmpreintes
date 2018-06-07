@@ -98,9 +98,18 @@ void ui::mainMenu(Doctor_ptr d){
 		if (car=='a'){
 			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
 			string path = inputString();
-			//Appeler la méthode d'analyse d'une empreinte
-
-			analyser.SetDoctor(d);
+			PrintAnalyser pa;
+			Rule_ptr r = fs::getRule();
+			pa.SetRule(r);
+			vector<AnalysisResult_ptr> results = pa.analysePrints(path, d);
+			cout << "Voici le résultat de chaque empreinte du fichier :"<<endl;
+			for(AnalysisResult_ptr ar : results){
+				cout << "Empreinte "<< ar->getPrintID() << endl;
+				for(auto it = ar->getProbas().begin(); it!=ar->getProbas().end(); it++){
+					cout << it->first << " : " << it->second<<endl;
+				} 
+				cout << endl<<endl;
+			}
 
 		} else if(car=='h'){
 			//Appeler la méthode historique

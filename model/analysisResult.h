@@ -6,6 +6,7 @@
 #include <memory>
 #include <map>
 
+#include "print.h"
 #include "model/doctor.h"
 
 using namespace std;
@@ -14,7 +15,7 @@ class AnalysisResult
 {
 
 public:
-    AnalysisResult (map<string, double> pproba, string pfile, Doctor_ptr pDoctor);
+    AnalysisResult (map<string, double> pproba, string pfile, Doctor_ptr pDoctor, printid_t id);
     AnalysisResult();
     virtual ~AnalysisResult ();
 

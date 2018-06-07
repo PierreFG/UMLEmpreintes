@@ -31,10 +31,11 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr 
         double val=0;
         for(auto it=asso.begin();it!=asso.end();++it){
             Vect R(it->second);
+            cout << "X.size :" << X.size() << " R.size : " << R.size() << endl;
             val=X*R;
             Y.insert(pair<string,double>(it->first,val));
         }
-        results.push_back(make_shared<AnalysisResult>(Y, file, d));
+        results.push_back(make_shared<AnalysisResult>(Y, file, d, p->getID()));
     }
     return results;
 
