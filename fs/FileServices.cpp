@@ -58,9 +58,8 @@ ostream& operator<<(ostream& out, const Doctor& d) {
 }
 
 ostream& operator<<(ostream& out, const Rule& r) {
-
     for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
-        out << it->first << ";";
+        out << it->first << "hey;";
         vector<double> v = it->second;
         for(auto it2 = v.begin(); it2!=v.end(); ++it2){
             out << *it2 << ";";
@@ -151,7 +150,7 @@ ostream& operator << (ostream& out, const Print& p){
     }
     cout << endl;
     cout << "Les maladies associees sont : "<<endl;
-    for (vector<string>::const_iterator it=p.diseases.cbegin(); it!=p.diseases.cend(); it++){
+    for (auto it=p.diseases.begin(); it!=p.diseases.end(); it++){
         cout << *it << "; ";
     }
     cout << endl;
@@ -278,7 +277,6 @@ vector<Print_ptr> fs::getPrints(string filename){
 			types.push_back(2);
 		}
 	}
-
 	//Then parse all file and get the prints
 	vector<Print_ptr> vec;
 
@@ -295,7 +293,7 @@ vector<Print_ptr> fs::getPrints(string filename){
 	int ligne=0;
 	vector<string> vecStr;
 	vector<double> vecDou;
-	vector<string> vecDis;
+	string vecDis;
 	if (is.is_open()){
         string useless;
         getline(is, useless);
@@ -303,22 +301,25 @@ vector<Print_ptr> fs::getPrints(string filename){
         while (getline(is, buffer)){
             stringstream data(buffer);
             string value;
-            for(unsigned int i=0; i<types.size(); i++){
+            for(int i=0; i<types.size(); i++){
                 getline(data, value, ';');
                 if(types.at(i)==0){
-                    int a = fs::stoi(value);
-                    if (a==id){
-                        for(unsigned int index=i; index<types.size(); index++){
+                    id = fs::stoi(value);
+                    /*if (a==id){
+                        for(int index=i; index<types.size(); index++){
                             getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
                         }
                         break;
                     }
                     //Save print
                     if(id != -1) {
-                        vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
-                    }
-                    id=a;
-                    vecDis.clear();
+                        Print_ptr p = make_shared<Print>(id, vecDis, vecDou,vecStr);
+                        cout << *p<<endl;
+                        vec.push_back(p);
+
+                    }*/
+                    
+                    
                     vecDou.clear();
                     vecStr.clear();
                 } else if (types.at(i)==1){
@@ -327,14 +328,26 @@ vector<Print_ptr> fs::getPrints(string filename){
                     vecStr.push_back(value);
                 }
             }
+            vecDis="";
             getline(data, value);
             if (value!=""){
-                vecDis.push_back(value);
+                vecDis=value;
             }
             ligne++;
-            cout << ligne << endl;
-            if(ligne==total){
-                vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
+            cout << "Le contenu de vec Dis :" << vecDis<<endl;
+            if (vec.size()!=0){
+                if (vec.back()->getID()==id){
+                    //vec.back()->addDisease(vecDis);
+                    cout << *(vec.back())<<"!!"<<endl;
+                } else {
+                    Print_ptr p = make_shared<Print>(id, vecDis, vecDou, vecStr);
+                    cout <<*p<<"|"<<endl;
+                    vec.push_back(p);
+                }
+            } else {
+                Print_ptr p = make_shared<Print>(id, vecDis, vecDou, vecStr);
+                cout << *p<<"//"<<endl;
+                vec.push_back(p);
             }
         }
 	}

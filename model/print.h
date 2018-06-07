@@ -13,13 +13,14 @@ class Print
 
 public:
     friend ostream& operator << (ostream& out, const Print& p);
-    Print (long id, vector<string>, vector<double>, vector<string>);
+    Print (long id, string, vector<double>, vector<string>);
     virtual ~Print ();
 
     long getID();
     vector<string> getDiseases();
     vector<double> getAttr();
     vector<string> getAttrStr();
+    void addDisease(string disease);
 
 
 protected:

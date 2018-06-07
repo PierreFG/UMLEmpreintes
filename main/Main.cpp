@@ -43,10 +43,16 @@ int main(int argc, char* argv[]) {
 	if(i){
 		vector<Print_ptr> v;
 		v = getPrints(path);
+		/*for(auto it=v.begin(); it!=v.end(); it++){
+			cout << *(*it) << endl;
+		}*/
 		PrintRuleMaker *prm = new PrintRuleMaker();
+		cout<<"\033[30m"<<endl;
 		Rule r = prm->generateRule(v);
+		cout<<"\033[0m"<<endl;
 		Rule_ptr r1 = make_shared<Rule>(r);
 		cout<<*r1;
+		saveRule(r1);
 		return 0;
 	}
 
