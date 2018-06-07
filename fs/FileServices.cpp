@@ -58,9 +58,7 @@ ostream& operator<<(ostream& out, const Doctor& d) {
 }
 
 ostream& operator<<(ostream& out, const Rule& r) {
-
     for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
-        out << it->first << ";";
         vector<double> v = it->second;
         for(auto it2 = v.begin(); it2!=v.end(); ++it2){
             out << *it2 << ";";
@@ -129,12 +127,10 @@ istream& operator>>(istream& in, AnalysisResult& r) {
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
-        cout << doctorID << endl;
-
     r.doctor = fs::findDoctorByID(doctorID);
 
     // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
-    if(!success) {
+    if(!success || doctorID==0) {
         in.setstate(ios::failbit);
     }
     return in;
@@ -151,7 +147,7 @@ ostream& operator << (ostream& out, const Print& p){
     }
     cout << endl;
     cout << "Les maladies associees sont : "<<endl;
-    for (vector<string>::const_iterator it=p.diseases.cbegin(); it!=p.diseases.cend(); it++){
+    for (auto it=p.diseases.begin(); it!=p.diseases.end(); it++){
         cout << *it << "; ";
     }
     cout << endl;
@@ -278,7 +274,6 @@ vector<Print_ptr> fs::getPrints(string filename){
 			types.push_back(2);
 		}
 	}
-
 	//Then parse all file and get the prints
 	vector<Print_ptr> vec;
 
@@ -308,6 +303,7 @@ vector<Print_ptr> fs::getPrints(string filename){
                 }
             }
             getline(data, disease, ';');
+
             if(vec.size() == 0 || vec.back()->getID() != id) {
                 vector<string> disvec;
                 if(!disease.empty()) {
@@ -320,61 +316,6 @@ vector<Print_ptr> fs::getPrints(string filename){
         }
         is.close();
 	}
-
-    /*//count the lines
-    int total=0;
-    while (getline(is, buffer) && !is.eof()) { total++;}
-    is.close();
-
-    is.open(filename.c_str());
-
-	int id = -1;
-	int ligne=0;
-	vector<string> vecStr;
-	vector<double> vecDou;
-	vector<string> vecDis;
-	if (is.is_open()){
-        string useless;
-        getline(is, useless);
-        ligne++;
-        while (getline(is, buffer)){
-            stringstream data(buffer);
-            string value;
-            for(unsigned int i=0; i<types.size(); i++){
-                getline(data, value, ';');
-                if(types.at(i)==0){
-                    int a = fs::stoi(value);
-                    if (a==id){
-                        for(unsigned int index=i; index<types.size(); index++){
-                            getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
-                        }
-                        break;
-                    }
-                    //Save print
-                    if(id != -1) {
-                        vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
-                    }
-                    id=a;
-                    vecDis.clear();
-                    vecDou.clear();
-                    vecStr.clear();
-                } else if (types.at(i)==1){
-                    vecDou.push_back(fs::stod(value));
-                } else if (types.at(i)==2){
-                    vecStr.push_back(value);
-                }
-            }
-            getline(data, value);
-            if (value!=""){
-                vecDis.push_back(value);
-            }
-            ligne++;
-            cout << ligne << endl;
-            if(ligne==total){
-                vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
-            }
-        }
-	}*/
 	return vec;
 }
 
@@ -492,9 +433,11 @@ vector<AnalysisResult_ptr> fs::readLogs(doctorid_t doctorID) {
         AnalysisResult tmp;
         // Parcours de tous les docteurs inscrits
         while(is >> tmp) {
-            if(tmp.getDoctor()->getID() == doctorID) {
-                results.push_back(make_shared<AnalysisResult>(tmp));
-            }
+        	if(tmp.getDoctor()!=nullptr){
+				if(tmp.getDoctor()->getID() == doctorID) {
+				    results.push_back(make_shared<AnalysisResult>(tmp));
+				}
+			}
         }
         is.close();
     }

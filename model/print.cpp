@@ -20,10 +20,7 @@ void Print::addDisease(string d) {
     diseases.push_back(d);
 }
 
-Print::Print(printid_t pid, vector<string> pdiseases, vector<double> pattr, vector<string> pattrStr):ID(pid),diseases(pdiseases), attr(pattr), attrStr(pattrStr)
-{
-    ID = 0;
-}
+Print::Print(printid_t pid, vector<string> pdiseases, vector<double> pattr, vector<string> pattrStr):ID(pid),diseases(pdiseases), attr(pattr), attrStr(pattrStr) {}
 
 Print::Print() {
     ID = 0;
