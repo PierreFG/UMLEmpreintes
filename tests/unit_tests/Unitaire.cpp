@@ -17,28 +17,6 @@ using namespace ui;
 using namespace fs;
 
 namespace test {
-
-	void TU_05() {
-		Doctor doc;
-		int i = 0;
-		while(cin >> doc) {
-		    cout << "#" << i++ << ": " << doc;
-		}
-
-	}
-
-    //Validation de signInDoctor
-    void testA1(){
-        Doctor d("Jean", "Jacques", "j.j@cancer", "coucou");
-        cout << signUpDoctor(make_shared<Doctor>(d))<<endl;
-    }
-
-    //Validation de signUpDoctor
-    void testA2(){
-        Doctor_ptr d = signInDoctor("j.j@cancer", "coucou");
-        cout << *d << endl;
-    }
-
     //TEST des fonctions du fs
     //getPrints
     void UT_1_1() {
@@ -58,10 +36,8 @@ namespace test {
         }
     }
 
-
-    //Validation de saveRule et getRule (simultané)
-    void testB3(){
-        map<string,vector<double>> map1;
+	void UT_1_3(){
+		map<string,vector<double>> map1;
         vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
         map1["rhume"] = v1;
         vector<double> v2; v2.push_back(5.0); v2.push_back(2.0);
@@ -78,18 +54,66 @@ namespace test {
         Rule_ptr r = fs::getRule();
         cout << "Expected : " << *ru << endl;
         cout << "Obtained : " << *r << endl;
-    }
-
-    void testB4(){
-
-    }
-
-    void testB5(){
-
-    }
+	}
+	
+	void UT_1_4(){
+        Doctor_ptr d = seizeInformation();
+        cout << signUpDoctor(d)<<endl;
+	}
+	
+	void UT_1_5(){
+		string mail = inputString();
+		string mdp = inputString();
+        Doctor_ptr d = signInDoctor(mail,mdp);
+        cout << *d << endl;
+	}
+	
+	void UT_1_6(){
+		Doctor_ptr d = make_shared<Doctor>("Jean", "Michel", "jm@chaudcourriel", "azerty");
+		map<string,double> map1;
+        map1["rhume"] = 0.9;
+        map1["cancer"] = 0.7;
+        map1["varicelle"] = 0.3;
+        AnalysisResult_ptr a = make_shared<AnalysisResult>(map1,"empreintes", d);
+        saveResult(a);
+        cout << "Résultat attendu : dtd + xml" << endl;
+	}
+	
+	void UT_1_7(){
+		Doctor_ptr d = make_shared<Doctor>("Jean", "Michel", "jm@chaudcourriel", "azerty");
+		map<string,double> asso;
+		asso["rhume"] = 0.9;
+		asso["cancer"] = 0.7;
+		asso["varicelle"] = 0.3;
+		AnalysisResult_ptr ar = make_shared<AnalysisResult>(asso,"empreintes.csv", d);
+		addResultToLog(ar);
+		cout << "Résultat attendu (ligne ajoutée à ./data/logs.csv) : 0;aaaa-mm-jj hh:mm:ss;empreintes.csv;0;" << endl;
+	}
+	
+	void UT_1_8(){
+		
+	}
+	
+	//TESTS DE UI
+	
+	void UT_2_1(){
+		string s=inputString();
+		cout << s << endl;
+	}
+    
+	void UT_2_2(){
+		int a = inputInt();
+		cout << a << endl;
+	}
+	
+	void UT_2_3(){
+		char c = inputChar({'a','b','c'});
+		cout << c << endl;
+	}
+    
 
     // TEST VECTEURS
-    void testD1(){
+    void UT_3_1(){
         //test de la construction de vecteur
         int n;
         cout<<"taille du vecteur?";
@@ -98,7 +122,7 @@ namespace test {
         v.afficher();
     }
 
-    void testD2(){
+    void UT_3_2(){
         //test de la modif d'un vecteur
         Vect v(3);
         v.afficher();
@@ -106,7 +130,7 @@ namespace test {
         v.afficher();
     }
 
-    void testD3(){
+    void UT_3_3(){
         //test des opérations vectorielles
         Vect v(3);
         v.set(2,(double) 1);
@@ -124,7 +148,7 @@ namespace test {
 
     }
     //TEST MATRICE
-    void testD4(){
+    void UT_3_4(){
         //construction d'une matrice carrée
         Mat M(2);
         M.afficher();
@@ -137,7 +161,7 @@ namespace test {
         Ma.afficher();
     }
 
-    void testD5(){
+    void UT_3_5(){
         //test d'une addition
         Mat M(3,2);
         Mat K(3,2);
@@ -151,7 +175,7 @@ namespace test {
         M.afficher();
     }
 
-    void testD6(){
+    void UT_3_6(){
         //test de multiplication
         Mat M(3);
         Mat K(3);
@@ -182,7 +206,7 @@ namespace test {
         I.afficher();
     }
 
-    void testD7(){
+    void UT_3_7(){
         //test de la transposée d'une matrice
         Mat M(3);
         for(int i=0;i<3;i++){
@@ -208,7 +232,7 @@ namespace test {
         P.afficher();
     }
 
-    void testD8(){
+    void UT_3_8(){
         //test de l'inverse d'une matrice
         Mat M(3);
         M.set(0,0,5);
@@ -233,7 +257,7 @@ namespace test {
         Mat V = K*M;
         V.afficher();
     }
-    void testD9(){
+    void UT_3_9(){
         //test du changement par ligne
         Mat M(3);
         M.set(0,0,5);
@@ -249,7 +273,7 @@ namespace test {
 
     }
 
-    void testD10(){
+    void UT_3_10(){
         //Test de la génération d'une matrice à partir du set d'empreintes
         vector<Print> V;
         vector<string> S1={"AT","OUI"};
@@ -258,67 +282,80 @@ namespace test {
         vector<int> I2={1,4,1};
      }
 
+}
+
+using namespace test;
 
 
-    int main() {
-        int test=-1;
-        cin >> test;
-        cin.ignore();
-        switch(test){
-            case 1:
-                testA1();
-                break;
-            case 2:
-                testA2();
-                break;
-            case 3:
-                UT_1_1();
-                break;
-            case 4:
-                UT_1_2();
-                break;
-            case 5:
-                testB3();
-                break;
-            case 6:
-                testB4();
-                break;
-            case 7:
-                testB5();
-                break;
-            case 8:
-                testD1();
-                break;
-            case 9:
-                testD2();
-                break;
-            case 10:
-                testD3();
-                break;
-            case 11:
-                testD4();
-                break;
-            case 12:
-                testD5();
-                break;
-            case 13:
-                testD6();
-                break;
-            case 14:
-                testD7();
-                break;
-            case 15:
-                testD8();
-                break;
-            case 16:
-                testD9();
-                break;
-            case 17:
-                testD10();
-                break;
-        }
-
-        return 0;
+int main() {
+    int test=-1;
+    cin >> test;
+    cin.ignore();
+    switch(test){
+        case 1:
+            UT_1_1();
+            break;
+        case 2:
+            UT_1_2();
+            break;
+        case 3:
+            UT_1_3();
+            break;
+        case 4:
+            UT_1_4();
+            break;
+        case 5:
+            UT_1_5();
+            break;
+        case 6:
+            UT_1_6();
+            break;
+        case 7:
+            UT_1_7();
+            break;
+        case 8:
+            UT_1_8();
+            break;
+        case 9:
+            UT_2_1();
+            break;
+        case 10:
+            UT_2_2();
+            break;
+        case 11:
+            UT_2_3();
+            break;
+        case 12:
+            UT_3_1();
+            break;
+        case 13:
+            UT_3_2();
+            break;
+        case 14:
+            UT_3_3();
+            break;
+        case 15:
+            UT_3_4();
+            break;
+        case 16:
+            UT_3_5();
+            break;
+       case 17:
+            UT_3_6();
+            break;
+       case 18:
+            UT_3_7();
+            break;
+       case 19:
+            UT_3_8();
+            break;
+       case 20:
+            UT_3_9();
+            break;
+       case 21:
+            UT_3_10();
+            break;
     }
 
+    return 0;
 }
