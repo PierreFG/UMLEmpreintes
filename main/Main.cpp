@@ -41,8 +41,8 @@ int main(int argc, char* argv[]) {
 
 	//****MAJ DE LA BASE DE DONNE (si -i)
 	if(i){
-		vector<Print> v;
-		v = getPrint(path);
+		vector<Print_ptr> v;
+		v = getPrints(path);
 		cout << "coucou2" << endl;
 		PrintRuleMaker *prm = new PrintRuleMaker();
 		Rule r = prm->generateRule(v);
