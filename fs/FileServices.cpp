@@ -122,19 +122,17 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 
     // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
-    doctorid_t doctorID;
+    id_t doctorID;
     bool success = (data >> doctorID)
         && getline(data, buffer, ';') // ignore le ';'
         && getline(data, r.date, ';')
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
-        cout << doctorID << endl;
-
     r.doctor = fs::findDoctorByID(doctorID);
 
     // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
-    if(!success) {
+    if(!success || doctorID==0) {
         in.setstate(ios::failbit);
     }
     return in;
@@ -234,7 +232,7 @@ doctorid_t fs::generateDoctorID() {
         if(idList.size() < numeric_limits<doctorid_t>::max()) {
             sort(idList.begin(), idList.end());
             nextID = idList.size()+1;
-            for(doctorid_t i=0; i<idList.size(); i++) {
+            for(id_t i=0; i<idList.size(); i++) {
                 if(idList[i] > i+1) {
                     nextID = i+1;
                     break;
@@ -457,9 +455,11 @@ vector<AnalysisResult_ptr> fs::readLogs(doctorid_t doctorID) {
         AnalysisResult tmp;
         // Parcours de tous les docteurs inscrits
         while(is >> tmp) {
-            if(tmp.getDoctor()->getID() == doctorID) {
-                results.push_back(make_shared<AnalysisResult>(tmp));
-            }
+        	if(tmp.getDoctor()!=nullptr){
+				if(tmp.getDoctor()->getID() == doctorID) {
+				    results.push_back(make_shared<AnalysisResult>(tmp));
+				}
+			}
         }
         is.close();
     }

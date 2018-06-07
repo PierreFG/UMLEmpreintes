@@ -17,21 +17,6 @@ using namespace ui;
 using namespace fs;
 
 namespace test {
-
-	//TESTS DU FS
-	
-	
-	void UT_1_3(){
-		
-	}
-	
-
-    //Validation de signUpDoctor
-    void testA2(){
-        Doctor_ptr d = signInDoctor("j.j@cancer", "coucou");
-        cout << *d << endl;
-    }
-
     //TEST des fonctions du fs
     //getPrints
     void UT_1_1() {
@@ -84,17 +69,25 @@ namespace test {
 	}
 	
 	void UT_1_6(){
-		Doctor d("Jean", "Michel", "jm@chaudcourriel", "azerty");
+		Doctor_ptr d = make_shared<Doctor>("Jean", "Michel", "jm@chaudcourriel", "azerty");
 		map<string,double> map1;
         map1["rhume"] = 0.9;
         map1["cancer"] = 0.7;
         map1["varicelle"] = 0.3;
-        AnalysisResult a(map1,"empreintes.csv", d);
+        AnalysisResult_ptr a = make_shared<AnalysisResult>(map1,"empreintes", d);
         saveResult(a);
+        cout << "Résultat attendu : dtd + xml" << endl;
 	}
 	
 	void UT_1_7(){
-		
+		Doctor_ptr d = make_shared<Doctor>("Jean", "Michel", "jm@chaudcourriel", "azerty");
+		map<string,double> asso;
+		asso["rhume"] = 0.9;
+		asso["cancer"] = 0.7;
+		asso["varicelle"] = 0.3;
+		AnalysisResult_ptr ar = make_shared<AnalysisResult>(asso,"empreintes.csv", d);
+		addResultToLog(ar);
+		cout << "Résultat attendu (ligne ajoutée à ./data/logs.csv) : 0;aaaa-mm-jj hh:mm:ss;empreintes.csv;0;" << endl;
 	}
 	
 	void UT_1_8(){
@@ -289,67 +282,80 @@ namespace test {
         vector<int> I2={1,4,1};
      }
 
+}
+
+using namespace test;
 
 
-    int main() {
-        int test=-1;
-        cin >> test;
-        cin.ignore();
-        switch(test){
-            case 1:
-                testA1();
-                break;
-            case 2:
-                testA2();
-                break;
-            case 3:
-                UT_1_1();
-                break;
-            case 4:
-                UT_1_2();
-                break;
-            case 5:
-                testB3();
-                break;
-            case 6:
-                testB4();
-                break;
-            case 7:
-                testB5();
-                break;
-            case 8:
-                UT_3_1();
-                break;
-            case 9:
-                UT_3_2();
-                break;
-            case 10:
-                UT_3_3();
-                break;
-            case 11:
-                UT_3_4();
-                break;
-            case 12:
-                UT_3_5();
-                break;
-            case 13:
-                UT_3_6();
-                break;
-            case 14:
-                UT_3_7();
-                break;
-            case 15:
-                UT_3_8();
-                break;
-            case 16:
-                UT_3_9();
-                break;
-            case 17:
-                UT_3_10();
-                break;
-        }
-
-        return 0;
+int main() {
+    int test=-1;
+    cin >> test;
+    cin.ignore();
+    switch(test){
+        case 1:
+            UT_1_1();
+            break;
+        case 2:
+            UT_1_2();
+            break;
+        case 3:
+            UT_1_3();
+            break;
+        case 4:
+            UT_1_4();
+            break;
+        case 5:
+            UT_1_5();
+            break;
+        case 6:
+            UT_1_6();
+            break;
+        case 7:
+            UT_1_7();
+            break;
+        case 8:
+            UT_1_8();
+            break;
+        case 9:
+            UT_2_1();
+            break;
+        case 10:
+            UT_2_2();
+            break;
+        case 11:
+            UT_2_3();
+            break;
+        case 12:
+            UT_3_1();
+            break;
+        case 13:
+            UT_3_2();
+            break;
+        case 14:
+            UT_3_3();
+            break;
+        case 15:
+            UT_3_4();
+            break;
+        case 16:
+            UT_3_5();
+            break;
+       case 17:
+            UT_3_6();
+            break;
+       case 18:
+            UT_3_7();
+            break;
+       case 19:
+            UT_3_8();
+            break;
+       case 20:
+            UT_3_9();
+            break;
+       case 21:
+            UT_3_10();
+            break;
     }
 
+    return 0;
 }
