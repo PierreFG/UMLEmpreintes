@@ -3,13 +3,6 @@
 #include "doctor.h"
 #include "fs/FileServices.h"
 
-/* !!!! On utilisera ces opérateurs pour les écritures / lectures dans les fichiers. Pour l'affichage à l'écran, c'est le module UI qui définit comment ça s'affiche. Ce sera plus cohérent !
-ostream& operator << (ostream &out, Doctor &d){
-    out << "Doctor " + d.firstName + " " + d.name << endl;
-    out << "Mail : " + d.mail  << endl;
-    return out;
-}*/
-
 long Doctor::getID(){
     return ID;
 }

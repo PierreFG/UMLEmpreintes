@@ -14,7 +14,7 @@ class AnalysisResult
 {
 
 public:
-    AnalysisResult (map<string, double> pproba, string pfile);
+    AnalysisResult (map<string, double> pproba, string pfile, Doctor_ptr pDoctor);
     AnalysisResult();
     virtual ~AnalysisResult ();
 

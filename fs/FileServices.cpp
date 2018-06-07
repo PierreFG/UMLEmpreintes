@@ -341,7 +341,7 @@ vector<Print_ptr> fs::getPrints(string filename){
 
 bool fs::saveResult(AnalysisResult_ptr r) {
     bool success = false;
-    ofstream os(fs::OUTPUT_PATH.c_str() + r->getFileName + ".xml", ios::out | ios::app);
+    ofstream os(fs::OUTPUT_PATH.c_str() + r->getFileName() + ".xml", ios::out | ios::app);
     if(os.is_open()) {
         os << "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>" << endl;
         os << "<!DOCTYPE analysis [" << endl;
