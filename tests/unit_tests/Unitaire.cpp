@@ -11,6 +11,7 @@
 #include "analysis/Mat.h"
 #include "model/print.h"
 #include "model/rule.h"
+#include "StrToMath.h"
 
 using namespace std;
 using namespace ui;
@@ -253,10 +254,19 @@ namespace test {
         vector<int> I2={1,4,1};
     }
 
-    //TEST OPERATIONS EMPREINTES
+    //TEST OPERATIONS EMPREINTES (StrToMath)
     void test D11(){
         string filename;
         cin>>filename;
+        vector<Print_ptr> prints = fs::getPrints(filename);
+        map<int,<vector(string)>> m = StrToMath::listVals(prints)
+        for(auto it = m.begin(); it!= m.end();++it){
+            cout<<it->first;
+            for(auto itv = it->second.begin; itv != it->second.end(); ++itv){
+                cout<<*it;
+            }
+            cout<<endl;
+        }
         
     }
 
