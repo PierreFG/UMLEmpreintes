@@ -43,10 +43,8 @@ int main(int argc, char* argv[]) {
 	if(i){
 		vector<Print_ptr> v;
 		v = getPrints(path);
-		cout << "coucou2" << endl;
 		PrintRuleMaker *prm = new PrintRuleMaker();
 		Rule r = prm->generateRule(v);
-		cout << "coucou2" << endl;
 		Rule_ptr r1 = make_shared<Rule>(r);
 		cout<<*r1;
 		return 0;

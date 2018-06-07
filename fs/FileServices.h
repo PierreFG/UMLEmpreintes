@@ -49,9 +49,9 @@ namespace fs {
     ///*****IN&OUT FUNCTIONS
     Doctor_ptr signInDoctor(string username, string password);
 
-    Doctor_ptr findDoctorByID(id_t id);
+    Doctor_ptr findDoctorByID(doctorid_t id);
 
-    id_t generateDoctorID();
+    doctorid_t generateDoctorID();
 
     bool signUpDoctor(Doctor_ptr doctor);
 
@@ -61,20 +61,9 @@ namespace fs {
 
     Rule_ptr getRule();
 
-	void saveOneHotString(map<string, int> oneHot);
-	/* This saves the one hot coding associated with a string
-	* the integer specifies the number of the string column
-	* of the matrix which should be set to 1.
-	*/
-
-	map<string, int> loadOneHotString();
-	/* Loads in memory from a file the one hot coding transposition
-	* of every possible string in a print. See method saveOneHotString above.
-	*/
-
     bool saveResult(AnalysisResult_ptr r);
     bool addResultToLog(AnalysisResult_ptr r);
-    vector<AnalysisResult_ptr> readLogs(id_t doctorID);
+    vector<AnalysisResult_ptr> readLogs(doctorid_t doctorID);
 }
 
 #endif // FILESERVICES_H_INCLUDED

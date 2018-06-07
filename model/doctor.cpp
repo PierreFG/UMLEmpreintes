@@ -3,7 +3,7 @@
 #include "doctor.h"
 #include "fs/FileServices.h"
 
-id_t Doctor::getID() {
+doctorid_t Doctor::getID() {
     return ID;
 }
 
