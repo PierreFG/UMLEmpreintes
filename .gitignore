@@ -29,6 +29,8 @@
 *.exe
 *.out
 *.app
+app
+appTest
 
 # VC Project
 *.sln
@@ -42,3 +44,4 @@
 # Others
 .vscode
 .vs
+
