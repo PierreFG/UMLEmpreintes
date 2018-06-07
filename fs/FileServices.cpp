@@ -465,30 +465,3 @@ vector<AnalysisResult_ptr> fs::readLogs(id_t doctorID) {
     }
     return results;
 }
-
-void fs::saveOneHotString(map<string, int> oneHot){
-	//That'll be a basic csv
-	ofstream os(ONE_HOT_RULE_PATH);
-	if (os.is_open()){
-		for(map<string,int>::iterator it=oneHot.begin(); it!=oneHot.end() && os.good(); it++){
-			os<<it->first<<";"<<it->second<<endl;
-		}
-	}
-}
-
-map<string,int> fs::loadOneHotString(){
-	ifstream is(ONE_HOT_RULE_PATH);
-	map<string, int> oneHot;
-	if(is.is_open()){
-		while(is.good()){
-			string buffer;
-			getline(is, buffer);
-			string str1,str2;
-			str1=buffer.substr(0,buffer.find(";"));
-			str2=buffer.substr(buffer.find(";")+1);
-			oneHot.insert(pair<string, int>(str1, fs::stoi(str2)));
-		}
-	}
-	return oneHot;
-}
-

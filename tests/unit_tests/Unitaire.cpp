@@ -18,14 +18,14 @@ using namespace fs;
 
 namespace test {
 
-    void TU_05() {
-        Doctor doc;
-        int i = 0;
-        while(cin >> doc) {
-            cout << "#" << i++ << ": " << doc;
-        }
+	void TU_05() {
+		Doctor doc;
+		int i = 0;
+		while(cin >> doc) {
+		    cout << "#" << i++ << ": " << doc;
+		}
 
-    }
+	}
 
     //Validation de signInDoctor
     void testA1(){
@@ -38,9 +38,6 @@ namespace test {
         Doctor_ptr d = signInDoctor("j.j@cancer", "coucou");
         cout << *d << endl;
     }
-
-
-
 
     //TEST des fonctions du fs
     //getPrints
