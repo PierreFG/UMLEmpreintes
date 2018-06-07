@@ -20,24 +20,24 @@
 #include "analysis/Mat.h"
 #include "analysis/Vect.h"
 
-using namespace std; 
+using namespace std;
 
 class StrToMath
 {
 public:
 	//---------------------------------------------------- Fonctions publiquess
-    map<int,vector<string>> listVals(vector<Print> datas);
-    pair<Mat,Vect> generateMat(vector<Print> datas, string disease, map<int,vector<string>> valpossibles);
-    vector<double> transformPrint(Print p, map<int,vector<string>> valpossibles);
-    vector<string> listDiseases(vector<Print> datas);
+    map<int,vector<string>> listVals(vector<Print_ptr> datas);
+    pair<Mat,Vect> generateMat(vector<Print_ptr> datas, string disease, map<int,vector<string>> valpossibles);
+    vector<double> transformPrint(Print_ptr p, map<int,vector<string>> valpossibles);
+    vector<string> listDiseases(vector<Print_ptr> datas);
 	//-------------------------------------------- Constructeurs - destructeur
 	StrToMath();
     virtual ~StrToMath();
     //------------------------------------------- Surcharge d'opérateurs
-    
-   
+
+
 protected:
 	//----------------------------------------------------- Attributs privés
-    
+
 };
 #endif // STRTOMATH_H

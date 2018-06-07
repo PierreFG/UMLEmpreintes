@@ -1,4 +1,4 @@
-    //---------- R?alisation du module <Chainon> (fichier Chainon.cpp) ---------
+//---------- R?alisation du module <Mat> (fichier Mat.cpp) ---------
 
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include personnel

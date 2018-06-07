@@ -128,6 +128,8 @@ istream& operator>>(istream& in, AnalysisResult& r) {
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
+        cout << doctorID << endl;
+
     r.doctor = fs::findDoctorByID(doctorID);
 
     // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
@@ -222,14 +224,14 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
 long fs::generateDoctorID() {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
-        vector<long> idList{};
+        vector<unsigned long> idList{};
         Doctor tmp;
         while(is >> tmp) {
             idList.push_back(tmp.getID());
         }
         sort(idList.begin(), idList.end());
         long nextID = idList.size()+1;
-        for(int i=0; i<idList.size(); i++) {
+        for(unsigned int i=0; i<idList.size(); i++) {
             if(idList[i] > i+1) {
                 nextID = i+1;
                 break;
@@ -252,7 +254,7 @@ bool fs::saveRule(Rule_ptr r){
     return success;
 }
 
-vector<Print> fs::getPrint(string filename){
+vector<Print_ptr> fs::getPrints(string filename){
 	//First of all, load all metadatas and analyse them
 	ifstream isMeta("meta_"+filename);
 	string buffer;
@@ -274,7 +276,7 @@ vector<Print> fs::getPrint(string filename){
 	}
 
 	//Then parse all file and get the prints
-	vector<Print> vec;
+	vector<Print_ptr> vec;
 
 	ifstream is(filename.c_str());
 
@@ -302,15 +304,14 @@ vector<Print> fs::getPrint(string filename){
                 if(types.at(i)==0){
                     int a = fs::stoi(value);
                     if (a==id){
-                        for(int index=i; index<types.size(); index++){
+                        for(unsigned int index=i; index<types.size(); index++){
                             getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
                         }
                         break;
                     }
                     //Save print
                     if(id != -1) {
-                        Print p(id, vecDis, vecDou, vecStr);
-                        vec.push_back(p);
+                        vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
                     }
                     id=a;
                     vecDis.clear();
@@ -329,8 +330,7 @@ vector<Print> fs::getPrint(string filename){
             ligne++;
             cout << ligne << endl;
             if(ligne==total){
-                Print p(id, vecDis, vecDou, vecStr);
-                vec.push_back(p);
+                vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
             }
         }
 	}
@@ -340,8 +340,46 @@ vector<Print> fs::getPrint(string filename){
 }
 
 bool fs::saveResult(AnalysisResult_ptr r) {
-    // Not implemented
-    return false;
+    bool success = false;
+    ofstream os(fs::OUTPUT_PATH.c_str() + r->getFileName + ".xml", ios::out | ios::app);
+    if(os.is_open()) {
+        os << "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>" << endl;
+        os << "<!DOCTYPE analysis [" << endl;
+        os << "<!ENTITY analysis (time, doctorid, fileid, printid, result*)>" << endl;
+        os << "<!ENTITY time (#PCDATA)>" << endl;
+        os << "<!ENTITY doctorid (#PCDATA)>" << endl;
+        os << "<!ENTITY fileid (#PCDATA)>" << endl;
+        os << "<!ENTITY printid (#PCDATA)>" << endl;
+        os << "<!ENTITY result (name, proba)>" << endl;
+        os << "<!ENTITY name (#PCDATA)>" << endl;
+        os << "<!ENTITY proba (#PCDATA)>" << endl;
+        os << "]>" << endl;
+        os << "<analysis>" << endl;
+        os << "  <time>" << endl;
+        os << "    " << r->getDate() << endl;
+        os << "  </time>" << endl;
+        os << "  <doctorid>" << endl;
+        os << "    " << r->getDoctor()->getID() << endl;
+        os << "  </doctorid>" << endl;
+        os << "  <fileid>" << endl;
+        os << "    " << r->getFileName() << endl;
+        os << "  </fileid>" << endl;
+        os << "  <printid>" << endl;
+        os << "    " << r->getPrintID() << endl;
+        os << "  </printid>" << endl;
+        for(auto& prb : r->getProbas()) {
+            os << "    <name>" << endl;
+            os << "      " << prb.first << endl;
+            os << "    </name>" << endl;
+            os << "    <proba>" << endl;
+            os << "      " << prb.second << endl;
+            os << "    </proba>" << endl;
+        }
+        os << "</analysis>" << endl;
+        success = os.good();
+        os.close();
+    }
+    return success;
 }
 
 Rule_ptr fs::getRule(){
@@ -423,30 +461,3 @@ vector<AnalysisResult_ptr> fs::readLogs(long doctorID) {
     }
     return results;
 }
-
-void fs::saveOneHotString(map<string, int> oneHot){
-	//That'll be a basic csv
-	ofstream os(ONE_HOT_RULE_PATH);
-	if (os.is_open()){
-		for(map<string,int>::iterator it=oneHot.begin(); it!=oneHot.end() && os.good(); it++){
-			os<<it->first<<";"<<it->second<<endl;
-		}
-	}
-}
-
-map<string,int> fs::loadOneHotString(){
-	ifstream is(ONE_HOT_RULE_PATH);
-	map<string, int> oneHot;
-	if(is.is_open()){
-		while(is.good()){
-			string buffer;
-			getline(is, buffer);
-			string str1,str2;
-			str1=buffer.substr(0,buffer.find(";"));
-			str2=buffer.substr(buffer.find(";")+1);
-			oneHot.insert(pair<string, int>(str1, fs::stoi(str2)));
-		}
-	}
-	return oneHot;
-}
-

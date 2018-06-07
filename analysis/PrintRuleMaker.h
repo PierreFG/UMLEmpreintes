@@ -16,7 +16,7 @@
 #include "analysis/StrToMath.h"
 #include "model/rule.h"
 
-using namespace std; 
+using namespace std;
 
 class PrintRuleMaker{
 
@@ -24,11 +24,11 @@ public:
 
 
 //---------------------------------------------------- Fonctions publiquess
-    Rule generateRule(vector<Print> datas);
+    Rule generateRule(vector<Print_ptr> datas);
 	//-------------------------------------------- Constructeurs - destructeur
 	PrintRuleMaker();
     virtual ~PrintRuleMaker();
-    //------------------------------------------- Surcharge d'opérateurs   
+    //------------------------------------------- Surcharge d'opérateurs
 
 };
 #endif //PRINTRULEMAKER_H

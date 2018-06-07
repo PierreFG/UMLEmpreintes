@@ -88,8 +88,15 @@ Vect::Vect(int pn){
     n=pn;
     data.resize(n);
 }
+
+Vect::Vect(vector<double> d){
+    data=d;
+    n=data.size();
+}
+
 Vect::~Vect(){
 }
+
 
 Vect::Vect(const Vect& V){
     n=V.n;

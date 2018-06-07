@@ -10,10 +10,9 @@
 /////////////////////////////////////////////////////////////////  INCLUDE
 //------------------------------------------------------ Include Système
 
-
 //------------------------------------------------------ Include Personnel
 #include "analysis/Vect.h"
-using namespace std; 
+using namespace std;
 
 class Mat
 {
@@ -39,10 +38,10 @@ public:
     Mat operator*(double c); //multiplication scalaire
     Mat operator*(const Mat& B) ; //multiplication à droite par une matrice
     Vect operator*(const Vect& V); //multiplication à droite par un vecteur
-   
+
 protected:
 	//----------------------------------------------------- Attributs privés
-    vector<Vect> data; 
+    vector<Vect> data;
 	int m;
 };
 

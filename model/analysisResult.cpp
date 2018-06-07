@@ -22,3 +22,14 @@ string AnalysisResult::getDate() const{
     return date;
 }
 
+long AnalysisResult::getPrintID() const {
+ return printID;
+}
+
+string AnalysisResult::getFileName() const {
+    return file;
+}
+
+map<string, double> AnalysisResult::getProbas() const {
+    return proba;
+}

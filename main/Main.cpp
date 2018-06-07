@@ -2,6 +2,9 @@
 #include <unistd.h>
 
 #include "model/doctor.h"
+#include "model/rule.h"
+#include "fs/FileServices.h"
+#include "analysis/PrintAnalyser.h"
 #include "ui/UI.h"
 #include "analysis/PrintRuleMaker.h"
 #include "model/rule.h"
@@ -35,8 +38,8 @@ int main(int argc, char* argv[]) {
 				break;
 		}
    	}
-	cout << "coucou" << endl;
-	//****CHARGEMENT DE LA BASE DE DONNE (si -i)
+
+	//****MAJ DE LA BASE DE DONNE (si -i)
 	if(i){
 		vector<Print> v;
 		v = getPrint(path);
@@ -49,15 +52,20 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
+	Rule_ptr rule = fs::getRule();
+	if(rule == nullptr) {
+        return -1;
+	}
+	analyser.SetRule(rule);
+
 	//****MAIN APP
 	intro();
-	while(true){
-		shared_ptr<Doctor> d;
-		d = connectionMenu();
-		if(d==nullptr){
+	for(;;) {
+		Doctor_ptr d = connectionMenu();
+		if(d == nullptr) {
 			return 0;
 		}
-		mainMenu(*d);
+		mainMenu(d);
 	}
 
 	return 0;

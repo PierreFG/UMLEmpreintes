@@ -15,7 +15,7 @@
 using namespace std;
 
 // Operator overloading for model classes
-ostream& operator<<(ostream& out, const Doctor& d);
+ostream& operator<<(ostream& ostring filenameut, const Doctor& d);
 istream& operator>>(istream& in, Doctor& d);
 
 ostream& operator<<(ostream& out, const Print& p);
