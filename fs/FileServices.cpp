@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <ctime>
+#include <limits>
 
 #include "fs/FileServices.h"
 
@@ -121,7 +122,7 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 
     // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
-    long doctorID;
+    id_t doctorID;
     bool success = (data >> doctorID)
         && getline(data, buffer, ';') // ignore le ';'
         && getline(data, r.date, ';')
@@ -149,7 +150,7 @@ ostream& operator << (ostream& out, const Print& p){
         cout << *it << "; ";
     }
     cout << endl;
-    cout << "Les maladies associées sont : "<<endl;
+    cout << "Les maladies associees sont : "<<endl;
     for (vector<string>::const_iterator it=p.diseases.cbegin(); it!=p.diseases.cend(); it++){
         cout << *it << "; ";
     }
@@ -160,7 +161,7 @@ ostream& operator << (ostream& out, const Print& p){
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
 
-Doctor_ptr fs::findDoctorByID(long id) {
+Doctor_ptr fs::findDoctorByID(id_t id) {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
         Doctor tmp;
@@ -221,20 +222,23 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
-long fs::generateDoctorID() {
+id_t fs::generateDoctorID() {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
-        vector<unsigned long> idList{};
+        vector<id_t> idList{};
         Doctor tmp;
         while(is >> tmp) {
             idList.push_back(tmp.getID());
         }
-        sort(idList.begin(), idList.end());
-        long nextID = idList.size()+1;
-        for(unsigned int i=0; i<idList.size(); i++) {
-            if(idList[i] > i+1) {
-                nextID = i+1;
-                break;
+        id_t nextID = 0;
+        if(idList.size() < numeric_limits<id_t>::max()) {
+            sort(idList.begin(), idList.end());
+            nextID = idList.size()+1;
+            for(id_t i=0; i<idList.size(); i++) {
+                if(idList[i] > i+1) {
+                    nextID = i+1;
+                    break;
+                }
             }
         }
         is.close();
@@ -341,7 +345,7 @@ vector<Print_ptr> fs::getPrints(string filename){
 
 bool fs::saveResult(AnalysisResult_ptr r) {
     bool success = false;
-    ofstream os(fs::OUTPUT_PATH.c_str() + r->getFileName + ".xml", ios::out | ios::app);
+    ofstream os(fs::OUTPUT_PATH.c_str() + r->getFileName() + ".xml", ios::out | ios::app);
     if(os.is_open()) {
         os << "<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>" << endl;
         os << "<!DOCTYPE analysis [" << endl;
@@ -446,7 +450,7 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
     return success;
 }
 
-vector<AnalysisResult_ptr> fs::readLogs(long doctorID) {
+vector<AnalysisResult_ptr> fs::readLogs(id_t doctorID) {
     vector<AnalysisResult_ptr> results;
     ifstream is(fs::LOGS_PATH.c_str(), ios::in);
     if(is.is_open()) {

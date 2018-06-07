@@ -12,6 +12,7 @@ class AnalysisResult;
 class Doctor;
 
 typedef shared_ptr<Doctor> Doctor_ptr;
+typedef uint16_t id_t;
 
 namespace fs {
     bool signUpDoctor(Doctor_ptr);
@@ -31,14 +32,14 @@ public:
 
     friend bool fs::signUpDoctor(Doctor_ptr);
 
-    long getID();
+    id_t getID();
     string getName();
     string getFirstName();
     string getMail();
     string getPassword();
 
 protected:
-    long ID;
+    id_t ID;
     string name;
     string firstName;
     string mail;
