@@ -25,11 +25,6 @@ namespace test {
 		
 	}
 	
-	//Validation de signInDoctor
-    void testA1(){
-        Doctor d("Jean", "Jacques", "j.j@cancer", "coucou");
-        cout << signUpDoctor(make_shared<Doctor>(d))<<endl;
-    }
 
     //Validation de signUpDoctor
     void testA2(){
@@ -57,32 +52,7 @@ namespace test {
     }
 
 	void UT_1_3(){
-		
-	}
-	
-	void UT_1_4(){
-		
-	}
-	
-	void UT_1_5(){
-		
-	}
-	
-	void UT_1_6(){
-		
-	}
-	
-	void UT_1_7(){
-		
-	}
-	
-	void UT_1_8(){
-		
-	}
-
-    //Validation de saveRule et getRule (simultané)
-    void testB3(){
-        map<string,vector<double>> map1;
+		map<string,vector<double>> map1;
         vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
         map1["rhume"] = v1;
         vector<double> v2; v2.push_back(5.0); v2.push_back(2.0);
@@ -99,7 +69,37 @@ namespace test {
         Rule_ptr r = fs::getRule();
         cout << "Expected : " << *ru << endl;
         cout << "Obtained : " << *r << endl;
-    }
+	}
+	
+	void UT_1_4(){
+        Doctor_ptr d = seizeInformation();
+        cout << signUpDoctor(d)<<endl;
+	}
+	
+	void UT_1_5(){
+		string mail = inputString();
+		string mdp = inputString();
+        Doctor_ptr d = signInDoctor(mail,mdp);
+        cout << *d << endl;
+	}
+	
+	void UT_1_6(){
+		Doctor d("Jean", "Michel", "jm@chaudcourriel", "azerty");
+		map<string,double> map1;
+        map1["rhume"] = 0.9;
+        map1["cancer"] = 0.7;
+        map1["varicelle"] = 0.3;
+        AnalysisResult a(map1,"empreintes.csv", d);
+        saveResult(a);
+	}
+	
+	void UT_1_7(){
+		
+	}
+	
+	void UT_1_8(){
+		
+	}
 	
 	//TESTS DE UI
 	
