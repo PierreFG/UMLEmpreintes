@@ -3,9 +3,13 @@
 
 #include "model/doctor.h"
 #include "ui/UI.h"
+#include "analysis/PrintRuleMaker.h"
+#include "model/rule.h"
+#include "fs/FileServices.h"
 
 using namespace std;
 using namespace ui;
+using namespace fs;
 
 void usage(){
 	cerr << "usage : ./app [-i]" << endl;
@@ -15,7 +19,8 @@ void usage(){
 
 int main(int argc, char* argv[]) {
 	//****TRAITEMENT ARGUMENTS
-	char optstring[]="i";
+	string path;
+	char optstring[]="i:";
 	int c;
 	bool i = false;
 	while( (c=getopt (argc, argv, optstring)) != -1 )
@@ -23,15 +28,24 @@ int main(int argc, char* argv[]) {
 		switch(c){
 			case 'i':
 				i = true;
+				path = (string) optarg;
 				break;
 			case '?':
 				usage();
 				break;
 		}
    	}
-
+	cout << "coucou" << endl;
 	//****CHARGEMENT DE LA BASE DE DONNE (si -i)
 	if(i){
+		vector<Print> v;
+		v = getPrint(path);
+		cout << "coucou2" << endl;
+		PrintRuleMaker *prm = new PrintRuleMaker();
+		Rule r = prm->generateRule(v);
+		cout << "coucou2" << endl;
+		Rule_ptr r1 = make_shared<Rule>(r);
+		cout<<*r1;
 		return 0;
 	}
 
@@ -48,39 +62,6 @@ int main(int argc, char* argv[]) {
 
 	return 0;
 }
-
-/*#include<map>
-#include<vector>
-#include "model/rule.h"
-#include "fs/FileServices.h"
-using namespace fs;
-
-int main(){
-	map<string,vector<double>> map1;
-	vector<double> r; r.push_back(5.0); r.push_back(4.0);
-	map1["rhume"] = r;
-	vector<double> c; c.push_back(5.0); c.push_back(2.0);
-	map1["cancer"] = c;
-	Rule_ptr ru = make_shared<Rule>(map1);
-
-	if(saveRule(ru)){
-		cout << "Rule saved !" << endl;
-	}else{
-		cout << "Something wrong happened..." << endl;
-	}
-
-	return 0;
-}*/
-
-
-/*#include "model/rule.h"
-#include "fs/FileServices.h"
-using namespace fs;
-int main(){
-	Rule_ptr r = fs::getRule();
-	cout << *r;
-	return 0;
-}*/
 
 /*#include "model/analysisResult.h"
 #include <map>
