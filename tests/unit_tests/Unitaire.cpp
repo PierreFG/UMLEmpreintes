@@ -60,7 +60,7 @@ namespace test {
 
 
     //Validation de saveRule et getRule (simultané)
-    void testB3(){
+    void UT_1_3() {
         map<string,vector<double>> map1;
         vector<double> v1; v1.push_back(5.0); v1.push_back(4.0);
         map1["rhume"] = v1;
@@ -80,7 +80,7 @@ namespace test {
         cout << "Obtained : " << *r << endl;
     }
 
-    void testB4(){
+    void UT_1_4() {
 
     }
 
