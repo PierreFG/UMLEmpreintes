@@ -22,7 +22,7 @@ using namespace std;
 class PrintAnalyser{
     //---------------------------------------------------- Fonctions publiques
 public:
-    vector<AnalysisResult_ptr> analysePrints(string file);
+    vector<AnalysisResult_ptr> analysePrints(string file, Doctor_ptr pDoctor);
     void SetRule(Rule_ptr r);
     void SetDoctor(Doctor_ptr d);
 //-------------------------------------------- Constructeurs - destructeur

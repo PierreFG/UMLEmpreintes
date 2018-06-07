@@ -122,7 +122,7 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 
     // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
-    id_t doctorID;
+    doctorid_t doctorID;
     bool success = (data >> doctorID)
         && getline(data, buffer, ';') // ignore le ';'
         && getline(data, r.date, ';')
@@ -161,7 +161,7 @@ ostream& operator << (ostream& out, const Print& p){
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
 
-Doctor_ptr fs::findDoctorByID(id_t id) {
+Doctor_ptr fs::findDoctorByID(doctorid_t id) {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
         Doctor tmp;
@@ -222,19 +222,19 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
-id_t fs::generateDoctorID() {
+doctorid_t fs::generateDoctorID() {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
-        vector<id_t> idList{};
+        vector<doctorid_t> idList{};
         Doctor tmp;
         while(is >> tmp) {
             idList.push_back(tmp.getID());
         }
-        id_t nextID = 0;
-        if(idList.size() < numeric_limits<id_t>::max()) {
+        doctorid_t nextID = 0;
+        if(idList.size() < numeric_limits<doctorid_t>::max()) {
             sort(idList.begin(), idList.end());
             nextID = idList.size()+1;
-            for(id_t i=0; i<idList.size(); i++) {
+            for(doctorid_t i=0; i<idList.size(); i++) {
                 if(idList[i] > i+1) {
                     nextID = i+1;
                     break;
@@ -450,7 +450,7 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
     return success;
 }
 
-vector<AnalysisResult_ptr> fs::readLogs(id_t doctorID) {
+vector<AnalysisResult_ptr> fs::readLogs(doctorid_t doctorID) {
     vector<AnalysisResult_ptr> results;
     ifstream is(fs::LOGS_PATH.c_str(), ios::in);
     if(is.is_open()) {

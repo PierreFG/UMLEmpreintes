@@ -49,9 +49,9 @@ namespace fs {
     ///*****IN&OUT FUNCTIONS
     Doctor_ptr signInDoctor(string username, string password);
 
-    Doctor_ptr findDoctorByID(id_t id);
+    Doctor_ptr findDoctorByID(doctorid_t id);
 
-    id_t generateDoctorID();
+    doctorid_t generateDoctorID();
 
     bool signUpDoctor(Doctor_ptr doctor);
 
@@ -74,7 +74,7 @@ namespace fs {
 
     bool saveResult(AnalysisResult_ptr r);
     bool addResultToLog(AnalysisResult_ptr r);
-    vector<AnalysisResult_ptr> readLogs(id_t doctorID);
+    vector<AnalysisResult_ptr> readLogs(doctorid_t doctorID);
 }
 
 #endif // FILESERVICES_H_INCLUDED

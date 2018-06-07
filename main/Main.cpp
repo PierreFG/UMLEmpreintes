@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
 	//****MAJ DE LA BASE DE DONNE (si -i)
 	if(i){
 		vector<Print_ptr> v;
-		v = getPrint(path);
+		v = getPrints(path);
 		PrintRuleMaker *prm = new PrintRuleMaker();
 		Rule r = prm->generateRule(v);
 		Rule_ptr r1 = make_shared<Rule>(r);
