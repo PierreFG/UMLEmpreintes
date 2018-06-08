@@ -17,9 +17,6 @@ using namespace ui;
 using namespace fs;
 
 int main(int argc, char* argv[]) {
-
-	clock_t t1=clock();
-
 	//****Arguments processing
 	string path;
 	char optstring[]="i:";
@@ -59,9 +56,6 @@ int main(int argc, char* argv[]) {
 		cout<<*r1;
 		saveRule(r1);
 
-		clock_t t2=clock();
-		float temps =(float)(t2-t1)/CLOCKS_PER_SEC*1000;
-		cout<<"temps :"<<temps<<endl;
 		return 0;
 	}
 
@@ -86,22 +80,5 @@ int main(int argc, char* argv[]) {
 		
 		mainMenu(d);
 	}
-	
-	clock_t t2=clock();
-	float temps =(float)(t2-t1)/CLOCKS_PER_SEC;
-	cout<<"temps :"<<temps<<endl;
 	return 0;
 }
-
-/*#include "model/analysisResult.h"
-#include <map>
-#include "fs/FileServices.h"
-using namespace fs;
-int main(){
-	map<string, double> proba;
-	proba["Hepatite"]=39.0; proba["Rhume"]=69.2;
-	AnalysisResult_ptr ar = make_shared<AnalysisResult>(proba, "./empreinte01.csv");
-	cout << *ar;
-	addResultToLog(ar);
-	return 0;
-}*/
