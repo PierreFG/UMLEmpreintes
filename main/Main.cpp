@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
 		if(d == nullptr) return 0; //exit app
 		mainMenu(d);
 	}
-
+	
 	return 0;
 }
 

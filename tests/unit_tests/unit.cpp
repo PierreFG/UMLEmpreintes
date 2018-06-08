@@ -90,7 +90,7 @@ void UT_1_7(){
 }
 
 void UT_1_8() {
-
+    
 }
 
 //TESTS DE UI
@@ -142,8 +142,6 @@ void UT_3_3() {
     cout<<v*u<<endl;
     u=u*0.25;
     u.afficher();
-
-
 }
 //TEST MATRICE
 void UT_3_4() {
@@ -255,6 +253,7 @@ void UT_3_8() {
     Mat V = K*M;
     V.afficher();
 }
+
 void UT_3_9() {
     //test du changement par ligne
     Mat M(3);
