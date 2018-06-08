@@ -271,7 +271,12 @@ namespace test {
     }
 
 
-    int main() {
+    
+
+}
+
+using namespace test;
+int main() {
         int test=-1;
         cin >> test;
         cin.ignore();
@@ -331,5 +336,3 @@ namespace test {
 
         return 0;
     }
-
-}
