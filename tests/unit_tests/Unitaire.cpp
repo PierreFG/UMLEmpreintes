@@ -261,7 +261,7 @@ namespace test {
         vector<Print_ptr> prints = fs::getPrints(filename);
         map<int,vector<string>> m = StrToMath::listVals(prints);
         for(map<int,vector<string>>::iterator it = m.begin(); it!= m.end();++it){
-            cout<<it->first;
+            cout<<it->first<<" | ";
             for(vector<string>::iterator itv = (it->second.begin()); itv != (it->second.end()); ++itv){
                 cout<<*itv;
             }

@@ -69,9 +69,15 @@ int main(int argc, char* argv[]) {
 	for(;;) {
 		Doctor_ptr d = connectionMenu();
 		if(d == nullptr) return 0; //exit app
+		
+		for(unsigned int i = 0; i < 10; i++)
+		{
+			cout << endl;
+		}
+		
 		mainMenu(d);
 	}
-
+	
 	return 0;
 }
 

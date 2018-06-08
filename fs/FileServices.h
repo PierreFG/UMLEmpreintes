@@ -43,27 +43,62 @@ namespace fs {
     */
 
     string itos(int i);
+    /* Returns the int parameter parsed to string*/
+
     int stoi(string s);
+    /* Returns the string parameter parsed to int*/
+
     double stod(string s);
+    /* Returns the string parameter parsed to double*/
 
     ///*****IN&OUT FUNCTIONS
     Doctor_ptr signInDoctor(string username, string password);
+    /* Returns a shared pointer to a Doctor if 
+    * the parameters match a doctor in the database.
+    * Returns nullptr if no doctor was found */
 
     Doctor_ptr findDoctorByID(doctorid_t id);
-
+    /* Returns a shared pointer to a Doctor if 
+    *  the id in parameter matches the one in the database.
+    *  Returns nullptr if no doctor was found */
+    
     doctorid_t generateDoctorID();
+    /* Returns an unique ID for a doctor */
 
     bool signUpDoctor(Doctor_ptr doctor);
+    /* Save a doctor in the database
+    *  Returns false if anything wrong happened.
+    */
 
     vector<Print_ptr> getPrints(string filename);
+    /* Returns a vector of the prints (shared_pointer) found
+    *  at the filde pointed in the path in parameter. 
+    */
 
     bool saveRule(Rule_ptr r);
+    /* Save a rule in the database
+    *  Returns false if anything wrong happened.
+    */
 
     Rule_ptr getRule();
+    /* Returns the current rule in the database
+    *  Return nullptr if anything wrong happened.
+    */
 
     bool saveResult(AnalysisResult_ptr r);
+    /* Save the AnalysisResult parameter in the out folder
+    *  Returns false if anything wrong happened.
+    */
+
     bool addResultToLog(AnalysisResult_ptr r);
+    /* Save the AnalysisResult parameter at the end of the logfile
+    *  Returns false if anything wrong happened.
+    */
+
     vector<AnalysisResult_ptr> readLogs(doctorid_t doctorID);
+    /* Returns the content of a doctor history.
+    * (found in the log file)
+    */
 }
 
 #endif // FILESERVICES_H_INCLUDED
