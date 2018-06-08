@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <time.h>
 
 #include "model/doctor.h"
 #include "model/rule.h"
@@ -9,6 +10,7 @@
 #include "analysis/PrintRuleMaker.h"
 #include "model/rule.h"
 #include "fs/FileServices.h"
+
 
 using namespace std;
 using namespace ui;
@@ -55,6 +57,7 @@ int main(int argc, char* argv[]) {
 		Rule_ptr r1 = make_shared<Rule>(r);
 		cout<<*r1;
 		saveRule(r1);
+
 		return 0;
 	}
 

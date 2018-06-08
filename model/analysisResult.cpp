@@ -1,4 +1,3 @@
-#include <ctime>
 #include "analysisResult.h"
 #include "fs/FileServices.h"
 
@@ -32,3 +31,16 @@ string AnalysisResult::getFileName() const {
 map<string, double> AnalysisResult::getProbas() const {
     return proba;
 }
+
+//***********Constructor/Destructor
+AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile, Doctor_ptr pDoctor, printid_t id) :
+    proba(pproba), file(pfile), printID(id) {
+    date = getCurrentTime();
+    doctor = pDoctor;
+}
+
+AnalysisResult::AnalysisResult() {
+    printID = 0;
+}
+
+AnalysisResult::~AnalysisResult(){}
