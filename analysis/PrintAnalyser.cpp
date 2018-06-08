@@ -23,14 +23,18 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr 
     vector<AnalysisResult_ptr> results;
     vector<Print_ptr> prints = fs::getPrints(file);
     for(Print_ptr& p : prints) {
-        StrToMath Tools;
-        vector<double> printNum = Tools.transformPrint(p, usedRule->getOneHotRule());
+        
+        vector<double> printNum = StrToMath::transformPrint(p, usedRule->getOneHotRule());
         Vect X(printNum);
         map<string,vector<double>> asso = usedRule->getAsso();
         map<string, double> Y;
         double val=0;
         for(auto it=asso.begin();it!=asso.end();++it){
-            Vect R(it->second);
+            
+            vector<double> coefs= it->second;
+            double termeConstant = coefs[0];
+            coefs.erase(coefs.begin());
+            Vect R(coefs);            
             cout << "X.size :" << X.size() << " R.size : " << R.size() << endl;
             val=X*R;
             Y.insert(pair<string,double>(it->first,val));
