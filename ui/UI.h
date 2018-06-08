@@ -45,6 +45,13 @@ namespace ui {
     //about his datas in order to create a proper
     //Doctor instance
 
+    int getch();
+    //Get a char without showing it in the console
+
+    string getpass(bool=true);
+    //Get a password 
+
+
     class Colorize {
     public:
         enum {DEFAULT = 0, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};

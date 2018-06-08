@@ -413,7 +413,6 @@ Rule_ptr fs::getRule(){
         }
     }
     Rule_ptr r = make_shared<Rule>(m, one);
-    cout << *r << endl;
     return r;
 }
 
