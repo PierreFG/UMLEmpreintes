@@ -41,3 +41,101 @@
       0.3
     </proba>
 </analysis>
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<!DOCTYPE analysis [
+<!ENTITY analysis (time, doctorid, fileid, printid, result*)>
+<!ENTITY time (#PCDATA)>
+<!ENTITY doctorid (#PCDATA)>
+<!ENTITY fileid (#PCDATA)>
+<!ENTITY printid (#PCDATA)>
+<!ENTITY result (name, proba)>
+<!ENTITY name (#PCDATA)>
+<!ENTITY proba (#PCDATA)>
+]>
+<analysis>
+  <time>
+    2018-6-8 16:42:27
+  </time>
+  <doctorid>
+    0
+  </doctorid>
+  <fileid>
+    empreintes.csv
+  </fileid>
+  <printid>
+    12
+  </printid>
+  <result>
+    <name>
+      cancer
+    </name>
+    <proba>
+      0.7
+    </proba>
+  </result>
+  <result>
+    <name>
+      rhume
+    </name>
+    <proba>
+      0.9
+    </proba>
+  </result>
+  <result>
+    <name>
+      varicelle
+    </name>
+    <proba>
+      0.3
+    </proba>
+  </result>
+</analysis>
+<?xml version='1.0' encoding='UTF-8' standalone='yes' ?>
+<!DOCTYPE analysis [
+<!ENTITY analysis (time, doctorid, fileid, printid, result*)>
+<!ENTITY time (#PCDATA)>
+<!ENTITY doctorid (#PCDATA)>
+<!ENTITY fileid (#PCDATA)>
+<!ENTITY printid (#PCDATA)>
+<!ENTITY result (name, proba)>
+<!ENTITY name (#PCDATA)>
+<!ENTITY proba (#PCDATA)>
+]>
+<analysis>
+  <time>
+    2018-6-8 16:44:50
+  </time>
+  <doctorid>
+    0
+  </doctorid>
+  <fileid>
+    empreintes.csv
+  </fileid>
+  <printid>
+    12
+  </printid>
+  <result>
+    <name>
+      cancer
+    </name>
+    <proba>
+      0.7
+    </proba>
+  </result>
+  <result>
+    <name>
+      rhume
+    </name>
+    <proba>
+      0.9
+    </proba>
+  </result>
+  <result>
+    <name>
+      varicelle
+    </name>
+    <proba>
+      0.3
+    </proba>
+  </result>
+</analysis>
