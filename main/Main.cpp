@@ -15,8 +15,9 @@ using namespace ui;
 using namespace fs;
 
 void usage() {
-	cerr << "usage : ./app [-i]" << endl;
-	//exit(1);
+	cerr << "usage : ./app [-i \"setfile.txt\"]" << endl;
+	cerr << "There must be the the set file itself (xxx.txt) but also the meta file named meta_xxx.txt." << endl;
+	exit(1);
 	return;
 }
 
@@ -43,21 +44,29 @@ int main(int argc, char* argv[]) {
 	if(i) {
 		vector<Print_ptr> v;
 		v = getPrints(path);
-		for(auto it=v.begin(); it!=v.end(); it++){
+		/*for(auto it=v.begin(); it!=v.end(); it++){
 			cout << *(*it) << endl;
+		}*/
+		if(v.begin()==v.end()){
+			cerr << "Something wrong happened, we could'nt find your files." << endl;
+			usage();
 		}
 		PrintRuleMaker *prm = new PrintRuleMaker();
-		cout<<"\033[30m"<<endl;
+
+		cout.setstate(std::ios_base::failbit);
 		Rule r = prm->generateRule(v);
-		cout<<"\033[0m"<<endl;
+		cout.clear();
+
 		Rule_ptr r1 = make_shared<Rule>(r);
 		cout<<*r1;
 		saveRule(r1);
 		return 0;
 	}
 
-	Rule_ptr rule = fs::getRule();
+	Rule_ptr rule = getRule();
 	if(rule == nullptr) {
+		cerr << "Error : No print set was loaded !" << endl;
+		usage();
         return -1;
 	}
 	analyser.SetRule(rule);
