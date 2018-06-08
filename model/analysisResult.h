@@ -11,22 +11,35 @@
 
 using namespace std;
 
+/*
+* Used as a container for the result of an analysis
+*/
+
 class AnalysisResult
 {
-
 public:
     AnalysisResult (map<string, double> pproba, string pfile, Doctor_ptr pDoctor, printid_t id);
+    /*Constructor*/
     AnalysisResult();
+    /*Default constructor*/
     virtual ~AnalysisResult ();
+    /*Default destructor*/
 
     friend ostream& operator<<(ostream& out, const AnalysisResult& r);
+    /*Extern overload of the output stream operator*/
     friend istream& operator>>(istream& in, AnalysisResult& r);
+    /*Extern overload of the input stream operator*/
 
     Doctor_ptr getDoctor() const;
+    /*Returns the Doctor associated with de Result*/
     string getDate() const;
+    /*Returns the date of the Result*/
     long getPrintID() const;
+    /*Returns the the id of the associated print*/
     string getFileName() const;
-     map<string, double> getProbas() const;
+    /*Returns the file path to the print*/
+    map<string, double> getProbas() const;
+    /*Returns the probas*/
 
 private:
     map<string, double> proba;

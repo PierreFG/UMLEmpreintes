@@ -33,9 +33,13 @@ public:
     void addDisease(string d);
 
     long getID() const;
+    /*Returns the Print's id*/
     vector<string> getDiseases() const;
+    /*Returns the diseases attribute*/
     vector<double> getAttr() const;
+    /*Returns the attr attribute*/
     vector<string> getAttrStr() const;
+    /*Returns the attrStr attribute*/
 
 private:
     printid_t ID;
