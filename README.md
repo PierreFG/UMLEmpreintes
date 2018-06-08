@@ -13,11 +13,15 @@ Build the application with :
 
 First of all, you have to load the data set by typing :
 `./app -i "xxx.txt"`
-xxx.txt is the relative path to your dataset file.
+(xxx.txt is the relative path to your dataset file.)
 
 Then, you can lauch the app :
 `./app`
 
 ### Tests
 
+Build the test application with :
 `make tests`
+
+Lauch the test app with :
+`./appTest`
