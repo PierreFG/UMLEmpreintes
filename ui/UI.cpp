@@ -12,7 +12,7 @@
 #include <vector>
 #include <memory>
 #include <stdio.h>
-#include <termios.h>
+//#include <termios.h>
 #include <unistd.h>
 
 #include "ui/UI.h"
@@ -24,9 +24,10 @@
 using namespace std;
 
 void ui::usage() {
-    cerr << "usage : ./app [-i]" << endl;
-    //exit(1);
-    return;
+	cerr << "usage : ./app [-i \"setfile.txt\"]" << endl;
+	cerr << "There must be the the set file itself (xxx.txt) but also the meta file named xxx_meta.txt." << endl;
+	exit(1);
+	return;
 }
 
 void ui::intro() {
@@ -70,9 +71,9 @@ Doctor_ptr ui::connectionMenu() {
 				cout << "Saisissez votre mail :" << endl;
 				email=inputString();
 				cout << "Saisissez votre mot de passe :"<<endl;
-				
-				//password=inputString();
-				password=getpass();
+
+				password=inputString();
+				//password=getpass();
 				d = fs::signInDoctor(email, password);
 				if (d!=nullptr){
 					ok=true;
@@ -217,6 +218,7 @@ Doctor_ptr ui::seizeInformation(){
 	return make_shared<Doctor>(firstname, lastname, email, password);
 }
 
+/*
 int ui::getch() {
     int ch;
     struct termios t_old, t_new;
@@ -261,3 +263,4 @@ string ui::getpass(bool show_asterisk)
   cout <<endl;
   return password;
 }
+*/

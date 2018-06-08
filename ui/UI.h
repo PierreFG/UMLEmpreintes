@@ -45,16 +45,13 @@ namespace ui {
     //about his datas in order to create a proper
     //Doctor instance
 
-<<<<<<< HEAD
     void usage();
-=======
-    int getch();
+
+    //int getch();
     //Get a char without showing it in the console
 
-    string getpass(bool=true);
-    //Get a password 
-
->>>>>>> 979f5198341d0d2fab47337a6f1632198557df81
+    //string getpass(bool=true);
+    //Get a password
 
     class Colorize {
     public:
