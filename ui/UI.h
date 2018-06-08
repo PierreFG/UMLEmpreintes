@@ -45,6 +45,8 @@ namespace ui {
     //about his datas in order to create a proper
     //Doctor instance
 
+    void usage();
+
     class Colorize {
     public:
         enum {DEFAULT = 0, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE};

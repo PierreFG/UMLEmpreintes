@@ -28,7 +28,7 @@ public:
     string getFileName() const;
      map<string, double> getProbas() const;
 
-protected:
+private:
     map<string, double> proba;
     string file;
     string date;

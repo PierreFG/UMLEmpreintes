@@ -20,7 +20,7 @@ public:
 
     friend ostream& operator<<(ostream& out, const Rule& r);
 
-protected:
+private:
     map<string,vector<double>> asso;
     map<int,vector<string>> oneHotRule;
 };

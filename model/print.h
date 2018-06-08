@@ -27,7 +27,7 @@ public:
     vector<string> getAttrStr() const;
 
 
-protected:
+private:
     printid_t ID;
     vector<string> diseases;
     vector<double> attr;

@@ -38,7 +38,7 @@ public:
     string getMail();
     string getPassword();
 
-protected:
+private:
     doctorid_t ID;
     string name;
     string firstName;

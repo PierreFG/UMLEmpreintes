@@ -20,6 +20,12 @@
 
 using namespace std;
 
+void ui::usage() {
+    cerr << "usage : ./app [-i]" << endl;
+    //exit(1);
+    return;
+}
+
 void ui::intro() {
 	cout << Colorize(Colorize::RED) << endl;
 	cout << "Analyseur d'empreintes" << endl;
@@ -107,7 +113,7 @@ void ui::mainMenu(Doctor_ptr d){
 				cout << "Empreinte "<< ar->getPrintID() << endl;
 				for(auto it = ar->getProbas().begin(); it!=ar->getProbas().end(); it++){
 					cout << it->first << " : " << it->second<<endl;
-				} 
+				}
 				cout << endl<<endl;
 			}
 

@@ -36,7 +36,7 @@ public:
     //------------------------------------------- Surcharge d'opérateurs
 
 
-protected:
+private:
 	//----------------------------------------------------- Attributs privés
 
 };
