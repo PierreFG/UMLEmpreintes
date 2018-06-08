@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <ctime>
+#include <limits>
 
 #include "fs/FileServices.h"
 
@@ -57,9 +58,8 @@ ostream& operator<<(ostream& out, const Doctor& d) {
 }
 
 ostream& operator<<(ostream& out, const Rule& r) {
-
     for(auto it = r.asso.begin(); it!=r.asso.end(); ++it){
-        out << it->first << ";";
+    	out << it->first<<";";
         vector<double> v = it->second;
         for(auto it2 = v.begin(); it2!=v.end(); ++it2){
             out << *it2 << ";";
@@ -121,19 +121,17 @@ istream& operator>>(istream& in, AnalysisResult& r) {
 
     // Copie les donnï¿½es dans un flux et parse ce flux de donnï¿½es
     stringstream data(buffer);
-    long doctorID;
+    doctorid_t doctorID;
     bool success = (data >> doctorID)
         && getline(data, buffer, ';') // ignore le ';'
         && getline(data, r.date, ';')
         && getline(data, r.file, ';')
         && (data >> r.printID);
 
-        cout << doctorID << endl;
-
     r.doctor = fs::findDoctorByID(doctorID);
 
     // Indique une erreur si les donnï¿½es parsï¿½es sont non conformes
-    if(!success) {
+    if(!success || doctorID==0) {
         in.setstate(ios::failbit);
     }
     return in;
@@ -149,8 +147,8 @@ ostream& operator << (ostream& out, const Print& p){
         cout << *it << "; ";
     }
     cout << endl;
-    cout << "Les maladies associées sont : "<<endl;
-    for (vector<string>::const_iterator it=p.diseases.cbegin(); it!=p.diseases.cend(); it++){
+    cout << "Les maladies associees sont : "<<endl;
+    for (auto it=p.diseases.begin(); it!=p.diseases.end(); it++){
         cout << *it << "; ";
     }
     cout << endl;
@@ -160,7 +158,7 @@ ostream& operator << (ostream& out, const Print& p){
 /// SERVICES DE HAUT NIVEAU D'ACCES AUX FICHIERS DE STOCKAGE
 ///////////////////////////////////////////////////////////////////////////////
 
-Doctor_ptr fs::findDoctorByID(long id) {
+Doctor_ptr fs::findDoctorByID(doctorid_t id) {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
         Doctor tmp;
@@ -221,20 +219,23 @@ bool fs::signUpDoctor(Doctor_ptr doctor) {
     return success;
 }
 
-long fs::generateDoctorID() {
+doctorid_t fs::generateDoctorID() {
     ifstream is(fs::DOCTORS_PATH.c_str(), ios::in);
     if(is.is_open()) {
-        vector<unsigned long> idList{};
+        vector<doctorid_t> idList{};
         Doctor tmp;
         while(is >> tmp) {
             idList.push_back(tmp.getID());
         }
-        sort(idList.begin(), idList.end());
-        long nextID = idList.size()+1;
-        for(unsigned int i=0; i<idList.size(); i++) {
-            if(idList[i] > i+1) {
-                nextID = i+1;
-                break;
+        doctorid_t nextID = 0;
+        if(idList.size() < numeric_limits<doctorid_t>::max()) {
+            sort(idList.begin(), idList.end());
+            nextID = idList.size()+1;
+            for(doctorid_t i=0; i<idList.size(); i++) {
+                if(idList[i] > i+1) {
+                    nextID = i+1;
+                    break;
+                }
             }
         }
         is.close();
@@ -262,80 +263,64 @@ vector<Print_ptr> fs::getPrints(string filename){
 	//Since we know every data is in order and that there's exactly n different types,
 	//we only need to store a number between 0 and n-1 to indicate the type of the i-th
 	//data.
-
+    if(!isMeta.is_open()){
+        return {};
+    }
 	vector<int> types;
 	while(getline(isMeta, buffer)) {
 		string type = buffer.substr(buffer.find(";")+1);
 		if (type=="ID"){
 			types.push_back(0);
-		} else if (type=="double"){
+		} else if (type=="double") {
 			types.push_back(1);
-		} else if (type=="string"){
+		} else if (type=="string") {
 			types.push_back(2);
 		}
 	}
-
 	//Then parse all file and get the prints
 	vector<Print_ptr> vec;
 
 	ifstream is(filename.c_str());
-
-    //count the lines
-    int total=0;
-    while (getline(is, buffer) && !is.eof()) { total++;}
-    is.close();
-
-    is.open(filename.c_str());
-
-	int id = -1;
-	int ligne=0;
-	vector<string> vecStr;
-	vector<double> vecDou;
-	vector<string> vecDis;
-	if (is.is_open()){
-        string useless;
-        getline(is, useless);
-        ligne++;
-        while (getline(is, buffer)){
+	if(is.is_open()) {
+        getline(is, buffer); // first line is useless
+        while(getline(is, buffer)) {
+            vector<double> dvec;
+            vector<string> svec;
+            printid_t id;
+            string disease;
             stringstream data(buffer);
-            string value;
-            for(unsigned int i=0; i<types.size(); i++){
-                getline(data, value, ';');
-                if(types.at(i)==0){
-                    int a = fs::stoi(value);
-                    if (a==id){
-                        for(unsigned int index=i; index<types.size(); index++){
-                            getline(data, value, ';'); //emptyiung buffer til we reach end of line containing disease
-                        }
-                        break;
-                    }
-                    //Save print
-                    if(id != -1) {
-                        vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
-                    }
-                    id=a;
-                    vecDis.clear();
-                    vecDou.clear();
-                    vecStr.clear();
-                } else if (types.at(i)==1){
-                    vecDou.push_back(fs::stod(value));
-                } else if (types.at(i)==2){
-                    vecStr.push_back(value);
+            string tmp;
+            for(unsigned int i=0; i<types.size(); i++) {
+                if(types[i] == 0) {
+                    data >> id;
+                    getline(data, tmp, ';');
+                } else if(types[i] == 1) {
+                    double d;
+                    data >> d;
+                    getline(data, tmp, ';');
+                    dvec.push_back(d);
+                } else if(types[i] == 2) {
+                    string s;
+                    getline(data, s, ';');
+                    svec.push_back(s);
                 }
             }
-            getline(data, value);
-            if (value!=""){
-                vecDis.push_back(value);
-            }
-            ligne++;
-            cout << ligne << endl;
-            if(ligne==total){
-                vec.push_back(make_shared<Print>(id, vecDis, vecDou, vecStr));
+            getline(data, disease, ';');
+
+            if(vec.size() == 0 || vec.back()->getID() != id) {
+                vector<string> disvec;
+                if(!disease.empty()) {
+                    disvec.push_back(disease);
+                }
+                vec.push_back(make_shared<Print>(id, disvec, dvec, svec));
+            } else {
+                vec.back()->addDisease(disease);
             }
         }
-	}
-
-
+        is.close();
+	}else{
+        return {};
+    }
 	return vec;
 }
 
@@ -368,12 +353,14 @@ bool fs::saveResult(AnalysisResult_ptr r) {
         os << "    " << r->getPrintID() << endl;
         os << "  </printid>" << endl;
         for(auto& prb : r->getProbas()) {
+            os << "  <result>" << endl;
             os << "    <name>" << endl;
             os << "      " << prb.first << endl;
             os << "    </name>" << endl;
             os << "    <proba>" << endl;
             os << "      " << prb.second << endl;
             os << "    </proba>" << endl;
+            os << "  </result>" << endl;
         }
         os << "</analysis>" << endl;
         success = os.good();
@@ -415,11 +402,11 @@ Rule_ptr fs::getRule(){
 
             string d; //maladie
             getline(data, d, ';');
-            string buffer = d;
+            string buffer;
             getline(data, buffer, ';');
             while(buffer.compare("") != 0){
                 //cout << fs::stoi(buffer) << " | ";
-                v.push_back(fs::stoi(buffer));
+                v.push_back(fs::stod(buffer));
                 getline(data, buffer, ';');
             }
             m[d] = v;
@@ -446,16 +433,18 @@ bool fs::addResultToLog(AnalysisResult_ptr r) {
     return success;
 }
 
-vector<AnalysisResult_ptr> fs::readLogs(long doctorID) {
+vector<AnalysisResult_ptr> fs::readLogs(doctorid_t doctorID) {
     vector<AnalysisResult_ptr> results;
     ifstream is(fs::LOGS_PATH.c_str(), ios::in);
     if(is.is_open()) {
         AnalysisResult tmp;
         // Parcours de tous les docteurs inscrits
         while(is >> tmp) {
-            if(tmp.getDoctor()->getID() == doctorID) {
-                results.push_back(make_shared<AnalysisResult>(tmp));
-            }
+        	if(tmp.getDoctor()!=nullptr){
+				if(tmp.getDoctor()->getID() == doctorID) {
+				    results.push_back(make_shared<AnalysisResult>(tmp));
+				}
+			}
         }
         is.close();
     }

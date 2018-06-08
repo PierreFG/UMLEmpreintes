@@ -11,6 +11,9 @@
 #include <set>
 #include <vector>
 #include <memory>
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
 
 #include "ui/UI.h"
 #include "model/doctor.h"
@@ -61,7 +64,9 @@ Doctor_ptr ui::connectionMenu() {
 				cout << "Saisissez votre mail :" << endl;
 				email=inputString();
 				cout << "Saisissez votre mot de passe :"<<endl;
-				password=inputString();
+				
+				//password=inputString();
+				password=getpass();
 				d = fs::signInDoctor(email, password);
 				if (d!=nullptr){
 					ok=true;
@@ -98,9 +103,18 @@ void ui::mainMenu(Doctor_ptr d){
 		if (car=='a'){
 			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
 			string path = inputString();
-			//Appeler la méthode d'analyse d'une empreinte
-
-			analyser.SetDoctor(d);
+			PrintAnalyser pa;
+			Rule_ptr r = fs::getRule();
+			pa.SetRule(r);
+			vector<AnalysisResult_ptr> results = pa.analysePrints(path, d);
+			cout << "Voici le résultat de chaque empreinte du fichier :"<<endl;
+			for(AnalysisResult_ptr ar : results){
+				cout << "Empreinte "<< ar->getPrintID() << endl;
+				for(auto it = ar->getProbas().begin(); it!=ar->getProbas().end(); it++){
+					cout << it->first << " : " << it->second<<endl;
+				} 
+				cout << endl<<endl;
+			}
 
 		} else if(car=='h'){
 			//Appeler la méthode historique
@@ -195,4 +209,49 @@ Doctor_ptr ui::seizeInformation(){
 		}
 	} while(!ok);
 	return make_shared<Doctor>(firstname, lastname, email, password);
+}
+
+int ui::getch() {
+    int ch;
+    struct termios t_old, t_new;
+
+    tcgetattr(STDIN_FILENO, &t_old);
+    t_new = t_old;
+    t_new.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &t_new);
+
+    ch = getchar();
+
+    tcsetattr(STDIN_FILENO, TCSANOW, &t_old);
+    return ch;
+}
+
+string ui::getpass(bool show_asterisk)
+{
+  const char BACKSPACE=127;
+  const char RETURN=10;
+
+  string password;
+  unsigned char ch=0;
+
+  while((ch=getch())!=RETURN)
+    {
+       if(ch==BACKSPACE)
+         {
+            if(password.length()!=0)
+              {
+                 if(show_asterisk)
+                 cout <<"\b \b";
+                 password.resize(password.length()-1);
+              }
+         }
+       else
+         {
+             password+=ch;
+             if(show_asterisk)
+                 cout <<'*';
+         }
+    }
+  cout <<endl;
+  return password;
 }

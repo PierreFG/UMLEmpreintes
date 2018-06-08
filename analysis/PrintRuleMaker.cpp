@@ -4,7 +4,7 @@
 //------------------------------------------------------ Include personnel
 #include "analysis/PrintRuleMaker.h"
 
-
+#include <iostream>
 //-------------------------------------------------------- Include syst?me
 
 
@@ -23,6 +23,9 @@ Rule PrintRuleMaker::generateRule(vector<Print_ptr> datas){
         Vect D = ((Eq.first).transpose())*(Eq.second);
         Vect R=G*D;
         M.insert(pair<string, vector<double>>(diseases[i],R.getData()));
+    }
+    for(string s : diseases){
+    	cout << s << endl;
     }
     Rule Rl(M,valpossibles);
     return Rl;

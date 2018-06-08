@@ -19,7 +19,7 @@ PrintAnalyser analyser;
 
 //////////////////////////////////////////////////////////////////  PUBLIC
 //---------------------------------------------------- Fonctions publiques
-vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file) {
+vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr d) {
     vector<AnalysisResult_ptr> results;
     vector<Print_ptr> prints = fs::getPrints(file);
     for(Print_ptr& p : prints) {
@@ -31,10 +31,11 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file) {
         double val=0;
         for(auto it=asso.begin();it!=asso.end();++it){
             Vect R(it->second);
+            cout << "X.size :" << X.size() << " R.size : " << R.size() << endl;
             val=X*R;
             Y.insert(pair<string,double>(it->first,val));
         }
-        results.push_back(make_shared<AnalysisResult>(Y, file));
+        results.push_back(make_shared<AnalysisResult>(Y, file, d, p->getID()));
     }
     return results;
 

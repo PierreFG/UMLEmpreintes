@@ -15,7 +15,7 @@
 using namespace std;
 
 // Operator overloading for model classes
-ostream& operator<<(ostream& out, const Doctor& d);
+ostream& operator<<(ostream& ostring, const Doctor& d);
 istream& operator>>(istream& in, Doctor& d);
 
 ostream& operator<<(ostream& out, const Print& p);
@@ -31,6 +31,7 @@ namespace fs {
 
     const string FORMAT_PATH = "data/format.cfg";
     const string RULES_PATH = "data/rules.csv";
+	const string ONE_HOT_RULE_PATH= "data/ohrule.csv";
     const string LOGS_PATH = "data/logs.csv";
     const string DOCTORS_PATH = "data/doctors.csv";
     const string OUTPUT_PATH = "out/";
@@ -48,9 +49,9 @@ namespace fs {
     ///*****IN&OUT FUNCTIONS
     Doctor_ptr signInDoctor(string username, string password);
 
-    Doctor_ptr findDoctorByID(long id);
+    Doctor_ptr findDoctorByID(doctorid_t id);
 
-    long generateDoctorID();
+    doctorid_t generateDoctorID();
 
     bool signUpDoctor(Doctor_ptr doctor);
 
@@ -60,10 +61,9 @@ namespace fs {
 
     Rule_ptr getRule();
 
-
     bool saveResult(AnalysisResult_ptr r);
     bool addResultToLog(AnalysisResult_ptr r);
-    vector<AnalysisResult_ptr> readLogs(long doctorID);
+    vector<AnalysisResult_ptr> readLogs(doctorid_t doctorID);
 }
 
 #endif // FILESERVICES_H_INCLUDED
