@@ -25,7 +25,7 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr 
     for(Print_ptr& p : prints) {
         StrToMath Tools;
         vector<double> printNum = Tools.transformPrint(p, usedRule->getOneHotRule());
-        Vect X(printNum);
+        X.afficher();
         map<string,vector<double>> asso = usedRule->getAsso();
         map<string, double> Y;
         double val=0;

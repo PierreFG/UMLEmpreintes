@@ -22,7 +22,7 @@ void usage() {
 }
 
 int main(int argc, char* argv[]) {
-	//****TRAITEMENT ARGUMENTS
+	//****Arguments processing
 	string path;
 	char optstring[]="i:";
 	int c;
@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
 		}
    	}
 
-	//****MAJ DE LA BASE DE DONNE (si -i)
+	//****Updating/Creating rules (if -i argument)
 	if(i) {
 		vector<Print_ptr> v;
 		v = getPrints(path);
@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
 		}
 		PrintRuleMaker *prm = new PrintRuleMaker();
 
-		cout.setstate(std::ios_base::failbit);
+		cout.setstate(std::ios_base::failbit); //disable the ouputs
 		Rule r = prm->generateRule(v);
 		cout.clear();
 
@@ -63,21 +63,19 @@ int main(int argc, char* argv[]) {
 		return 0;
 	}
 
+	//****MAIN APP
+	//Loading rules
 	Rule_ptr rule = getRule();
 	if(rule == nullptr) {
 		cerr << "Error : No print set was loaded !" << endl;
 		usage();
-        return -1;
 	}
 	analyser.SetRule(rule);
-
-	//****MAIN APP
+	
 	intro();
 	for(;;) {
 		Doctor_ptr d = connectionMenu();
-		if(d == nullptr) {
-			return 0;
-		}
+		if(d == nullptr) return 0; //exit app
 		mainMenu(d);
 	}
 
