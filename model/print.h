@@ -13,11 +13,6 @@ typedef int64_t printid_t;
 class Print
 {
 public:
-<<<<<<< HEAD
-=======
-    friend ostream& operator << (ostream& out, const Print& p);
-    Print& operator =(const Print& p);
->>>>>>> 7d71a76224b8c3d95e755fca3c291d078eaaddf4
     Print (printid_t id, vector<string>, vector<double>, vector<string>);
     Print(Print &p);
     Print();
@@ -32,10 +27,6 @@ public:
     vector<string> getDiseases() const;
     vector<double> getAttr() const;
     vector<string> getAttrStr() const;
-<<<<<<< HEAD
-=======
-
->>>>>>> 7d71a76224b8c3d95e755fca3c291d078eaaddf4
 
 private:
     printid_t ID;
