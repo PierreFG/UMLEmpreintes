@@ -16,7 +16,6 @@ using namespace fs;
 
 void usage() {
 	cerr << "usage : ./app [-i \"setfile.txt\"]" << endl;
-	cerr << "There must be the the set file itself (xxx.txt) but also the meta file named xxx_meta.txt." << endl;
 	exit(1);
 	return;
 }
@@ -48,7 +47,7 @@ int main(int argc, char* argv[]) {
 			cout << *(*it) << endl;
 		}*/
 		if(v.begin()==v.end()){
-			cerr << "Something wrong happened, we could'nt find your files." << endl;
+			cerr << "Something wrong happened, we could'nt find your file." << endl;
 			usage();
 		}
 		PrintRuleMaker *prm = new PrintRuleMaker();

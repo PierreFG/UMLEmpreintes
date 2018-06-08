@@ -40,7 +40,6 @@ appTest
 # folders
 .vs/
 .vscode/
-.data/
 
 # Others
 .vscode
