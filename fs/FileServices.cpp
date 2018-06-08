@@ -328,6 +328,9 @@ vector<Print_ptr> fs::getPrints(string filename){
 	}else{
         return {};
     }
+    for (Print_ptr p : vec){
+    	cout << *p << endl;
+    	}
 	return vec;
 }
 
