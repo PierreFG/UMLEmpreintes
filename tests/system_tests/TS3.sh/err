@@ -1,0 +1,1 @@
+app: analysis/Vect.cpp:67: double Vect::operator*(const Vect&): Assertion `n==B.n' failed.
