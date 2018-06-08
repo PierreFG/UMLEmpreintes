@@ -30,7 +30,11 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr 
         map<string, double> Y;
         double val=0;
         for(auto it=asso.begin();it!=asso.end();++it){
-            Vect R(it->second);
+            
+            vector<double> coefs= it->second;
+            double termeConstant = coefs[0];
+            coefs.erase(coefs.begin());
+            Vect R(coefs);            
             cout << "X.size :" << X.size() << " R.size : " << R.size() << endl;
             val=X*R;
             Y.insert(pair<string,double>(it->first,val));
