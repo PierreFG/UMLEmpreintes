@@ -19,18 +19,16 @@ class Rule
 public:
     Rule (map<string,vector<double>> ,map<int,vector<string>>);
     /*Constructor*/
-
     virtual ~Rule ();
     /*Default destructor*/
 
-    map<string,vector<double>> getAsso();
-    /*Returns the asso attribute*/
-
-    map<int,vector<string>> getOneHotRule();
-    /*Returns the oneHotRule attribute*/
-
     friend ostream& operator<<(ostream& out, const Rule& r);
     /*Extern overload of the output stream operator*/
+
+    map<string,vector<double>> getAsso();
+    /*Returns the asso attribute*/
+    map<int,vector<string>> getOneHotRule();
+    /*Returns the oneHotRule attribute*/
 
 private:
     map<string,vector<double>> asso;
