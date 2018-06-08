@@ -15,7 +15,9 @@ class Print
 
 public:
     friend ostream& operator << (ostream& out, const Print& p);
+    Print& operator =(const Print& p);
     Print (printid_t id, vector<string>, vector<double>, vector<string>);
+    Print(Print &p);
     Print();
     virtual ~Print();
 

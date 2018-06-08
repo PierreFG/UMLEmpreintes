@@ -115,9 +115,9 @@ void ui::mainMenu(Doctor_ptr d){
 			pa.SetRule(r);
 			vector<AnalysisResult_ptr> results = pa.analysePrints(path, d);
 			cout << "Voici le résultat de chaque empreinte du fichier :"<<endl;
-			for(AnalysisResult_ptr ar : results){
+			for(AnalysisResult_ptr& ar : results){
 				cout << "Empreinte "<< ar->getPrintID() << endl;
-				for(auto it = ar->getProbas().begin(); it!=ar->getProbas().end(); it++){
+				for(map<string, double>::const_iterator it = ar->getProbas().cbegin(); it!=ar->getProbas().cend(); it++){
 					cout << it->first << " : " << it->second<<endl;
 				}
 				cout << endl<<endl;

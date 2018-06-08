@@ -6,7 +6,7 @@
 #include "analysis/Mat.h"
 #include "fs/FileServices.h"
 #include "analysis/PrintAnalyser.h"
-#include "StrToMath.h"
+#include "analysis/StrToMath.h"
 
 //-------------------------------------------------------- Include syst?me
 #include <vector>
@@ -23,17 +23,21 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr 
     vector<AnalysisResult_ptr> results;
     vector<Print_ptr> prints = fs::getPrints(file);
     for(Print_ptr& p : prints) {
-        StrToMath Tools;
-        vector<double> printNum = Tools.transformPrint(p, usedRule->getOneHotRule());
+        vector<double> printNum = StrToMath::transformPrint(p, usedRule->getOneHotRule());
         Vect X(printNum);
         map<string,vector<double>> asso = usedRule->getAsso();
         map<string, double> Y;
         double val=0;
         for(auto it=asso.begin();it!=asso.end();++it){
-            Vect R(it->second);
-            cout << "X.size :" << X.size() << " R.size : " << R.size() << endl;
-            val=X*R;
-            Y.insert(pair<string,double>(it->first,val));
+
+            vector<double> coefs= it->second;
+            double termeConstant = coefs[0];
+            coefs.erase(coefs.begin());
+            Vect R(coefs);
+            val=X*R+termeConstant;
+            if(val > 0.5) {
+                Y.insert(pair<string,double>(it->first,val));
+            }
         }
         results.push_back(make_shared<AnalysisResult>(Y, file, d, p->getID()));
     }

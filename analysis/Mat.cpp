@@ -34,8 +34,6 @@ Mat Mat::inv(){
     assert(m==data[0].n);
     Mat G(*this);
     Mat I(m);
-    cout<<"copie de la matrice"<<endl;
-    G.afficher();
     int r = -1;
     int k=0;
     Vect bufferG;
@@ -81,7 +79,6 @@ Mat Mat::inv(){
         }
 
     }
-    cout<<"G après gauss :"<<endl;
     G.afficher();
     return I;
 }
@@ -116,8 +113,6 @@ Mat Mat::operator*(double c){
     return B;
 }
 Mat Mat::operator*(const Mat& B){
-    cout<<"mat G :"<<m<<" "<<data[0].n<<endl;
-    cout<<"mat D :"<<B.m<<" "<<B.data[0].n<<endl;
     assert(data[0].n==B.m && m ==B.data[0].n);
     int n =data[0].n;
     Mat R = Mat(m,B.data[0].n);

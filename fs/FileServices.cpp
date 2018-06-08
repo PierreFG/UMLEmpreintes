@@ -148,7 +148,7 @@ ostream& operator << (ostream& out, const Print& p){
     }
     cout << endl;
     cout << "Les maladies associees sont : "<<endl;
-    for (auto it=p.diseases.begin(); it!=p.diseases.end(); it++){
+    for (vector<string>::const_iterator it=p.getDiseases().cbegin(); it!=p.getDiseases().cend(); it++){
         cout << *it << "; ";
     }
     cout << endl;
@@ -256,15 +256,8 @@ bool fs::saveRule(Rule_ptr r){
 }
 
 vector<Print_ptr> fs::getPrints(string filename){
-    string metaName = "";
-    if(filename.find('.')!=string::npos){
-        metaName = filename.substr(0,filename.find('.')) + "_meta" + filename.substr(filename.find('.'),string::npos);
-    }else{
-        metaName = filename + "_meta";
-    }
-
 	//First of all, load all metadatas and analyse them
-	ifstream isMeta(metaName);
+	ifstream isMeta("data/metaFile.txt");
 	string buffer;
 
 	//Since we know every data is in order and that there's exactly n different types,

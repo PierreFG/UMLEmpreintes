@@ -41,7 +41,7 @@ int main(int argc, char* argv[]) {
 			cout << *(*it) << endl;
 		}*/
 		if(v.begin()==v.end()){
-			cerr << "Something wrong happened, we could'nt find your files." << endl;
+			cerr << "Something wrong happened, we could'nt find your file." << endl;
 			usage();
 		}
 		PrintRuleMaker *prm = new PrintRuleMaker();
@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 		usage();
 	}
 	analyser.SetRule(rule);
-	
+
 	intro();
 	for(;;) {
 		Doctor_ptr d = connectionMenu();

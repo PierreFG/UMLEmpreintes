@@ -22,22 +22,23 @@
 
 using namespace std;
 
-class StrToMath
+namespace StrToMath
 {
-public:
+
 	//---------------------------------------------------- Fonctions publiquess
+    //listes les valeurs possibles pour chaque attribut de type string des empreintes
     map<int,vector<string>> listVals(vector<Print_ptr> datas);
+
+    //Créer la matrice et le vecteur nécessaire à la régression linéaire
+    //M et Y du MX=Y (pour une maladie) :
     pair<Mat,Vect> generateMat(vector<Print_ptr> datas, string disease, map<int,vector<string>> valpossibles);
+
+    //transformer une empreinte en un vecteur de double, cad une ligne de la matrice : en appliquant le one hot coding :
     vector<double> transformPrint(Print_ptr p, map<int,vector<string>> valpossibles);
+
+    //lister les différentes maladies présentes dans le jeu d'empreintes:
     vector<string> listDiseases(vector<Print_ptr> datas);
 	//-------------------------------------------- Constructeurs - destructeur
-	StrToMath();
-    virtual ~StrToMath();
-    //------------------------------------------- Surcharge d'opérateurs
 
-
-private:
-	//----------------------------------------------------- Attributs privés
-
-};
+}
 #endif // STRTOMATH_H
