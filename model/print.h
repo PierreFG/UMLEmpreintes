@@ -12,14 +12,14 @@ typedef int64_t printid_t;
 
 class Print
 {
-
 public:
-    friend ostream& operator << (ostream& out, const Print& p);
-    Print& operator =(const Print& p); 
     Print (printid_t id, vector<string>, vector<double>, vector<string>);
     Print(Print &p);
     Print();
     virtual ~Print();
+
+    friend ostream& operator << (ostream& out, const Print& p);
+    Print& operator =(const Print& p); 
 
     void addDisease(string d);
 
@@ -27,8 +27,6 @@ public:
     vector<string> getDiseases() const;
     vector<double> getAttr() const;
     vector<string> getAttrStr() const;
-    void afficherMaladies() const;
-
 
 protected:
     printid_t ID;

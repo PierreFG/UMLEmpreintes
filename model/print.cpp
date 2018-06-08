@@ -39,12 +39,8 @@ void Print::addDisease(string d) {
     diseases.push_back(d);
 }
 
-void Print::afficherMaladies() const {
-	for (string s: diseases){
-		cout << s << "; "<<endl;
-	}
+//***********Constructor/Destructor
 
-}
 Print::Print(printid_t pid, vector<string> pdiseases, vector<double> pattr, vector<string> pattrStr):ID(pid), diseases(pdiseases), attr(pattr), attrStr(pattrStr) {
 }
 
