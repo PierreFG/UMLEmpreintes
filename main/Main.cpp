@@ -14,6 +14,8 @@ using namespace std;
 using namespace ui;
 using namespace fs;
 
+#ifndef TEST
+
 int main(int argc, char* argv[]) {
 	//****Arguments processing
 	string path;
@@ -69,27 +71,16 @@ int main(int argc, char* argv[]) {
 	for(;;) {
 		Doctor_ptr d = connectionMenu();
 		if(d == nullptr) return 0; //exit app
-		
+
 		for(unsigned int i = 0; i < 10; i++)
 		{
 			cout << endl;
 		}
-		
+
 		mainMenu(d);
 	}
-	
+
 	return 0;
 }
 
-/*#include "model/analysisResult.h"
-#include <map>
-#include "fs/FileServices.h"
-using namespace fs;
-int main(){
-	map<string, double> proba;
-	proba["Hepatite"]=39.0; proba["Rhume"]=69.2;
-	AnalysisResult_ptr ar = make_shared<AnalysisResult>(proba, "./empreinte01.csv");
-	cout << *ar;
-	addResultToLog(ar);
-	return 0;
-}*/
+#endif // TEST

@@ -90,7 +90,7 @@ Doctor_ptr ui::connectionMenu() {
 		else if (res=='q'){
 			notConnected=false;
 			d=nullptr;
-			cout <<"A bientôt"<<endl;
+			cout <<"A bientot"<<endl;
 		}
 	} while(notConnected);
 	return d;
@@ -99,7 +99,7 @@ Doctor_ptr ui::connectionMenu() {
 void ui::mainMenu(Doctor_ptr d){
 	char car;
 
-	cout << "Bonjour M. " << d->getName() <<"."<<endl;
+	cout << "Bonjour Dr. " << d->getName() <<"."<<endl;
 
 	while (car!='d'){
 		cout << endl<<endl;
@@ -108,32 +108,34 @@ void ui::mainMenu(Doctor_ptr d){
 		cout << "Pour vous deconnecter, tapez (d)."<<endl;
 		car=inputChar({'a', 'h', 'd'});
 		if (car=='a'){
-			cout << "Entrez le chemin d'accès au fichier d'empreinte(s) à analyser :"<<endl;
+			cout << "Entrez le chemin d'acces au fichier d'empreinte(s) a analyser :"<<endl;
 			string path = inputString();
 			PrintAnalyser pa;
 			Rule_ptr r = fs::getRule();
 			pa.SetRule(r);
 			vector<AnalysisResult_ptr> results = pa.analysePrints(path, d);
-			cout << "Voici le résultat de chaque empreinte du fichier :"<<endl;
+			cout << "Voici le resultat de chaque empreinte du fichier :"<<endl;
 			for(AnalysisResult_ptr& ar : results){
-				cout << "Empreinte "<< ar->getPrintID() << endl;
-				for(map<string, double>::const_iterator it = ar->getProbas().cbegin(); it!=ar->getProbas().cend(); it++){
-					cout << it->first << " : " << it->second<<endl;
-				}
-				cout << endl<<endl;
+				cout << "Empreinte "<< ar->getPrintID() <<  endl;
+				map<string, double> cpy = ar->getProbas();
+                for(map<string, double>::iterator it = cpy.begin(); it!=cpy.end(); it++){
+                    cout << it->first << " : " << it->second<<endl;
+                }
+                cout << endl<<endl;
+                fs::addResultToLog(ar);
+                fs::saveResult(ar);
 			}
 
 		} else if(car=='h'){
-			//Appeler la méthode historique
+			//Appeler la methode historique
 			vector<AnalysisResult_ptr> res = fs::readLogs(d->getID());
 			if (!res.empty()){
 				cout << "Votre historique : " << endl;
 				for(auto it = res.begin(); it!=res.end(); it++){
 					cout << **it <<endl;
 				}
-
 			} else {
-				cout << "Votre historique est vide à l'heure actuelle" << endl<<endl;
+				cout << "Votre historique est vide a l'heure actuelle" << endl<<endl;
 			}
 
 		}

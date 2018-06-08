@@ -418,7 +418,7 @@ Rule_ptr fs::getRule(){
 
 
 bool fs::addResultToLog(AnalysisResult_ptr r) {
-    // Vérification de la conformité de l'analyse à enregistrer
+    // Verification de la conformite de l'analyse a enregistrer
     if(r == nullptr) {
         return false;
     }

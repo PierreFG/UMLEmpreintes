@@ -35,14 +35,13 @@ vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr 
             coefs.erase(coefs.begin());
             Vect R(coefs);
             val=X*R+termeConstant;
-            if(val > 0.5) {
+            if(val > 0.1) {
                 Y.insert(pair<string,double>(it->first,val));
             }
         }
         results.push_back(make_shared<AnalysisResult>(Y, file, d, p->getID()));
     }
     return results;
-
 }
 void PrintAnalyser :: SetRule(Rule_ptr r){
     usedRule = r;

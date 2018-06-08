@@ -101,7 +101,7 @@ vector<double> StrToMath::transformPrint(Print_ptr p, map<int,vector<string>> va
         vals = valpossibles[j];
         nbVals=vals.size();
         auto it = find(vals.begin(),vals.end(),p->getAttrStr()[j]);
-        assert(it!=vals.end());
+        //assert(it!=vals.end());
         ind = vals.end()-it;
         for(int k=0;k<nbVals;k++){
             if(k!=ind){

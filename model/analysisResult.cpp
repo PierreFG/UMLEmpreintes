@@ -3,9 +3,8 @@
 #include "fs/FileServices.h"
 
 AnalysisResult::AnalysisResult(map<string, double> pproba, string pfile, Doctor_ptr pDoctor, printid_t id) :
-    proba(pproba), file(pfile), printID(id) {
+    proba(pproba), file(pfile), doctor(pDoctor), printID(id) {
     date = fs::getCurrentTime();
-    doctor = pDoctor;
 }
 
 AnalysisResult::AnalysisResult() {
@@ -23,7 +22,7 @@ string AnalysisResult::getDate() const{
 }
 
 long AnalysisResult::getPrintID() const {
- return printID;
+    return printID;
 }
 
 string AnalysisResult::getFileName() const {
