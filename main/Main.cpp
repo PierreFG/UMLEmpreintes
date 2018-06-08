@@ -16,7 +16,7 @@ using namespace fs;
 
 void usage() {
 	cerr << "usage : ./app [-i \"setfile.txt\"]" << endl;
-	cerr << "There must be the the set file itself (xxx.txt) but also the meta file named meta_xxx.txt." << endl;
+	cerr << "There must be the the set file itself (xxx.txt) but also the meta file named xxx_meta.txt." << endl;
 	exit(1);
 	return;
 }
