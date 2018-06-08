@@ -39,7 +39,7 @@ public:
     Mat operator*(const Mat& B) ; //multiplication à droite par une matrice
     Vect operator*(const Vect& V); //multiplication à droite par un vecteur
 
-protected:
+private:
 	//----------------------------------------------------- Attributs privés
     vector<Vect> data;
 	int m;

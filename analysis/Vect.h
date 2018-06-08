@@ -40,12 +40,12 @@ public:
     ~Vect();
     Vect(const Vect&);
     Vect(vector<double>);
-        
 
 
-protected:
+
+private:
 	//----------------------------------------------------- Attributs privés
-    vector<double> data; 
+    vector<double> data;
 	int n;
 };
 

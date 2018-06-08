@@ -50,7 +50,7 @@ public:
     string getPassword();
     /*Returns the doctor's password*/
 
-protected:
+private:
     doctorid_t ID;
     string name;
     string firstName;

@@ -12,7 +12,7 @@
 #include <vector>
 #include <memory>
 #include <stdio.h>
-#include <termios.h>
+//#include <termios.h>
 #include <unistd.h>
 
 #include "ui/UI.h"
@@ -22,6 +22,13 @@
 #include "fs/FileServices.h"
 
 using namespace std;
+
+void ui::usage() {
+	cerr << "usage : ./app [-i \"setfile.txt\"]" << endl;
+	cerr << "There must be the the set file itself (xxx.txt) but also the meta file named xxx_meta.txt." << endl;
+	exit(1);
+	return;
+}
 
 void ui::intro() {
 	cout << Colorize(Colorize::RED) << endl;
@@ -64,9 +71,9 @@ Doctor_ptr ui::connectionMenu() {
 				cout << "Saisissez votre mail :" << endl;
 				email=inputString();
 				cout << "Saisissez votre mot de passe :"<<endl;
-				
-				//password=inputString();
-				password=getpass();
+
+				password=inputString();
+				//password=getpass();
 				d = fs::signInDoctor(email, password);
 				if (d!=nullptr){
 					ok=true;
@@ -108,11 +115,11 @@ void ui::mainMenu(Doctor_ptr d){
 			pa.SetRule(r);
 			vector<AnalysisResult_ptr> results = pa.analysePrints(path, d);
 			cout << "Voici le résultat de chaque empreinte du fichier :"<<endl;
-			for(AnalysisResult_ptr ar : results){
+			for(AnalysisResult_ptr& ar : results){
 				cout << "Empreinte "<< ar->getPrintID() << endl;
-				for(auto it = ar->getProbas().begin(); it!=ar->getProbas().end(); it++){
+				for(map<string, double>::const_iterator it = ar->getProbas().cbegin(); it!=ar->getProbas().cend(); it++){
 					cout << it->first << " : " << it->second<<endl;
-				} 
+				}
 				cout << endl<<endl;
 			}
 
@@ -211,6 +218,7 @@ Doctor_ptr ui::seizeInformation(){
 	return make_shared<Doctor>(firstname, lastname, email, password);
 }
 
+/*
 int ui::getch() {
     int ch;
     struct termios t_old, t_new;
@@ -255,3 +263,4 @@ string ui::getpass(bool show_asterisk)
   cout <<endl;
   return password;
 }
+*/

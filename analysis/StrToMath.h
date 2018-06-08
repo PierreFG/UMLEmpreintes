@@ -40,5 +40,5 @@ namespace StrToMath
     vector<string> listDiseases(vector<Print_ptr> datas);
 	//-------------------------------------------- Constructeurs - destructeur
 
-};
+}
 #endif // STRTOMATH_H

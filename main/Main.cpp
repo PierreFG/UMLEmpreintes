@@ -14,12 +14,6 @@ using namespace std;
 using namespace ui;
 using namespace fs;
 
-void usage() {
-	cerr << "usage : ./app [-i \"setfile.txt\"]" << endl;
-	exit(1);
-	return;
-}
-
 int main(int argc, char* argv[]) {
 	//****Arguments processing
 	string path;
@@ -70,7 +64,7 @@ int main(int argc, char* argv[]) {
 		usage();
 	}
 	analyser.SetRule(rule);
-	
+
 	intro();
 	for(;;) {
 		Doctor_ptr d = connectionMenu();

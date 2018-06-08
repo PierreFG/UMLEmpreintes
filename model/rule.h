@@ -32,8 +32,13 @@ public:
     friend ostream& operator<<(ostream& out, const Rule& r);
     /*Extern overload of the output stream operator*/
 
+<<<<<<< HEAD
 protected:
     map<string,vector<double>> asso; 
+=======
+private:
+    map<string,vector<double>> asso;
+>>>>>>> 7d71a76224b8c3d95e755fca3c291d078eaaddf4
     map<int,vector<string>> oneHotRule;
 };
 

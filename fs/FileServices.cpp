@@ -148,9 +148,9 @@ ostream& operator << (ostream& out, const Print& p){
     }
     cout << endl;
     cout << "Les maladies associees sont : "<<endl;
-    /*for (vector<string>::const_iterator it=p.getDiseases().cbegin(); it!=p.getDiseases().cend(); it++){
+    for (vector<string>::const_iterator it=p.getDiseases().cbegin(); it!=p.getDiseases().cend(); it++){
         cout << *it << "; ";
-    }*/
+    }
     cout << endl;
     return out;
 }

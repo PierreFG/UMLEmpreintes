@@ -10,7 +10,6 @@ Print& Print::operator =(const Print& p){
 		attrStr.push_back(s);
 	}
 	for (string s : p.diseases){
-		cout <<"Copie de : " << s << endl;
 		diseases.push_back(s);
 	}
 	for(double d: p.attr){
@@ -39,8 +38,11 @@ void Print::addDisease(string d) {
     diseases.push_back(d);
 }
 
+<<<<<<< HEAD
 //***********Constructor/Destructor
 
+=======
+>>>>>>> 7d71a76224b8c3d95e755fca3c291d078eaaddf4
 Print::Print(printid_t pid, vector<string> pdiseases, vector<double> pattr, vector<string> pattrStr):ID(pid), diseases(pdiseases), attr(pattr), attrStr(pattrStr) {
 }
 
@@ -57,7 +59,6 @@ Print::Print(Print &p){
 		attrStr.push_back(s);
 	}
 	for (string s : p.diseases){
-		cout <<"Copie de : " << s << endl;
 		diseases.push_back(s);
 	}
 	for(double d: p.attr){
