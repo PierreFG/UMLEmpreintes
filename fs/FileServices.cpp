@@ -263,7 +263,9 @@ vector<Print_ptr> fs::getPrints(string filename){
 	//Since we know every data is in order and that there's exactly n different types,
 	//we only need to store a number between 0 and n-1 to indicate the type of the i-th
 	//data.
-
+    if(!isMeta.is_open()){
+        return {};
+    }
 	vector<int> types;
 	while(getline(isMeta, buffer)) {
 		string type = buffer.substr(buffer.find(";")+1);
@@ -316,7 +318,9 @@ vector<Print_ptr> fs::getPrints(string filename){
             }
         }
         is.close();
-	}
+	}else{
+        return {};
+    }
 	return vec;
 }
 
