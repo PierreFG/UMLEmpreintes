@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <time.h>
 
 #include "model/doctor.h"
 #include "model/rule.h"
@@ -10,11 +11,15 @@
 #include "model/rule.h"
 #include "fs/FileServices.h"
 
+
 using namespace std;
 using namespace ui;
 using namespace fs;
 
 int main(int argc, char* argv[]) {
+
+	clock_t t1=clock();
+
 	//****Arguments processing
 	string path;
 	char optstring[]="i:";
@@ -53,6 +58,10 @@ int main(int argc, char* argv[]) {
 		Rule_ptr r1 = make_shared<Rule>(r);
 		cout<<*r1;
 		saveRule(r1);
+
+		clock_t t2=clock();
+		float temps =(float)(t2-t1)/CLOCKS_PER_SEC*1000;
+		cout<<"temps :"<<temps<<endl;
 		return 0;
 	}
 
@@ -78,6 +87,9 @@ int main(int argc, char* argv[]) {
 		mainMenu(d);
 	}
 	
+	clock_t t2=clock();
+	float temps =(float)(t2-t1)/CLOCKS_PER_SEC;
+	cout<<"temps :"<<temps<<endl;
 	return 0;
 }
 
