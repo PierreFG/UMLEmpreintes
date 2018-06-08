@@ -257,7 +257,7 @@ bool fs::saveRule(Rule_ptr r){
 
 vector<Print_ptr> fs::getPrints(string filename){
 	//First of all, load all metadatas and analyse them
-	ifstream isMeta(filename + "_meta");
+	ifstream isMeta("meta_"+filename);
 	string buffer;
 
 	//Since we know every data is in order and that there's exactly n different types,

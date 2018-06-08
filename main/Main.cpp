@@ -47,9 +47,11 @@ int main(int argc, char* argv[]) {
 			cout << *(*it) << endl;
 		}
 		PrintRuleMaker *prm = new PrintRuleMaker();
-		cout<<"\033[30m"<<endl;
+
+		cout.setstate(std::ios_base::failbit);
 		Rule r = prm->generateRule(v);
-		cout<<"\033[0m"<<endl;
+		cout.clear();
+
 		Rule_ptr r1 = make_shared<Rule>(r);
 		cout<<*r1;
 		saveRule(r1);
