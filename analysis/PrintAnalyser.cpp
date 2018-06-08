@@ -22,8 +22,7 @@ PrintAnalyser analyser;
 vector<AnalysisResult_ptr> PrintAnalyser::analysePrints(string file, Doctor_ptr d) {
     vector<AnalysisResult_ptr> results;
     vector<Print_ptr> prints = fs::getPrints(file);
-    for(Print_ptr& p : prints) {
-        
+    for(Print_ptr& p : prints) {        
         vector<double> printNum = StrToMath::transformPrint(p, usedRule->getOneHotRule());
         Vect X(printNum);
         map<string,vector<double>> asso = usedRule->getAsso();

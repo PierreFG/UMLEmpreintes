@@ -148,9 +148,10 @@ ostream& operator << (ostream& out, const Print& p){
     }
     cout << endl;
     cout << "Les maladies associees sont : "<<endl;
-    for (auto it=p.diseases.begin(); it!=p.diseases.end(); it++){
+    p.afficherMaladies();
+    /*for (vector<string>::const_iterator it=p.getDiseases().cbegin(); it!=p.getDiseases().cend(); it++){
         cout << *it << "; ";
-    }
+    }*/
     cout << endl;
     return out;
 }
@@ -321,6 +322,9 @@ vector<Print_ptr> fs::getPrints(string filename){
 	}else{
         return {};
     }
+    for(Print_ptr p : vec){
+    	p->afficherMaladies();
+    	}
 	return vec;
 }
 
